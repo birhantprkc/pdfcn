@@ -1,0 +1,38 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forme/utils",
+  "title": "Forme Utils",
+  "description": "Theme context and helpers for the forme base",
+  "dependencies": [
+    "@formepdf/react",
+    "@formepdf/core"
+  ],
+  "files": [
+    {
+      "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+      "content": "import { professionalTheme } from \"@/registry/themes\";\n\nexport const theme = professionalTheme;\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "registry/bases/forme/lib/pdfcn-theme-context.tsx",
+      "content": "/* eslint-disable react-refresh/only-export-components */\n// Exports both a component (PdfcnThemeProvider) and hooks/context intentionally.\n// All PDF components import from a single file — splitting would break the public API.\n\nimport * as React from \"react\";\nimport { createContext, useContext, useMemo } from 'react';\nimport type { DependencyList, ReactNode } from 'react';\n\nimport { theme as defaultTheme } from \"./pdfcn-theme\";\n\nexport type PdfcnTheme = typeof defaultTheme;\n\nexport const PdfcnThemeContext = createContext<PdfcnTheme>(defaultTheme);\n\nexport interface PdfcnThemeProviderProps {\n  theme?: PdfcnTheme;\n  children: ReactNode;\n}\n\n/**\n * Detect whether React currently has an active dispatcher.\n * When components are invoked as plain functions in tests, dispatcher is null.\n */\nfunction hasActiveDispatcher(): boolean {\n  const maybeInternals = React as unknown as {\n    __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?: {\n      H?: unknown;\n    };\n  };\n\n  const dispatcher =\n    maybeInternals\n      .__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?.H;\n  return dispatcher != null;\n}\n\nexport function PdfcnThemeProvider({\n  theme,\n  children,\n}: PdfcnThemeProviderProps) {\n  const resolvedTheme = useMemo(() => theme ?? defaultTheme, [theme]);\n  return (\n    <PdfcnThemeContext.Provider value={resolvedTheme}>\n      {children}\n    </PdfcnThemeContext.Provider>\n  );\n}\n\n/**\n * Regex patterns that indicate a hook was called outside a valid React render tree.\n * These errors are caught and suppressed so components fall back to safe defaults.\n */\nconst HOOK_ERROR_PATTERNS =\n  /invalid hook call|useContext|useMemo|cannot read properties of null|dispatcher|renderWithHooks|resolveDispatcher|hooks can only be called|rendered fewer hooks/i;\n\n/**\n * Calls a React hook with a graceful fallback for non-render environments (e.g. unit tests).\n * Uses hasActiveDispatcher() as the primary guard; the try/catch is a safety net for edge\n * cases where the dispatcher check passes but the hook still cannot execute.\n */\nfunction callHook<T>(hook: () => T, fallback: T): T {\n  if (!hasActiveDispatcher()) {return fallback;}\n  try {\n    return hook();\n  } catch (error) {\n    if (error instanceof Error && HOOK_ERROR_PATTERNS.test(error.message))\n      {return fallback;}\n    throw error;\n  }\n}\n\n/**\n * Returns the active PdfcnTheme from context, or the default theme when called\n * outside a React render tree (e.g. unit tests).\n */\nexport function usePdfcnTheme(): PdfcnTheme {\n  return callHook(() => useContext(PdfcnThemeContext), defaultTheme);\n}\n\n/**\n * Calls factory() and returns the result.\n * The deps parameter is accepted for API compatibility with existing callers.\n */\n// eslint-disable-next-line @typescript-eslint/no-unused-vars\nexport function useSafeMemo<T>(factory: () => T, _deps: DependencyList): T {\n  return factory();\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "registry/bases/forme/lib/resolve-color.ts",
+      "content": "import type { ColorTokens } from \"@/registry/themes\";\n\n/** Theme color token keys that can be used for the color prop */\nexport const THEME_COLOR_KEYS = [\n  \"foreground\",\n  \"background\",\n  \"muted\",\n  \"mutedForeground\",\n  \"primary\",\n  \"primaryForeground\",\n  \"border\",\n  \"accent\",\n  \"destructive\",\n  \"success\",\n  \"warning\",\n  \"info\",\n] as const satisfies (keyof ColorTokens)[];\n\n/** Resolves a color value: theme token key → hex, or raw CSS color as-is. */\nexport function resolveColor(value: string, colors: ColorTokens): string {\n  const key = value as (typeof THEME_COLOR_KEYS)[number];\n  return THEME_COLOR_KEYS.includes(key) ? colors[key] : value;\n}\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "registry/bases/forme/lib/forme-svg.tsx",
+      "content": "import { Svg as FormeSvg } from \"@formepdf/react\";\nimport { createElement } from 'react';\nimport type { ReactNode, CSSProperties } from 'react';\n\ntype AnyProps = Record<string, unknown> & {\n  children?: ReactNode;\n  style?: CSSProperties;\n};\n\nexport function Svg({\n  children,\n  width,\n  height,\n  viewBox,\n  style,\n  ...rest\n}: AnyProps & { width?: number; height?: number; viewBox?: string }) {\n  return (\n    <FormeSvg\n      width={width as number}\n      height={height as number}\n      viewBox={viewBox as string | undefined}\n      style={style as never}\n      {...rest}\n    >\n      {children}\n    </FormeSvg>\n  );\n}\n\nexport const Circle = (props: AnyProps) => createElement(\"circle\", props);\nexport const Rect = (props: AnyProps) => createElement(\"rect\", props);\nexport const G = (props: AnyProps) => createElement(\"g\", props);\nexport const Line = (props: AnyProps) => createElement(\"line\", props);\nexport const Path = (props: AnyProps) => createElement(\"path\", props);\nexport const SvgText = (props: AnyProps) => createElement(\"text\", props);\n",
+      "type": "registry:lib"
+    },
+    {
+      "path": "registry/bases/forme/lib/maybe-fixed.tsx",
+      "content": "import { Fixed, View } from \"@formepdf/react\";\nimport type { Style } from \"@formepdf/react\";\nimport type { ReactNode } from \"react\";\n\nexport function MaybeFixed({\n  fixed,\n  position,\n  wrap,\n  style,\n  children,\n}: {\n  fixed?: boolean;\n  position: \"header\" | \"footer\";\n  wrap?: boolean;\n  style?: Style | Style[];\n  children?: ReactNode;\n}) {\n  const view = (\n    <View wrap={wrap} style={style as never}>\n      {children}\n    </View>\n  );\n  if (!fixed) {return view;}\n  return <Fixed position={position}>{view}</Fixed>;\n}\n",
+      "type": "registry:lib"
+    }
+  ],
+  "type": "registry:lib"
+}

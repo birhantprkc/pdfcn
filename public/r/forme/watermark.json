@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forme/watermark",
+  "title": "Watermark",
+  "description": "Watermark PDF component (forme)",
+  "dependencies": [
+    "@formepdf/react",
+    "@formepdf/core"
+  ],
+  "registryDependencies": [
+    "forme/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/bases/forme/components/watermark/watermark.tsx",
+      "content": "import { Text as PDFText, StyleSheet, View } from \"@formepdf/react\";\nimport type { Style } from \"@formepdf/react\";\n\nimport type { PDFComponentProps, PdfcnTheme } from \"@/registry/themes\";\n\nimport { usePdfcnTheme, useSafeMemo } from \"../../lib/pdfcn-theme-context\";\nimport { resolveColor } from \"../../lib/resolve-color\";\n\nexport type WatermarkPosition =\n  | \"center\"\n  | \"top-left\"\n  | \"top-right\"\n  | \"bottom-left\"\n  | \"bottom-right\";\n\n/**\n * Diagonal watermark overlaid across the full page using absolute positioning.\n * Props - `text` | `opacity` | `fontSize` | `color` | `angle` | `position` | `fixed` | `style`\n * @see {@link PdfWatermarkProps}\n */\nexport interface PdfWatermarkProps extends Omit<PDFComponentProps, \"children\"> {\n  text: string;\n  opacity?: number;\n  fontSize?: number;\n  color?: string;\n  angle?: number;\n  position?: WatermarkPosition;\n  /**\n   * @default true\n   */\n  fixed?: boolean;\n  children?: never;\n}\n\nfunction createWatermarkStyles(t: PdfcnTheme) {\n  const { fontWeights } = t.primitives;\n  // Use page margins as corner insets so watermark position adapts to the active theme.\n  const { marginTop, marginBottom, marginLeft, marginRight } = t.spacing.page;\n  return StyleSheet.create({\n    container: {\n      alignItems: \"center\",\n      bottom: 0,\n      justifyContent: \"center\",\n      left: 0,\n      pointerEvents: \"none\",\n      position: \"absolute\",\n      right: 0,\n      top: 0,\n      zIndex: -1,\n    },\n    positionBottomLeft: {\n      alignItems: \"flex-start\",\n      justifyContent: \"flex-end\",\n      paddingBottom: marginBottom,\n      paddingLeft: marginLeft,\n    },\n    positionBottomRight: {\n      alignItems: \"flex-end\",\n      justifyContent: \"flex-end\",\n      paddingBottom: marginBottom,\n      paddingRight: marginRight,\n    },\n    positionCenter: { alignItems: \"center\", justifyContent: \"center\" },\n    positionTopLeft: {\n      alignItems: \"flex-start\",\n      justifyContent: \"flex-start\",\n      paddingLeft: marginLeft,\n      paddingTop: marginTop,\n    },\n    positionTopRight: {\n      alignItems: \"flex-end\",\n      justifyContent: \"flex-start\",\n      paddingRight: marginRight,\n      paddingTop: marginTop,\n    },\n    text: {\n      fontFamily: t.typography.heading.fontFamily,\n      fontWeight: fontWeights.bold,\n      letterSpacing: 4,\n      textTransform: \"uppercase\",\n    },\n  });\n}\n\nexport function PdfWatermark({\n  text,\n  opacity = 0.15,\n  fontSize = 60,\n  color = \"mutedForeground\",\n  angle = -45,\n  position = \"center\",\n  fixed = true,\n  style,\n}: PdfWatermarkProps) {\n  const theme = usePdfcnTheme();\n  const styles = useSafeMemo(() => createWatermarkStyles(theme), [theme]);\n  const positionMap: Record<WatermarkPosition, Style> = {\n    \"bottom-left\": styles.positionBottomLeft,\n    \"bottom-right\": styles.positionBottomRight,\n    center: styles.positionCenter,\n    \"top-left\": styles.positionTopLeft,\n    \"top-right\": styles.positionTopRight,\n  };\n  const containerStyles: Style[] = [styles.container, positionMap[position]];\n  if (style) {containerStyles.push(...[style].flat());}\n  const textStyles: Style[] = [\n    styles.text,\n    {\n      color: resolveColor(color, theme.colors),\n      fontSize,\n      opacity,\n      transform: `rotate(${angle}deg)`,\n    },\n  ];\n  return (\n    <View style={containerStyles as never}>\n      <PDFText style={textStyles as never}>{text}</PDFText>\n    </View>\n  );\n}\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "registry/bases/forme/components/watermark/index.ts",
+      "content": "export {\n  PdfWatermark,\n  type PdfWatermarkProps,\n  type WatermarkPosition,\n} from \"./watermark\";\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:ui"
+}

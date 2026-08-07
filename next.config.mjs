@@ -52,6 +52,11 @@ const nextConfig = {
       },
     ];
   },
+  serverExternalPackages: [
+    "takumi-pdf",
+    "@formepdf/core",
+    "@takumi-rs/helpers",
+  ],
 };
 
 const withMDX = createMDX({});

@@ -1,81 +1,22 @@
 ---
 title: Introduction
-description: A template for building and publishing your own shadcn registry components.
+description: pdfcn is a shadcn registry of PDF components for Takumi PDF and Forme PDF.
 ---
 
-A **ready-to-use template** for creating and publishing custom components to the [shadcn registry](https://ui.shadcn.com/docs/registry).
+# pdfcn
 
-## What You Get
+A registry of PDF primitives, layouts, and document blocks with **100% parity** across two bases:
 
-- 📦 **Simple structure** - One component file + one config file
-- 📚 **Documentation site** - Powered by Fumadocs
-- 🎨 **Registry compatible** - Works with `npx shadcn add`
-- 🤖 **[Agent ready](https://www.mintlify.com/score/startercn)** - Ships with `llms.txt`, `llms-full.txt`, API catalog routes, and agent skill discovery endpoints
-- 🔊 **[Web audio feedback](https://audio.raphaelsalaja.com/)** - Built-in interaction sounds powered by `@web-kits/audio`
-- 📳 **[Web haptics](https://haptics.lochie.me/)** - Optional haptic feedback for supported devices via `web-haptics`
-- ✨ **[Motion animations](https://motion.dev/)** - Uses `motion` for animated UI states and transitions
-- 🎯 **[Animated icons](https://lucide-animated.com/)** - Includes reusable animated icons for buttons, sharing, and navigation
-- 🔄 **[View transitions](https://nextjs.org/docs/app/api-reference/config/next-config-js/viewTransition)** - Uses Next.js view transitions for smoother page changes
-- 🚀 **Deploy ready** - Deploy anywhere
+- **Takumi PDF** — JSX/Tailwind to paged PDF (WASM). Browser preview via `react-pdf`.
+- **Forme PDF** — React primitives with Forme’s layout engine. Client and server render.
 
-## Tech Stack
-
-- `Next.js 16` + App Router
-- `React 19`
-- `Tailwind CSS 4`
-- `Fumadocs`
-- `motion`
-- `@web-kits/audio`
-- `web-haptics`
-- `shiki` + `rehype-pretty-code`
-
-## How It Works
-
-1. Edit your component at `registry/new-york/your-component.tsx`
-2. Update `registry.json` with your component name and details
-3. Run `pnpm registry:build`
-
-That's it. Deploy your app and users can install your component:
+## Install
 
 ```bash
-npx shadcn@latest add https://your-site.com/r/your-component.json
+npx shadcn@latest add @pdfcn/takumi/text
+npx shadcn@latest add @pdfcn/forme/invoice-minimal
 ```
 
-## FAQ
+## Bases
 
-<Accordion type="multiple">
-
-<AccordionItem value="faq-1">
-<AccordionTrigger>
-Why copy/paste instead of npm packages?
-</AccordionTrigger>
-<AccordionContent>
-
-The shadcn philosophy gives you **ownership** of the code. You can customize components to your exact needs without fighting library constraints.
-
-</AccordionContent>
-</AccordionItem>
-
-<AccordionItem value="faq-2">
-<AccordionTrigger>
-Which frameworks are supported?
-</AccordionTrigger>
-<AccordionContent>
-
-Any React framework: Next.js, Remix, Astro, Gatsby, Vite, etc.
-
-</AccordionContent>
-</AccordionItem>
-
-<AccordionItem value="faq-3">
-<AccordionTrigger>
-Can I publish multiple components?
-</AccordionTrigger>
-<AccordionContent>
-
-Yes! Add more files to `registry/new-york/` and list them in `registry.json`.
-
-</AccordionContent>
-</AccordionItem>
-
-</Accordion>
+Switch bases in the docs to see the same component implemented for each engine. Public props and variants match [pdfx](https://github.com/akii09/pdfx) — only the PDF primitives differ.

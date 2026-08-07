@@ -1,4 +1,4 @@
-export const FALLBACK_SITE_ORIGIN = "https://startercn.vercel.app" as const;
+export const FALLBACK_SITE_ORIGIN = "https://pdfcn.vercel.app" as const;
 
 const getBaseUrl = () => {
   if (process.env.NODE_ENV !== "production") {
@@ -20,19 +20,19 @@ export const SITE = {
     TWITTER: "@alaymanguy",
   },
   DESCRIPTION: {
-    LONG: "A starter kit for building and publishing your own shadcn registry components.",
-    SHORT: "Build your own shadcn registry",
+    LONG: "A shadcn registry of PDF components for Takumi PDF and Forme PDF — invoices, reports, tables, and primitives with live PDF preview.",
+    SHORT: "PDF component registry for Takumi and Forme",
   },
   KEYWORDS: [
     "shadcn",
     "shadcn registry",
-    "component registry",
-    "shadcn components",
-    "next.js",
-    "tailwindcss",
+    "pdf components",
+    "takumi-pdf",
+    "forme pdf",
+    "react pdf",
     "npx shadcn add",
   ] as const,
-  NAME: "startercn",
+  NAME: "pdfcn",
   OG_IMAGE: `${baseUrl}/og`,
   REGISTRY: baseUrl,
   URL: baseUrl,

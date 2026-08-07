@@ -1,0 +1,26 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "forme/page-break",
+  "title": "Page Break",
+  "description": "Page Break PDF component (forme)",
+  "dependencies": [
+    "@formepdf/react",
+    "@formepdf/core"
+  ],
+  "registryDependencies": [
+    "forme/utils"
+  ],
+  "files": [
+    {
+      "path": "registry/bases/forme/components/page-break/page-break.tsx",
+      "content": "import { PageBreak as FormePageBreak } from \"@formepdf/react\";\n\nimport type { PDFComponentProps } from \"@/registry/themes\";\n\nexport interface PageBreakProps extends Omit<PDFComponentProps, \"children\"> {\n  children?: never;\n}\n\nexport function PageBreak(_props: PageBreakProps) {\n  return <FormePageBreak />;\n}\n",
+      "type": "registry:component"
+    },
+    {
+      "path": "registry/bases/forme/components/page-break/index.ts",
+      "content": "export { PageBreak } from \"./page-break\";\nexport type { PageBreakProps } from \"./page-break\";\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:ui"
+}

@@ -1,19 +1,1931 @@
 {
-  "name": "startercn",
-  "homepage": "https://github.com/shadcn-labs/startercn",
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "pdfcn",
+  "homepage": "https://pdfcn.vercel.app",
   "items": [
     {
-      "name": "your-component",
-      "type": "registry:ui",
-      "title": "Your Component",
-      "description": "A placeholder component. Replace this with your custom shadcn component.",
+      "name": "takumi/utils",
+      "type": "registry:lib",
+      "title": "Takumi Utils",
+      "description": "Theme context and helpers for the takumi base",
       "files": [
         {
-          "path": "registry/new-york/your-component.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/your-component.tsx"
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme-context.tsx",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/takumi/lib/resolve-color.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/takumi/lib/takumi-primitives.tsx",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/takumi/lib/takumi-svg.tsx",
+          "type": "registry:lib"
         }
-      ]
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Alert PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/alert/alert.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/alert/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Badge PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/badge/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/badge/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Card PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/card/card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/card/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "Data Table PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/data-table/data-table.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/data-table/data-table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/data-table/data-table.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/data-table/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils", "takumi/table"]
+    },
+    {
+      "name": "takumi/divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "Divider PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/divider/divider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/divider/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/form",
+      "type": "registry:ui",
+      "title": "Form",
+      "description": "Form PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/form/form.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/form/form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/form/form.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/form/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/graph",
+      "type": "registry:ui",
+      "title": "Graph",
+      "description": "Graph PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/graph/graph.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/graph/graph.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/graph/graph.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/graph/graph.utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/graph/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/heading",
+      "type": "registry:ui",
+      "title": "Heading",
+      "description": "Heading PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/heading/heading.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/heading/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/keep-together",
+      "type": "registry:ui",
+      "title": "Keep Together",
+      "description": "Keep Together PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/keep-together/keep-together.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/keep-together/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/key-value",
+      "type": "registry:ui",
+      "title": "Key Value",
+      "description": "Key Value PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/key-value/key-value.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/key-value/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "Link PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/link/link.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/link/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "List PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/list/list.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/list/list.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/list/list.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/list/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/page-break",
+      "type": "registry:ui",
+      "title": "Page Break",
+      "description": "Page Break PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/page-break/page-break.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/page-break/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/page-footer",
+      "type": "registry:ui",
+      "title": "Page Footer",
+      "description": "Page Footer PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/page-footer/page-footer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/page-footer/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "Page Header PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/page-header/page-header.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/page-header/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/page-number",
+      "type": "registry:ui",
+      "title": "Page Number",
+      "description": "Page Number PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/page-number/page-number.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/page-number/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/pdf-image",
+      "type": "registry:ui",
+      "title": "Pdf Image",
+      "description": "Pdf Image PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/pdf-image/pdf-image.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/pdf-image/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/qrcode",
+      "type": "registry:ui",
+      "title": "Qrcode",
+      "description": "Qrcode PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/qrcode/qrcode.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/qrcode/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers", "qrcode"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/section",
+      "type": "registry:ui",
+      "title": "Section",
+      "description": "Section PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/section/section.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/section/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/signature",
+      "type": "registry:ui",
+      "title": "Signature",
+      "description": "Signature PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/signature/signature.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/signature/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/stack",
+      "type": "registry:ui",
+      "title": "Stack",
+      "description": "Stack PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/stack/stack.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/stack/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Table PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/table/table.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/table/table.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/table/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/text",
+      "type": "registry:ui",
+      "title": "Text",
+      "description": "Text PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/text/text.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/text/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/watermark",
+      "type": "registry:ui",
+      "title": "Watermark",
+      "description": "Watermark PDF component (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/components/watermark/watermark.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/takumi/components/watermark/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/invoice-classic",
+      "type": "registry:block",
+      "title": "Invoice Classic",
+      "description": "Invoice Classic PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/invoice-classic/invoice-classic.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/invoice-classic/invoice-classic.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/invoice-consultant",
+      "type": "registry:block",
+      "title": "Invoice Consultant",
+      "description": "Invoice Consultant PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/invoice-consultant/invoice-consultant.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/invoice-consultant/invoice-consultant.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/invoice-corporate",
+      "type": "registry:block",
+      "title": "Invoice Corporate",
+      "description": "Invoice Corporate PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/invoice-corporate/invoice-corporate.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/invoice-corporate/invoice-corporate.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/invoice-creative",
+      "type": "registry:block",
+      "title": "Invoice Creative",
+      "description": "Invoice Creative PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/invoice-creative/invoice-creative.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/invoice-creative/invoice-creative.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/invoice-minimal",
+      "type": "registry:block",
+      "title": "Invoice Minimal",
+      "description": "Invoice Minimal PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/invoice-minimal/invoice-minimal.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/invoice-minimal/invoice-minimal.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/invoice-modern",
+      "type": "registry:block",
+      "title": "Invoice Modern",
+      "description": "Invoice Modern PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/invoice-modern/invoice-modern.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/invoice-modern/invoice-modern.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/report-financial",
+      "type": "registry:block",
+      "title": "Report Financial",
+      "description": "Report Financial PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/report-financial/report-financial.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-financial/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-financial/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/report-marketing",
+      "type": "registry:block",
+      "title": "Report Marketing",
+      "description": "Report Marketing PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/report-marketing/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-marketing/report-marketing.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-marketing/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/report-operations",
+      "type": "registry:block",
+      "title": "Report Operations",
+      "description": "Report Operations PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/report-operations/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-operations/report-operations.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-operations/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/report-security",
+      "type": "registry:block",
+      "title": "Report Security",
+      "description": "Report Security PDF block (takumi)",
+      "files": [
+        {
+          "path": "registry/bases/takumi/blocks/report-security/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-security/report-security.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/takumi/blocks/report-security/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
+      "registryDependencies": ["takumi/utils"]
+    },
+    {
+      "name": "takumi/theme-professional",
+      "type": "registry:theme",
+      "title": "Professional Theme (takumi)",
+      "description": "professional theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/professional.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-professional.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-modern",
+      "type": "registry:theme",
+      "title": "Modern Theme (takumi)",
+      "description": "modern theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/modern.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-modern.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-minimal",
+      "type": "registry:theme",
+      "title": "Minimal Theme (takumi)",
+      "description": "minimal theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/minimal.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-minimal.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-executive",
+      "type": "registry:theme",
+      "title": "Executive Theme (takumi)",
+      "description": "executive theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/executive.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-executive.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-corporate",
+      "type": "registry:theme",
+      "title": "Corporate Theme (takumi)",
+      "description": "corporate theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/corporate.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-corporate.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-elegant",
+      "type": "registry:theme",
+      "title": "Elegant Theme (takumi)",
+      "description": "elegant theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/elegant.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-elegant.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-vivid",
+      "type": "registry:theme",
+      "title": "Vivid Theme (takumi)",
+      "description": "vivid theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/vivid.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-vivid.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-forest",
+      "type": "registry:theme",
+      "title": "Forest Theme (takumi)",
+      "description": "forest theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/forest.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-forest.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "takumi/theme-blueprint",
+      "type": "registry:theme",
+      "title": "Blueprint Theme (takumi)",
+      "description": "blueprint theme tokens for takumi",
+      "files": [
+        {
+          "path": "registry/themes/blueprint.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-blueprint.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["takumi-pdf", "@takumi-rs/helpers"]
+    },
+    {
+      "name": "forme/utils",
+      "type": "registry:lib",
+      "title": "Forme Utils",
+      "description": "Theme context and helpers for the forme base",
+      "files": [
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme-context.tsx",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/forme/lib/resolve-color.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/forme/lib/forme-svg.tsx",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/bases/forme/lib/maybe-fixed.tsx",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Alert PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/alert/alert.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/alert/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Badge PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/badge/badge.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/badge/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Card PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/card/card.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/card/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/data-table",
+      "type": "registry:ui",
+      "title": "Data Table",
+      "description": "Data Table PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/data-table/data-table.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/data-table/data-table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/data-table/data-table.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/data-table/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils", "forme/table"]
+    },
+    {
+      "name": "forme/divider",
+      "type": "registry:ui",
+      "title": "Divider",
+      "description": "Divider PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/divider/divider.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/divider/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/form",
+      "type": "registry:ui",
+      "title": "Form",
+      "description": "Form PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/form/form.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/form/form.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/form/form.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/form/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/graph",
+      "type": "registry:ui",
+      "title": "Graph",
+      "description": "Graph PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/graph/graph.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/graph/graph.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/graph/graph.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/graph/graph.utils.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/graph/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/heading",
+      "type": "registry:ui",
+      "title": "Heading",
+      "description": "Heading PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/heading/heading.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/heading/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/keep-together",
+      "type": "registry:ui",
+      "title": "Keep Together",
+      "description": "Keep Together PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/keep-together/keep-together.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/keep-together/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/key-value",
+      "type": "registry:ui",
+      "title": "Key Value",
+      "description": "Key Value PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/key-value/key-value.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/key-value/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/link",
+      "type": "registry:ui",
+      "title": "Link",
+      "description": "Link PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/link/link.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/link/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/list",
+      "type": "registry:ui",
+      "title": "List",
+      "description": "List PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/list/list.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/list/list.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/list/list.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/list/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/page-break",
+      "type": "registry:ui",
+      "title": "Page Break",
+      "description": "Page Break PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/page-break/page-break.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/page-break/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/page-footer",
+      "type": "registry:ui",
+      "title": "Page Footer",
+      "description": "Page Footer PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/page-footer/page-footer.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/page-footer/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/page-header",
+      "type": "registry:ui",
+      "title": "Page Header",
+      "description": "Page Header PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/page-header/page-header.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/page-header/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/page-number",
+      "type": "registry:ui",
+      "title": "Page Number",
+      "description": "Page Number PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/page-number/page-number.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/page-number/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/pdf-image",
+      "type": "registry:ui",
+      "title": "Pdf Image",
+      "description": "Pdf Image PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/pdf-image/pdf-image.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/pdf-image/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/qrcode",
+      "type": "registry:ui",
+      "title": "Qrcode",
+      "description": "Qrcode PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/qrcode/qrcode.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/qrcode/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core", "qrcode"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/section",
+      "type": "registry:ui",
+      "title": "Section",
+      "description": "Section PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/section/section.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/section/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/signature",
+      "type": "registry:ui",
+      "title": "Signature",
+      "description": "Signature PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/signature/signature.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/signature/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/stack",
+      "type": "registry:ui",
+      "title": "Stack",
+      "description": "Stack PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/stack/stack.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/stack/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Table PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/table/table.styles.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/table/table.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/table/table.types.ts",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/table/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/text",
+      "type": "registry:ui",
+      "title": "Text",
+      "description": "Text PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/text/text.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/text/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/watermark",
+      "type": "registry:ui",
+      "title": "Watermark",
+      "description": "Watermark PDF component (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/components/watermark/watermark.tsx",
+          "type": "registry:component"
+        },
+        {
+          "path": "registry/bases/forme/components/watermark/index.ts",
+          "type": "registry:component"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/invoice-classic",
+      "type": "registry:block",
+      "title": "Invoice Classic",
+      "description": "Invoice Classic PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/invoice-classic/invoice-classic.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/invoice-classic/invoice-classic.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/invoice-consultant",
+      "type": "registry:block",
+      "title": "Invoice Consultant",
+      "description": "Invoice Consultant PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/invoice-consultant/invoice-consultant.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/invoice-consultant/invoice-consultant.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/invoice-corporate",
+      "type": "registry:block",
+      "title": "Invoice Corporate",
+      "description": "Invoice Corporate PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/invoice-corporate/invoice-corporate.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/invoice-corporate/invoice-corporate.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/invoice-creative",
+      "type": "registry:block",
+      "title": "Invoice Creative",
+      "description": "Invoice Creative PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/invoice-creative/invoice-creative.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/invoice-creative/invoice-creative.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/invoice-minimal",
+      "type": "registry:block",
+      "title": "Invoice Minimal",
+      "description": "Invoice Minimal PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/invoice-minimal/invoice-minimal.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/invoice-minimal/invoice-minimal.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/invoice-modern",
+      "type": "registry:block",
+      "title": "Invoice Modern",
+      "description": "Invoice Modern PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/invoice-modern/invoice-modern.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/invoice-modern/invoice-modern.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/report-financial",
+      "type": "registry:block",
+      "title": "Report Financial",
+      "description": "Report Financial PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/report-financial/report-financial.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-financial/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-financial/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/report-marketing",
+      "type": "registry:block",
+      "title": "Report Marketing",
+      "description": "Report Marketing PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/report-marketing/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-marketing/report-marketing.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-marketing/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/report-operations",
+      "type": "registry:block",
+      "title": "Report Operations",
+      "description": "Report Operations PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/report-operations/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-operations/report-operations.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-operations/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/report-security",
+      "type": "registry:block",
+      "title": "Report Security",
+      "description": "Report Security PDF block (forme)",
+      "files": [
+        {
+          "path": "registry/bases/forme/blocks/report-security/report-layout.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-security/report-security.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/bases/forme/blocks/report-security/report.types.ts",
+          "type": "registry:block"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"],
+      "registryDependencies": ["forme/utils"]
+    },
+    {
+      "name": "forme/theme-professional",
+      "type": "registry:theme",
+      "title": "Professional Theme (forme)",
+      "description": "professional theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/professional.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-professional.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-modern",
+      "type": "registry:theme",
+      "title": "Modern Theme (forme)",
+      "description": "modern theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/modern.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-modern.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-minimal",
+      "type": "registry:theme",
+      "title": "Minimal Theme (forme)",
+      "description": "minimal theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/minimal.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-minimal.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-executive",
+      "type": "registry:theme",
+      "title": "Executive Theme (forme)",
+      "description": "executive theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/executive.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-executive.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-corporate",
+      "type": "registry:theme",
+      "title": "Corporate Theme (forme)",
+      "description": "corporate theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/corporate.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-corporate.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-elegant",
+      "type": "registry:theme",
+      "title": "Elegant Theme (forme)",
+      "description": "elegant theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/elegant.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-elegant.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-vivid",
+      "type": "registry:theme",
+      "title": "Vivid Theme (forme)",
+      "description": "vivid theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/vivid.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-vivid.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-forest",
+      "type": "registry:theme",
+      "title": "Forest Theme (forme)",
+      "description": "forest theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/forest.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-forest.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
+    },
+    {
+      "name": "forme/theme-blueprint",
+      "type": "registry:theme",
+      "title": "Blueprint Theme (forme)",
+      "description": "blueprint theme tokens for forme",
+      "files": [
+        {
+          "path": "registry/themes/blueprint.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-blueprint.ts"
+        },
+        {
+          "path": "registry/themes/primitives.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/primitives.ts"
+        },
+        {
+          "path": "registry/themes/theme-types.ts",
+          "type": "registry:theme",
+          "target": "components/pdf/theme-types.ts"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
+          "type": "registry:lib",
+          "target": "components/pdf/pdfcn-theme.ts"
+        }
+      ],
+      "dependencies": ["@formepdf/react", "@formepdf/core"]
     }
   ]
 }
