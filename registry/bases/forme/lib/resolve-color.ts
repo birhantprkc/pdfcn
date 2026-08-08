@@ -17,7 +17,7 @@ export const THEME_COLOR_KEYS = [
 ] as const satisfies (keyof ColorTokens)[];
 
 /** Resolves a color value: theme token key → hex, or raw CSS color as-is. */
-export function resolveColor(value: string, colors: ColorTokens): string {
+export const resolveColor = (value: string, colors: ColorTokens): string => {
   const key = value as (typeof THEME_COLOR_KEYS)[number];
   return THEME_COLOR_KEYS.includes(key) ? colors[key] : value;
-}
+};

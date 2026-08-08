@@ -7,26 +7,24 @@ type AnyProps = Record<string, unknown> & {
   style?: CSSProperties;
 };
 
-export function Svg({
+export const Svg = ({
   children,
   width,
   height,
   viewBox,
   style,
   ...rest
-}: AnyProps & { width?: number; height?: number; viewBox?: string }) {
-  return (
-    <FormeSvg
-      width={width as number}
-      height={height as number}
-      viewBox={viewBox as string | undefined}
-      style={style as never}
-      {...rest}
-    >
-      {children}
-    </FormeSvg>
-  );
-}
+}: AnyProps & { width?: number; height?: number; viewBox?: string }) => (
+  <FormeSvg
+    width={width as number}
+    height={height as number}
+    viewBox={viewBox as string | undefined}
+    style={style as never}
+    {...rest}
+  >
+    {children}
+  </FormeSvg>
+);
 
 export const Circle = (props: AnyProps) => createElement("circle", props);
 export const Rect = (props: AnyProps) => createElement("rect", props);

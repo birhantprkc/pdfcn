@@ -1,0 +1,92 @@
+---
+title: "Data Table"
+description: "Tabular data with columns and rows."
+---
+
+<ComponentPreview base="takumi" name="data-table" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/data-table
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/data-table/data-table.tsx"
+  base="takumi"
+  title="components/pdf/data-table.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme-context.tsx"
+  base="takumi"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme.ts"
+  base="takumi"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-primitives.tsx"
+  base="takumi"
+  title="components/pdf/takumi-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-svg.tsx"
+  base="takumi"
+  title="components/pdf/takumi-svg.tsx"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { DataTable } from "@/components/pdf/data-table";
+```
+
+```tsx
+<DataTable
+  columns={[{ key: "name", header: "Name" }]}
+  data={[{ name: "Widget" }]}
+/>
+```

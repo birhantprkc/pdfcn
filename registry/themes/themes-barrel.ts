@@ -1,3 +1,13 @@
+import { blueprintTheme } from "./blueprint";
+import { corporateTheme } from "./corporate";
+import { elegantTheme } from "./elegant";
+import { executiveTheme } from "./executive";
+import { forestTheme } from "./forest";
+import { minimalTheme } from "./minimal";
+import { modernTheme } from "./modern";
+import { professionalTheme } from "./professional";
+import { vividTheme } from "./vivid";
+
 export { defaultPrimitives } from "./primitives";
 export { professionalTheme } from "./professional";
 export { modernTheme } from "./modern";
@@ -8,16 +18,6 @@ export { elegantTheme } from "./elegant";
 export { vividTheme } from "./vivid";
 export { forestTheme } from "./forest";
 export { blueprintTheme } from "./blueprint";
-
-import { blueprintTheme } from "./blueprint";
-import { corporateTheme } from "./corporate";
-import { elegantTheme } from "./elegant";
-import { executiveTheme } from "./executive";
-import { forestTheme } from "./forest";
-import { minimalTheme } from "./minimal";
-import { modernTheme } from "./modern";
-import { professionalTheme } from "./professional";
-import { vividTheme } from "./vivid";
 
 /** Map of all built-in theme presets */
 export const themePresets = {

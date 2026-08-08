@@ -1,5 +1,4 @@
 import { MarketingReportDocument } from "@/registry/bases/forme/blocks/report-marketing/report-marketing";
 
-export default function Demo() {
-  return <MarketingReportDocument />;
-}
+const Demo = () => <MarketingReportDocument />;
+export default Demo;

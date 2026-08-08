@@ -2,7 +2,7 @@ import { Fixed, View } from "@formepdf/react";
 import type { Style } from "@formepdf/react";
 import type { ReactNode } from "react";
 
-export function MaybeFixed({
+export const MaybeFixed = ({
   fixed,
   position,
   wrap,
@@ -14,7 +14,7 @@ export function MaybeFixed({
   wrap?: boolean;
   style?: Style | Style[];
   children?: ReactNode;
-}) {
+}) => {
   const view = (
     <View wrap={wrap} style={style as never}>
       {children}
@@ -24,4 +24,4 @@ export function MaybeFixed({
     return view;
   }
   return <Fixed position={position}>{view}</Fixed>;
-}
+};

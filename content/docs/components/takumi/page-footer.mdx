@@ -1,0 +1,111 @@
+---
+title: "Page Footer"
+description: "Repeating page footer."
+---
+
+<ComponentPreview base="takumi" name="page-footer" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/page-footer
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/page-footer/page-footer.tsx"
+  base="takumi"
+  title="components/pdf/page-footer.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme-context.tsx"
+  base="takumi"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme.ts"
+  base="takumi"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-primitives.tsx"
+  base="takumi"
+  title="components/pdf/takumi-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-svg.tsx"
+  base="takumi"
+  title="components/pdf/takumi-svg.tsx"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PageFooter } from "@/components/pdf/page-footer";
+```
+
+```tsx
+<PageFooter leftText="pdfcn" rightText="Confidential" />
+```
+
+## API Reference
+
+### PageFooter
+
+| Prop          | Type                | Default  |
+| ------------- | ------------------- | -------- |
+| `leftText`    | `string`            | -        |
+| `rightText`   | `string`            | -        |
+| `centerText`  | `string`            | -        |
+| `variant`     | `PageFooterVariant` | 'simple' |
+| `background`  | `string`            | -        |
+| `textColor`   | `string`            | -        |
+| `marginTop`   | `number`            | -        |
+| `address`     | `string`            | -        |
+| `phone`       | `string`            | -        |
+| `email`       | `string`            | -        |
+| `website`     | `string`            | -        |
+| `fixed`       | `boolean`           | false    |
+| `sticky`      | `boolean`           | false    |
+| `pagePadding` | `number`            | 0        |
+| `noWrap`      | `boolean`           | true     |

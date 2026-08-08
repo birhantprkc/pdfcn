@@ -1,3 +1,5 @@
+"use client";
+
 /* eslint-disable react-refresh/only-export-components */
 // Exports both a component (PdfcnThemeProvider) and hooks/context intentionally.
 // All PDF components import from a single file — splitting would break the public API.
@@ -21,7 +23,7 @@ export interface PdfcnThemeProviderProps {
  * Detect whether React currently has an active dispatcher.
  * When components are invoked as plain functions in tests, dispatcher is null.
  */
-function hasActiveDispatcher(): boolean {
+const hasActiveDispatcher = (): boolean => {
   const maybeInternals = React as unknown as {
     __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?: {
       H?: unknown;
@@ -31,20 +33,20 @@ function hasActiveDispatcher(): boolean {
   const dispatcher =
     maybeInternals
       .__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?.H;
-  return dispatcher != null;
-}
+  return dispatcher !== null;
+};
 
-export function PdfcnThemeProvider({
+export const PdfcnThemeProvider = ({
   theme,
   children,
-}: PdfcnThemeProviderProps) {
+}: PdfcnThemeProviderProps) => {
   const resolvedTheme = useMemo(() => theme ?? defaultTheme, [theme]);
   return (
     <PdfcnThemeContext.Provider value={resolvedTheme}>
       {children}
     </PdfcnThemeContext.Provider>
   );
-}
+};
 
 /**
  * Regex patterns that indicate a hook was called outside a valid React render tree.
@@ -58,7 +60,7 @@ const HOOK_ERROR_PATTERNS =
  * Uses hasActiveDispatcher() as the primary guard; the try/catch is a safety net for edge
  * cases where the dispatcher check passes but the hook still cannot execute.
  */
-function callHook<T>(hook: () => T, fallback: T): T {
+const callHook = <T,>(hook: () => T, fallback: T): T => {
   if (!hasActiveDispatcher()) {
     return fallback;
   }
@@ -70,21 +72,19 @@ function callHook<T>(hook: () => T, fallback: T): T {
     }
     throw error;
   }
-}
+};
 
 /**
  * Returns the active PdfcnTheme from context, or the default theme when called
  * outside a React render tree (e.g. unit tests).
  */
-export function usePdfcnTheme(): PdfcnTheme {
-  return callHook(() => useContext(PdfcnThemeContext), defaultTheme);
-}
+export const usePdfcnTheme = (): PdfcnTheme =>
+  callHook(() => useContext(PdfcnThemeContext), defaultTheme);
 
 /**
  * Calls factory() and returns the result.
  * The deps parameter is accepted for API compatibility with existing callers.
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function useSafeMemo<T>(factory: () => T, _deps: DependencyList): T {
-  return factory();
-}
+export const useSafeMemo = <T,>(factory: () => T, _deps: DependencyList): T =>
+  factory();

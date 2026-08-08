@@ -1,0 +1,104 @@
+---
+title: "Heading"
+description: "Document headings with typographic scale."
+---
+
+<ComponentPreview base="takumi" name="heading" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/heading
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/heading/heading.tsx"
+  base="takumi"
+  title="components/pdf/heading.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme-context.tsx"
+  base="takumi"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme.ts"
+  base="takumi"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-primitives.tsx"
+  base="takumi"
+  title="components/pdf/takumi-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-svg.tsx"
+  base="takumi"
+  title="components/pdf/takumi-svg.tsx"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Heading } from "@/components/pdf/heading";
+```
+
+```tsx
+<Heading level={1}>Heading</Heading>
+```
+
+## API Reference
+
+### Heading
+
+| Prop           | Type              | Default     |
+| -------------- | ----------------- | ----------- | ------------- | ------ | --- | --- | --- |
+| `level`        | `1                | 2           | 3             | 4      | 5   | 6`  | 1   |
+| `align`        | `"left"           | "center"    | "right"`      | 'left' |
+| `color`        | `string`          | -           |
+| `transform`    | `"uppercase"      | "lowercase" | "capitalize"` | -      |
+| `weight`       | `HeadingWeight`   | 'bold'      |
+| `tracking`     | `HeadingTracking` | 'normal'    |
+| `noMargin`     | `boolean`         | false       |
+| `keepWithNext` | `boolean`         | -           |

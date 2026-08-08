@@ -46,17 +46,23 @@ interface ReportLayoutProps {
   graphData?: { label: string; value: number }[];
 }
 
-function toneColor(
+const toneColor = (
   theme: PdfcnTheme,
   tone: "success" | "warning" | "destructive" | "info"
-) {
-  if (tone === "success") {return theme.colors.success;}
-  if (tone === "warning") {return theme.colors.warning;}
-  if (tone === "destructive") {return theme.colors.destructive;}
+) => {
+  if (tone === "success") {
+    return theme.colors.success;
+  }
+  if (tone === "warning") {
+    return theme.colors.warning;
+  }
+  if (tone === "destructive") {
+    return theme.colors.destructive;
+  }
   return theme.colors.info;
-}
+};
 
-export function ReportLayout({
+export const ReportLayout = ({
   data,
   titlePrefix,
   statusLabel,
@@ -68,7 +74,7 @@ export function ReportLayout({
   graphShowValues = false,
   graphColors,
   graphData,
-}: ReportLayoutProps) {
+}: ReportLayoutProps) => {
   const theme = usePdfcnTheme();
   const accent = toneColor(theme, statusTone);
 
@@ -317,9 +323,9 @@ export function ReportLayout({
       </Page>
     </Document>
   );
-}
+};
 
-export function ReportTemplateFrame({
+export const ReportTemplateFrame = ({
   theme,
   data,
   titlePrefix,
@@ -343,8 +349,10 @@ export function ReportTemplateFrame({
   graphShowValues?: boolean;
   graphColors?: string[];
   graphData?: { label: string; value: number }[];
-}) {
-  if (!data) {return null;}
+}) => {
+  if (!data) {
+    return null;
+  }
 
   return (
     <PdfcnThemeProvider theme={theme}>
@@ -363,4 +371,4 @@ export function ReportTemplateFrame({
       />
     </PdfcnThemeProvider>
   );
-}
+};

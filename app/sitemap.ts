@@ -4,7 +4,7 @@ import { ROUTES } from "@/constants/routes";
 import { SITE } from "@/constants/site";
 import { source } from "@/lib/source";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+const sitemap = (): MetadataRoute.Sitemap => {
   const staticPages: MetadataRoute.Sitemap = [
     {
       changeFrequency: "monthly",
@@ -28,4 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   return [...staticPages, ...docPages];
-}
+};
+
+export default sitemap;

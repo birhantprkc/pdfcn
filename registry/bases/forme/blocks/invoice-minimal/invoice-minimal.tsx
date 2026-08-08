@@ -52,21 +52,7 @@ const sampleData: InvoiceMinimalData = {
   },
 };
 
-export function InvoiceMinimalDocument({
-  theme,
-  data = sampleData,
-}: {
-  theme?: PdfcnTheme;
-  data?: InvoiceMinimalData;
-}) {
-  return (
-    <PdfcnThemeProvider theme={theme}>
-      <InvoiceMinimalContent data={data} />
-    </PdfcnThemeProvider>
-  );
-}
-
-function InvoiceMinimalContent({ data }: { data: InvoiceMinimalData }) {
+const InvoiceMinimalContent = ({ data }: { data: InvoiceMinimalData }) => {
   const theme = usePdfcnTheme();
 
   const styles = StyleSheet.create({
@@ -244,4 +230,16 @@ function InvoiceMinimalContent({ data }: { data: InvoiceMinimalData }) {
       </Page>
     </Document>
   );
-}
+};
+
+export const InvoiceMinimalDocument = ({
+  theme,
+  data = sampleData,
+}: {
+  theme?: PdfcnTheme;
+  data?: InvoiceMinimalData;
+}) => (
+  <PdfcnThemeProvider theme={theme}>
+    <InvoiceMinimalContent data={data} />
+  </PdfcnThemeProvider>
+);

@@ -38,7 +38,7 @@ export interface PdfSignatureBlockProps {
   style?: Style;
 }
 
-function createSignatureStyles(t: PdfcnTheme) {
+const createSignatureStyles = (t: PdfcnTheme) => {
   const { spacing, fontWeights, typography } = t.primitives;
   return StyleSheet.create({
     block: { flex: 1, minWidth: 140 },
@@ -106,32 +106,28 @@ function createSignatureStyles(t: PdfcnTheme) {
       fontSize: typography.sm,
     },
   });
-}
+};
 
-function renderSignerBlock(
+const renderSignerBlock = (
   signer: SignatureSigner,
   styles: ReturnType<typeof createSignatureStyles>
-) {
-  return (
-    <View style={styles.block}>
-      {signer.label ? (
-        <PDFText style={styles.label}>{signer.label}</PDFText>
-      ) : null}
-      <View style={styles.line} />
-      {signer.name ? (
-        <PDFText style={styles.name}>{signer.name}</PDFText>
-      ) : null}
-      {signer.title ? (
-        <PDFText style={styles.titleText}>{signer.title}</PDFText>
-      ) : null}
-      {signer.date ? (
-        <PDFText style={styles.dateText}>{signer.date}</PDFText>
-      ) : null}
-    </View>
-  );
-}
+) => (
+  <View style={styles.block}>
+    {signer.label ? (
+      <PDFText style={styles.label}>{signer.label}</PDFText>
+    ) : null}
+    <View style={styles.line} />
+    {signer.name ? <PDFText style={styles.name}>{signer.name}</PDFText> : null}
+    {signer.title ? (
+      <PDFText style={styles.titleText}>{signer.title}</PDFText>
+    ) : null}
+    {signer.date ? (
+      <PDFText style={styles.dateText}>{signer.date}</PDFText>
+    ) : null}
+  </View>
+);
 
-export function PdfSignatureBlock({
+export const PdfSignatureBlock = ({
   variant = "single",
   label = "Signature",
   name,
@@ -139,7 +135,7 @@ export function PdfSignatureBlock({
   date,
   signers,
   style,
-}: PdfSignatureBlockProps) {
+}: PdfSignatureBlockProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createSignatureStyles(theme), [theme]);
   const containerStyles: Style[] = [styles.container];
@@ -179,4 +175,4 @@ export function PdfSignatureBlock({
       {renderSignerBlock({ date, label, name, title }, styles)}
     </View>
   );
-}
+};

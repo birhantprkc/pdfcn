@@ -31,7 +31,7 @@ export interface PdfCardProps extends Omit<PDFComponentProps, "children"> {
   wrap?: boolean;
 }
 
-function createCardStyles(t: PdfcnTheme) {
+const createCardStyles = (t: PdfcnTheme) => {
   const { spacing, borderRadius, fontWeights } = t.primitives;
   return StyleSheet.create({
     body: {
@@ -66,16 +66,16 @@ function createCardStyles(t: PdfcnTheme) {
       paddingBottom: spacing[1] + 2,
     },
   });
-}
+};
 
-export function PdfCard({
+export const PdfCard = ({
   title,
   children,
   variant = "default",
   padding = "md",
   wrap = false,
   style,
-}: PdfCardProps) {
+}: PdfCardProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createCardStyles(theme), [theme]);
   const paddingMap = {
@@ -104,4 +104,4 @@ export function PdfCard({
       )}
     </View>
   );
-}
+};

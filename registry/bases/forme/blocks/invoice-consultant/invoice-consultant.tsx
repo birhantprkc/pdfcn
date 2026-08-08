@@ -56,21 +56,11 @@ const sampleData: InvoiceConsultantData = {
   },
 };
 
-export function InvoiceConsultantDocument({
-  theme,
-  data = sampleData,
+const InvoiceConsultantContent = ({
+  data,
 }: {
-  theme?: PdfcnTheme;
-  data?: InvoiceConsultantData;
-}) {
-  return (
-    <PdfcnThemeProvider theme={theme}>
-      <InvoiceConsultantContent data={data} />
-    </PdfcnThemeProvider>
-  );
-}
-
-function InvoiceConsultantContent({ data }: { data: InvoiceConsultantData }) {
+  data: InvoiceConsultantData;
+}) => {
   const theme = usePdfcnTheme();
 
   const styles = StyleSheet.create({
@@ -324,4 +314,16 @@ function InvoiceConsultantContent({ data }: { data: InvoiceConsultantData }) {
       </Page>
     </Document>
   );
-}
+};
+
+export const InvoiceConsultantDocument = ({
+  theme,
+  data = sampleData,
+}: {
+  theme?: PdfcnTheme;
+  data?: InvoiceConsultantData;
+}) => (
+  <PdfcnThemeProvider theme={theme}>
+    <InvoiceConsultantContent data={data} />
+  </PdfcnThemeProvider>
+);

@@ -9,7 +9,7 @@ import type { ListItem, ListVariant, PdfListProps } from "./list.types";
 type Styles = ReturnType<typeof createListStyles>;
 type GapProp = "xs" | "sm" | "md";
 
-function getGapStyle(gap: GapProp, styles: Styles): Style {
+const getGapStyle = (gap: GapProp, styles: Styles): Style => {
   if (gap === "xs") {
     return styles.itemRowGapXs;
   }
@@ -17,15 +17,15 @@ function getGapStyle(gap: GapProp, styles: Styles): Style {
     return styles.itemRowGapMd;
   }
   return styles.itemRowGapSm;
-}
+};
 
-function buildRowStyles(
+const buildRowStyles = (
   index: number,
   total: number,
   gap: GapProp,
   styles: Styles,
   align: "start" | "center" = "start"
-): Style[] {
+): Style[] => {
   const row: Style[] = [
     align === "center" ? styles.itemRowCenter : styles.itemRow,
   ];
@@ -33,11 +33,11 @@ function buildRowStyles(
     row.push(getGapStyle(gap, styles));
   }
   return row;
-}
+};
 
 /** Bullet dot marker — solid filled for level 0, outline ring for nested levels. */
-function dotMarker(level: number, styles: Styles): React.ReactElement {
-  return level === 0 ? (
+const dotMarker = (level: number, styles: Styles): React.ReactElement =>
+  level === 0 ? (
     <View style={styles.markerBulletWrap}>
       <View style={styles.markerBulletDot} />
     </View>
@@ -46,62 +46,50 @@ function dotMarker(level: number, styles: Styles): React.ReactElement {
       <View style={styles.markerBulletSubDot} />
     </View>
   );
-}
 
-function renderBulletItem(
+// eslint-disable-next-line no-use-before-define, prefer-const
+let renderBulletItem: (
   item: ListItem,
   index: number,
   total: number,
   gap: GapProp,
   styles: Styles,
   level: number
-): React.ReactElement {
-  return (
-    <View key={index}>
-      <View style={buildRowStyles(index, total, gap, styles)}>
-        {dotMarker(level, styles)}
-        {/* flex:1 on the View, NOT on the Text — avoids Yoga height underestimation
-            for multi-line Text nodes that would cause overlapping rows. */}
-        <View style={styles.itemTextWrap}>
-          <PDFText style={styles.itemText}>{item.text}</PDFText>
-        </View>
-      </View>
-      {item.children && item.children.length > 0
-        ? renderItemList(item.children, "bullet", gap, styles, level + 1)
-        : null}
-    </View>
-  );
-}
+) => React.ReactElement;
+// eslint-disable-next-line no-use-before-define, prefer-const
+let renderMultiLevelItem: (
+  item: ListItem,
+  index: number,
+  total: number,
+  gap: GapProp,
+  styles: Styles,
+  level: number
+) => React.ReactElement;
 
-function renderNumberedItem(
+const renderNumberedItem = (
   item: ListItem,
   index: number,
   total: number,
   gap: GapProp,
   styles: Styles
-): React.ReactElement {
-  return (
-    <View
-      key={index}
-      style={buildRowStyles(index, total, gap, styles, "center")}
-    >
-      <View style={styles.markerNumberBadge}>
-        <PDFText style={styles.markerNumberText}>{`${index + 1}`}</PDFText>
-      </View>
-      <View style={styles.itemTextWrap}>
-        <PDFText style={styles.itemText}>{item.text}</PDFText>
-      </View>
+): React.ReactElement => (
+  <View key={index} style={buildRowStyles(index, total, gap, styles, "center")}>
+    <View style={styles.markerNumberBadge}>
+      <PDFText style={styles.markerNumberText}>{`${index + 1}`}</PDFText>
     </View>
-  );
-}
+    <View style={styles.itemTextWrap}>
+      <PDFText style={styles.itemText}>{item.text}</PDFText>
+    </View>
+  </View>
+);
 
-function renderChecklistItem(
+const renderChecklistItem = (
   item: ListItem,
   index: number,
   total: number,
   gap: GapProp,
   styles: Styles
-): React.ReactElement {
+): React.ReactElement => {
   const isChecked = item.checked ?? true;
   return (
     <View
@@ -116,81 +104,44 @@ function renderChecklistItem(
       </View>
     </View>
   );
-}
+};
 
-function renderIconItem(
+const renderIconItem = (
   item: ListItem,
   index: number,
   total: number,
   gap: GapProp,
   styles: Styles
-): React.ReactElement {
-  return (
-    <View
-      key={index}
-      style={buildRowStyles(index, total, gap, styles, "center")}
-    >
-      <View style={styles.iconBox}>
-        <PDFText style={styles.iconMark}>★</PDFText>
-      </View>
-      <View style={styles.itemTextWrap}>
-        <PDFText style={styles.itemText}>{item.text}</PDFText>
-      </View>
+): React.ReactElement => (
+  <View key={index} style={buildRowStyles(index, total, gap, styles, "center")}>
+    <View style={styles.iconBox}>
+      <PDFText style={styles.iconMark}>★</PDFText>
     </View>
-  );
-}
-
-function renderMultiLevelItem(
-  item: ListItem,
-  index: number,
-  total: number,
-  gap: GapProp,
-  styles: Styles,
-  level: number
-): React.ReactElement {
-  return (
-    <View key={index}>
-      <View style={buildRowStyles(index, total, gap, styles)}>
-        {dotMarker(level, styles)}
-        <View style={styles.itemTextWrap}>
-          <PDFText
-            style={[
-              level === 0 ? styles.itemText : styles.itemTextSub,
-              level === 0 ? styles.itemTextBold : {},
-            ]}
-          >
-            {item.text}
-          </PDFText>
-        </View>
-      </View>
-      {item.children && item.children.length > 0
-        ? renderItemList(item.children, "multi-level", gap, styles, level + 1)
-        : null}
+    <View style={styles.itemTextWrap}>
+      <PDFText style={styles.itemText}>{item.text}</PDFText>
     </View>
-  );
-}
+  </View>
+);
 
-function renderDescriptiveItem(
+const renderDescriptiveItem = (
   item: ListItem,
   index: number,
   total: number,
   gap: GapProp,
   styles: Styles
-): React.ReactElement {
-  return (
-    <View key={index} style={buildRowStyles(index, total, gap, styles)}>
-      <View style={styles.descriptiveAccent} />
-      <View style={styles.descriptiveContent}>
-        <PDFText style={styles.descriptiveTitle}>{item.text}</PDFText>
-        {item.description ? (
-          <PDFText style={styles.descriptiveDesc}>{item.description}</PDFText>
-        ) : null}
-      </View>
+): React.ReactElement => (
+  <View key={index} style={buildRowStyles(index, total, gap, styles)}>
+    <View style={styles.descriptiveAccent} />
+    <View style={styles.descriptiveContent}>
+      <PDFText style={styles.descriptiveTitle}>{item.text}</PDFText>
+      {item.description ? (
+        <PDFText style={styles.descriptiveDesc}>{item.description}</PDFText>
+      ) : null}
     </View>
-  );
-}
+  </View>
+);
 
-function renderItem(
+const renderItem = (
   item: ListItem,
   index: number,
   total: number,
@@ -198,7 +149,7 @@ function renderItem(
   gap: GapProp,
   styles: Styles,
   level: number
-): React.ReactElement | null {
+): React.ReactElement | null => {
   switch (variant) {
     case "bullet": {
       return renderBulletItem(item, index, total, gap, styles, level);
@@ -218,33 +169,70 @@ function renderItem(
     case "descriptive": {
       return renderDescriptiveItem(item, index, total, gap, styles);
     }
+    default: {
+      break;
+    }
   }
-}
+  return null;
+};
 
-function renderItemList(
+const renderItemList = (
   items: ListItem[],
   variant: ListVariant,
   gap: GapProp,
   styles: Styles,
   level: number
-): React.ReactElement {
-  return (
-    <View style={level > 0 ? styles.childrenContainer : undefined}>
-      {items.map((item, index) =>
-        renderItem(item, index, items.length, variant, gap, styles, level)
-      )}
-    </View>
-  );
-}
+): React.ReactElement => (
+  <View style={level > 0 ? styles.childrenContainer : undefined}>
+    {items.map((item, index) =>
+      renderItem(item, index, items.length, variant, gap, styles, level)
+    )}
+  </View>
+);
 
-export function PdfList({
+renderBulletItem = (item, index, total, gap, styles, level) => (
+  <View key={index}>
+    <View style={buildRowStyles(index, total, gap, styles)}>
+      {dotMarker(level, styles)}
+      <View style={styles.itemTextWrap}>
+        <PDFText style={styles.itemText}>{item.text}</PDFText>
+      </View>
+    </View>
+    {item.children && item.children.length > 0
+      ? renderItemList(item.children, "bullet", gap, styles, level + 1)
+      : null}
+  </View>
+);
+
+renderMultiLevelItem = (item, index, total, gap, styles, level) => (
+  <View key={index}>
+    <View style={buildRowStyles(index, total, gap, styles)}>
+      {dotMarker(level, styles)}
+      <View style={styles.itemTextWrap}>
+        <PDFText
+          style={[
+            level === 0 ? styles.itemText : styles.itemTextSub,
+            level === 0 ? styles.itemTextBold : {},
+          ]}
+        >
+          {item.text}
+        </PDFText>
+      </View>
+    </View>
+    {item.children && item.children.length > 0
+      ? renderItemList(item.children, "multi-level", gap, styles, level + 1)
+      : null}
+  </View>
+);
+
+export const PdfList = ({
   items,
   variant = "bullet",
   gap = "sm",
   style,
   noWrap = false,
   _level = 0,
-}: PdfListProps) {
+}: PdfListProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createListStyles(theme), [theme]);
 
@@ -261,4 +249,4 @@ export function PdfList({
       )}
     </View>
   );
-}
+};

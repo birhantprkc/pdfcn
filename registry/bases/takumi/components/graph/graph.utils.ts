@@ -38,10 +38,10 @@ export const GRAPH_SAFE_WIDTHS = {
  * const width = getGraphWidth(theme, { containerPadding: 12, wrapperPadding: 12 });
  * ```
  */
-export function getGraphWidth(
+export const getGraphWidth = (
   theme: PdfcnTheme,
   options: GraphWidthOptions = {}
-): number {
+): number => {
   const {
     containerPadding = 0,
     wrapperPadding = 0,
@@ -55,7 +55,7 @@ export function getGraphWidth(
     containerPadding * 2 -
     wrapperPadding * 2;
   return Math.max(Math.floor(availableWidth), 100);
-}
+};
 
 export const CHART_MARGINS = {
   axisBottom: 24,
@@ -67,9 +67,9 @@ export const CHART_MARGINS = {
 } as const;
 
 /** Normalize to always work with GraphSeries[]. */
-export function normalizeData(
+export const normalizeData = (
   data: GraphDataPoint[] | GraphSeries[]
-): GraphSeries[] {
+): GraphSeries[] => {
   if (data.length === 0) {
     return [];
   }
@@ -77,14 +77,14 @@ export function normalizeData(
     return [{ data: data as GraphDataPoint[], name: "Series 1" }];
   }
   return data as GraphSeries[];
-}
+};
 
 /** Compute nice Y-axis ticks for a given value range. */
-export function computeYTicks(
+export const computeYTicks = (
   min: number,
   max: number,
   count: number
-): number[] {
+): number[] => {
   if (min === max) {
     return [0, max || 1];
   }
@@ -93,10 +93,10 @@ export function computeYTicks(
     const v = min + i * step;
     return Math.round(v * 100) / 100;
   });
-}
+};
 
 /** Format a number for display on axis labels. */
-export function fmtNum(v: number): string {
+export const fmtNum = (v: number): string => {
   if (Math.abs(v) >= 1_000_000) {
     return `${(v / 1_000_000).toFixed(1)}M`;
   }
@@ -107,33 +107,32 @@ export function fmtNum(v: number): string {
     return v.toFixed(1);
   }
   return String(v);
-}
+};
 
 /** Truncate a label to at most maxLen characters. */
-export function truncate(s: string, maxLen: number): string {
-  return s.length > maxLen ? `${s.slice(0, maxLen - 1)}…` : s;
-}
+export const truncate = (s: string, maxLen: number): string =>
+  s.length > maxLen ? `${s.slice(0, maxLen - 1)}…` : s;
 
 /** Polar to Cartesian coordinate conversion for pie/donut arcs. */
-export function polarToCartesian(
+export const polarToCartesian = (
   cx: number,
   cy: number,
   r: number,
   angleDeg: number
-) {
+) => {
   const rad = ((angleDeg - 90) * Math.PI) / 180;
   return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
-}
+};
 
 /** Build an SVG arc path for a pie/donut slice. */
-export function arcPath(
+export const arcPath = (
   cx: number,
   cy: number,
   r: number,
   startAngle: number,
   endAngle: number,
   innerR = 0
-): string {
+): string => {
   const safeEnd = Math.min(endAngle, startAngle + 359.999);
   const large = safeEnd - startAngle > 180 ? 1 : 0;
   const s = polarToCartesian(cx, cy, r, safeEnd);
@@ -150,13 +149,13 @@ export function arcPath(
     `A ${innerR} ${innerR} 0 ${large} 1 ${si.x} ${si.y}`,
     "Z",
   ].join(" ");
-}
+};
 
 /** Compute smooth bezier control points (Catmull-Rom → cubic bezier). */
-export function smoothPath(
+export const smoothPath = (
   points: { x: number; y: number }[],
   tension = 0.4
-): string {
+): string => {
   if (points.length < 2) {
     return "";
   }
@@ -164,7 +163,7 @@ export function smoothPath(
     return `M ${points[0].x} ${points[0].y} L ${points[1].x} ${points[1].y}`;
   }
   const parts: string[] = [`M ${points[0].x} ${points[0].y}`];
-  for (let i = 0; i < points.length - 1; i++) {
+  for (let i = 0; i < points.length - 1; i += 1) {
     const p0 = points[Math.max(i - 1, 0)];
     const p1 = points[i];
     const p2 = points[i + 1];
@@ -176,30 +175,28 @@ export function smoothPath(
     parts.push(`C ${cp1x} ${cp1y} ${cp2x} ${cp2y} ${p2.x} ${p2.y}`);
   }
   return parts.join(" ");
-}
+};
 
 /** Get the default chart color palette from the theme. */
-export function getDefaultPalette(t: PdfcnTheme): string[] {
-  return [
-    t.colors.primary,
-    t.colors.info ?? "#3B82F6",
-    t.colors.success ?? "#22C55E",
-    t.colors.warning ?? "#F59E0B",
-    t.colors.destructive ?? "#EF4444",
-    "#8B5CF6",
-    "#F97316",
-    "#14B8A6",
-  ];
-}
+export const getDefaultPalette = (t: PdfcnTheme): string[] => [
+  t.colors.primary,
+  t.colors.info ?? "#3B82F6",
+  t.colors.success ?? "#22C55E",
+  t.colors.warning ?? "#F59E0B",
+  t.colors.destructive ?? "#EF4444",
+  "#8B5CF6",
+  "#F97316",
+  "#14B8A6",
+];
 
 /** Derive ChartLayout from series data, SVG dimensions, and variant. */
-export function buildLayout(
+export const buildLayout = (
   series: GraphSeries[],
   width: number,
   height: number,
   isPieOrDonut: boolean,
   yTickCount: number
-): ChartLayout {
+): ChartLayout => {
   const mL = isPieOrDonut ? CHART_MARGINS.pieLeft : CHART_MARGINS.axisLeft;
   const mB = isPieOrDonut ? CHART_MARGINS.pieBottom : CHART_MARGINS.axisBottom;
   const chartX = mL;
@@ -223,4 +220,4 @@ export function buildLayout(
     yMin,
     yTicks: computeYTicks(yMin, yMax, yTickCount),
   };
-}
+};

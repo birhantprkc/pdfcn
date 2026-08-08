@@ -9,11 +9,11 @@ import type {
   PdfFormProps,
 } from "./form.types";
 
-function renderFieldAbove(
+const renderFieldAbove = (
   field: PdfFormField,
   idx: number,
   styles: ReturnType<typeof createFormStyles>
-) {
+) => {
   const areaHeight = field.height ?? 18;
   const areaStyle: Style[] = [styles.fieldArea, { minHeight: areaHeight }];
 
@@ -27,13 +27,13 @@ function renderFieldAbove(
       </View>
     </View>
   );
-}
+};
 
-function renderFieldLeft(
+const renderFieldLeft = (
   field: PdfFormField,
   idx: number,
   styles: ReturnType<typeof createFormStyles>
-) {
+) => {
   const areaHeight = field.height ?? 18;
   const areaStyle: Style[] = [
     styles.fieldArea,
@@ -51,16 +51,23 @@ function renderFieldLeft(
       </View>
     </View>
   );
-}
+};
 
-function renderGroup(
+const renderGroup = (
   group: PdfFormGroup,
   gi: number,
   styles: ReturnType<typeof createFormStyles>,
   labelPosition: "above" | "left"
-) {
+) => {
   const layout: FormLayout = group.layout ?? "single";
-  const cols = layout === "three-column" ? 3 : (layout === "two-column" ? 2 : 1);
+  let cols: number;
+  if (layout === "three-column") {
+    cols = 3;
+  } else if (layout === "two-column") {
+    cols = 2;
+  } else {
+    cols = 1;
+  }
 
   const renderField = (field: PdfFormField, idx: number) =>
     labelPosition === "left"
@@ -104,9 +111,9 @@ function renderGroup(
       </View>
     </View>
   );
-}
+};
 
-export function PdfForm({
+export const PdfForm = ({
   title,
   subtitle,
   groups,
@@ -114,7 +121,7 @@ export function PdfForm({
   labelPosition = "above",
   noWrap = false,
   style,
-}: PdfFormProps) {
+}: PdfFormProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(
     () => createFormStyles(theme, variant),
@@ -144,4 +151,4 @@ export function PdfForm({
   ) : (
     inner
   );
-}
+};

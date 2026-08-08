@@ -6,6 +6,4 @@ export interface PageBreakProps extends Omit<PDFComponentProps, "children"> {
   children?: never;
 }
 
-export function PageBreak(_props: PageBreakProps) {
-  return <FormePageBreak />;
-}
+export const PageBreak = (_props: PageBreakProps) => <FormePageBreak />;

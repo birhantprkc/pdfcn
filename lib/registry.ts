@@ -20,7 +20,7 @@ export const getRegistryUiSourceCandidates = ({
   name: string;
   base?: BaseName;
 }) => {
-  const slug = name.includes("/") ? name.split("/").pop()! : name;
+  const slug = name.includes("/") ? (name.split("/").pop() ?? name) : name;
   return [
     path.join("registry", "bases", base, "components", slug, `${slug}.tsx`),
     path.join("registry", "bases", base, "blocks", slug, `${slug}.tsx`),

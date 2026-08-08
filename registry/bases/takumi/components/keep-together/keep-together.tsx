@@ -10,10 +10,8 @@ export interface KeepTogetherProps {
   style?: Style;
 }
 
-export function KeepTogether({ children, style }: KeepTogetherProps) {
-  return (
-    <View style={[{ breakInside: "avoid" }, style].filter(Boolean) as never}>
-      {children}
-    </View>
-  );
-}
+export const KeepTogether = ({ children, style }: KeepTogetherProps) => (
+  <View style={[{ breakInside: "avoid" }, style].filter(Boolean) as never}>
+    {children}
+  </View>
+);

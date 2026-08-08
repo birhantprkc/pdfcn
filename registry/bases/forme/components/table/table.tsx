@@ -13,178 +13,19 @@ import type {
   TableVariant,
 } from "./table.types";
 
-function processTableChildren(
-  children: ReactNode,
-  variant: TableVariant,
-  zebraStripe: boolean
-): ReactNode {
-  let bodyRowIndex = 0;
+export const TableHeader = ({ children, style }: TableSectionProps) => (
+  <View style={style}>{children}</View>
+);
 
-  return Children.map(children, (child) => {
-    if (!isValidElement(child)) {
-      return child;
-    }
+export const TableBody = ({ children, style }: TableSectionProps) => (
+  <View style={style}>{children}</View>
+);
 
-    if (
-      child.type === TableHeader ||
-      child.type === TableBody ||
-      child.type === TableFooter
-    ) {
-      const isBody = child.type === TableBody;
-      const sectionChild = child as ReactElement<TableSectionProps>;
-      const sectionChildren = Children.map(
-        sectionChild.props.children,
-        (rowChild) => {
-          if (isValidElement(rowChild) && rowChild.type === TableRow) {
-            const rowProps: Partial<TableRowProps> = { variant };
+export const TableFooter = ({ children, style }: TableSectionProps) => (
+  <View style={style}>{children}</View>
+);
 
-            if (isBody && zebraStripe) {
-              const isStripe = bodyRowIndex % 2 === 1;
-              bodyRowIndex++;
-              if (isStripe) {
-                rowProps.stripe = true;
-              }
-            }
-
-            return cloneElement(
-              rowChild as ReactElement<TableRowProps>,
-              rowProps
-            );
-          }
-          return rowChild;
-        }
-      );
-
-      return cloneElement(child, {}, sectionChildren);
-    }
-
-    if (child.type === TableRow) {
-      return cloneElement(child as ReactElement<TableRowProps>, { variant });
-    }
-
-    return child;
-  });
-}
-
-export function TableHeader({ children, style }: TableSectionProps) {
-  return <View style={style}>{children}</View>;
-}
-
-export function TableBody({ children, style }: TableSectionProps) {
-  return <View style={style}>{children}</View>;
-}
-
-export function TableFooter({ children, style }: TableSectionProps) {
-  return <View style={style}>{children}</View>;
-}
-
-export function Table({
-  children,
-  style,
-  variant = "line",
-  zebraStripe = false,
-  noWrap = false,
-}: TableProps) {
-  const theme = usePdfcnTheme();
-  const styles = useSafeMemo(() => createTableStyles(theme), [theme]);
-  const tableStyles: Style[] = [styles.table];
-  const effectiveZebra = variant === "striped" ? true : zebraStripe;
-
-  tableStyles.push(
-    {
-      bordered: styles.tableBordered,
-      compact: styles.tableCompact,
-      grid: styles.tableGrid,
-      line: styles.tableLine,
-      minimal: styles.tableMinimal,
-      "primary-header": styles.tablePrimaryHeader,
-      striped: styles.tableStriped,
-    }[variant]
-  );
-
-  const styleArray = style ? [...tableStyles, style] : tableStyles;
-  const processedChildren = processTableChildren(
-    children,
-    variant,
-    effectiveZebra
-  );
-
-  const inner = <View style={styleArray as never}>{processedChildren}</View>;
-  return noWrap ? <View wrap={false}>{inner}</View> : inner;
-}
-
-export function TableRow({
-  header,
-  footer,
-  stripe,
-  children,
-  style,
-  variant = "line",
-}: TableRowProps) {
-  const theme = usePdfcnTheme();
-  const styles = useSafeMemo(() => createTableStyles(theme), [theme]);
-  const rowStyles: Style[] = [styles.row];
-
-  rowStyles.push(
-    {
-      bordered: styles.rowBordered,
-      compact: styles.rowCompact,
-      grid: styles.rowGrid,
-      line: styles.rowLine,
-      minimal: styles.rowMinimal,
-      "primary-header": styles.rowPrimaryHeader,
-      striped: styles.rowStriped,
-    }[variant]
-  );
-
-  if (header) {
-    rowStyles.push(
-      {
-        bordered: styles.rowHeaderBordered,
-        compact: styles.rowHeaderCompact,
-        grid: styles.rowHeaderGrid,
-        line: styles.rowHeaderLine,
-        minimal: styles.rowHeaderMinimal,
-        "primary-header": styles.rowHeaderPrimaryHeader,
-        striped: styles.rowHeaderStriped,
-      }[variant]
-    );
-  }
-
-  if (footer) {
-    if (variant === "striped") {
-      rowStyles.push(styles.rowFooterStriped);
-    } else {
-      rowStyles.push(styles.rowFooter);
-    }
-  }
-
-  if (stripe && !header && !footer) {
-    rowStyles.push(styles.rowStripe);
-  }
-
-  const styleArray = style ? [...rowStyles, style] : rowStyles;
-  const childArray = Children.toArray(children);
-  const processedChildren = childArray.map((child, i) => {
-    if (isValidElement(child) && child.type === TableCell) {
-      return cloneElement(child as ReactElement<TableCellProps>, {
-        _last: i === childArray.length - 1,
-        footer,
-        header,
-        variant,
-      });
-    }
-    return child;
-  });
-
-  return (
-    <View wrap={false} style={styleArray as never}>
-      {processedChildren}
-    </View>
-  );
-}
-
-export function TableCell({
+export const TableCell = ({
   header,
   footer,
   align,
@@ -193,13 +34,13 @@ export function TableCell({
   style,
   variant = "line",
   _last,
-}: TableCellProps) {
+}: TableCellProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createTableStyles(theme), [theme]);
   const cellStyles: Style[] =
-    width !== undefined
-      ? [styles.cellFixed, { width } as Style]
-      : [styles.cell];
+    width === undefined
+      ? [styles.cell]
+      : [styles.cellFixed, { width } as Style];
 
   const cellVariantStyle = (
     {
@@ -261,4 +102,162 @@ export function TableCell({
     );
 
   return <View style={styleArray as never}>{content}</View>;
-}
+};
+
+export const TableRow = ({
+  header,
+  footer,
+  stripe,
+  children,
+  style,
+  variant = "line",
+}: TableRowProps) => {
+  const theme = usePdfcnTheme();
+  const styles = useSafeMemo(() => createTableStyles(theme), [theme]);
+  const rowStyles: Style[] = [
+    styles.row,
+    {
+      bordered: styles.rowBordered,
+      compact: styles.rowCompact,
+      grid: styles.rowGrid,
+      line: styles.rowLine,
+      minimal: styles.rowMinimal,
+      "primary-header": styles.rowPrimaryHeader,
+      striped: styles.rowStriped,
+    }[variant],
+  ];
+
+  if (header) {
+    rowStyles.push(
+      {
+        bordered: styles.rowHeaderBordered,
+        compact: styles.rowHeaderCompact,
+        grid: styles.rowHeaderGrid,
+        line: styles.rowHeaderLine,
+        minimal: styles.rowHeaderMinimal,
+        "primary-header": styles.rowHeaderPrimaryHeader,
+        striped: styles.rowHeaderStriped,
+      }[variant]
+    );
+  }
+
+  if (footer) {
+    if (variant === "striped") {
+      rowStyles.push(styles.rowFooterStriped);
+    } else {
+      rowStyles.push(styles.rowFooter);
+    }
+  }
+
+  if (stripe && !header && !footer) {
+    rowStyles.push(styles.rowStripe);
+  }
+
+  const styleArray = style ? [...rowStyles, style] : rowStyles;
+  const childArray = Children.toArray(children);
+  const processedChildren = childArray.map((child, i) => {
+    if (isValidElement(child) && child.type === TableCell) {
+      return cloneElement(child as ReactElement<TableCellProps>, {
+        _last: i === childArray.length - 1,
+        footer,
+        header,
+        variant,
+      });
+    }
+    return child;
+  });
+
+  return (
+    <View wrap={false} style={styleArray as never}>
+      {processedChildren}
+    </View>
+  );
+};
+
+const processTableChildren = (
+  children: ReactNode,
+  variant: TableVariant,
+  zebraStripe: boolean
+): ReactNode => {
+  let bodyRowIndex = 0;
+
+  return Children.map(children, (child) => {
+    if (!isValidElement(child)) {
+      return child;
+    }
+
+    if (
+      child.type === TableHeader ||
+      child.type === TableBody ||
+      child.type === TableFooter
+    ) {
+      const isBody = child.type === TableBody;
+      const sectionChild = child as ReactElement<TableSectionProps>;
+      const sectionChildren = Children.map(
+        sectionChild.props.children,
+        (rowChild) => {
+          if (isValidElement(rowChild) && rowChild.type === TableRow) {
+            const rowProps: Partial<TableRowProps> = { variant };
+
+            if (isBody && zebraStripe) {
+              const isStripe = bodyRowIndex % 2 === 1;
+              bodyRowIndex += 1;
+              if (isStripe) {
+                rowProps.stripe = true;
+              }
+            }
+
+            return cloneElement(
+              rowChild as ReactElement<TableRowProps>,
+              rowProps
+            );
+          }
+          return rowChild;
+        }
+      );
+
+      return cloneElement(child, {}, sectionChildren);
+    }
+
+    if (child.type === TableRow) {
+      return cloneElement(child as ReactElement<TableRowProps>, { variant });
+    }
+
+    return child;
+  });
+};
+
+export const Table = ({
+  children,
+  style,
+  variant = "line",
+  zebraStripe = false,
+  noWrap = false,
+}: TableProps) => {
+  const theme = usePdfcnTheme();
+  const styles = useSafeMemo(() => createTableStyles(theme), [theme]);
+  const tableStyles: Style[] = [styles.table];
+  const effectiveZebra = variant === "striped" ? true : zebraStripe;
+
+  tableStyles.push(
+    {
+      bordered: styles.tableBordered,
+      compact: styles.tableCompact,
+      grid: styles.tableGrid,
+      line: styles.tableLine,
+      minimal: styles.tableMinimal,
+      "primary-header": styles.tablePrimaryHeader,
+      striped: styles.tableStriped,
+    }[variant]
+  );
+
+  const styleArray = style ? [...tableStyles, style] : tableStyles;
+  const processedChildren = processTableChildren(
+    children,
+    variant,
+    effectiveZebra
+  );
+
+  const inner = <View style={styleArray as never}>{processedChildren}</View>;
+  return noWrap ? <View wrap={false}>{inner}</View> : inner;
+};

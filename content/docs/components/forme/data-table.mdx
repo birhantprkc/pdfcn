@@ -1,0 +1,80 @@
+---
+title: "Data Table"
+description: "Tabular data with columns and rows."
+---
+
+<ComponentPreview base="forme" name="data-table" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/data-table
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/data-table/data-table.tsx"
+  base="forme"
+  title="components/pdf/data-table.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme-context.tsx"
+  base="forme"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme.ts"
+  base="forme"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { DataTable } from "@/components/pdf/data-table";
+```
+
+```tsx
+<DataTable
+  columns={[{ key: "name", header: "Name" }]}
+  data={[{ name: "Widget" }]}
+/>
+```

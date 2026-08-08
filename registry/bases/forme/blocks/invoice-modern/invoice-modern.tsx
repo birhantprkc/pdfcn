@@ -51,21 +51,7 @@ const sampleData: InvoiceModernData = {
   },
 };
 
-export function InvoiceModernDocument({
-  theme,
-  data = sampleData,
-}: {
-  theme?: PdfcnTheme;
-  data?: InvoiceModernData;
-}) {
-  return (
-    <PdfcnThemeProvider theme={theme}>
-      <InvoiceModernContent data={data} />
-    </PdfcnThemeProvider>
-  );
-}
-
-function InvoiceModernContent({ data }: { data: InvoiceModernData }) {
+const InvoiceModernContent = ({ data }: { data: InvoiceModernData }) => {
   const theme = usePdfcnTheme();
 
   const styles = StyleSheet.create({
@@ -246,4 +232,16 @@ function InvoiceModernContent({ data }: { data: InvoiceModernData }) {
       </Page>
     </Document>
   );
-}
+};
+
+export const InvoiceModernDocument = ({
+  theme,
+  data = sampleData,
+}: {
+  theme?: PdfcnTheme;
+  data?: InvoiceModernData;
+}) => (
+  <PdfcnThemeProvider theme={theme}>
+    <InvoiceModernContent data={data} />
+  </PdfcnThemeProvider>
+);

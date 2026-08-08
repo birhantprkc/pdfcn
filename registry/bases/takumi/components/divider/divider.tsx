@@ -32,7 +32,7 @@ export interface DividerProps extends Omit<PDFComponentProps, "children"> {
   width?: string | number;
 }
 
-function createDividerStyles(t: PdfcnTheme) {
+const createDividerStyles = (t: PdfcnTheme) => {
   const { spacing, fontWeights } = t.primitives;
   return StyleSheet.create({
     base: { borderBottomColor: t.colors.border, borderBottomStyle: "solid" },
@@ -62,9 +62,9 @@ function createDividerStyles(t: PdfcnTheme) {
     thick: { borderBottomWidth: spacing[2] },
     thin: { borderBottomWidth: spacing[0.5] },
   });
-}
+};
 
-export function Divider({
+export const Divider = ({
   spacing = "md",
   variant = "solid",
   color,
@@ -72,7 +72,7 @@ export function Divider({
   label,
   width,
   style,
-}: DividerProps) {
+}: DividerProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createDividerStyles(theme), [theme]);
   const spacingMap = {
@@ -140,4 +140,4 @@ export function Divider({
     styleArray.push(...[style].flat());
   }
   return <View style={styleArray} />;
-}
+};

@@ -31,7 +31,7 @@ export interface PdfWatermarkProps extends Omit<PDFComponentProps, "children"> {
   children?: never;
 }
 
-function createWatermarkStyles(t: PdfcnTheme) {
+const createWatermarkStyles = (t: PdfcnTheme) => {
   const { fontWeights } = t.primitives;
   // Use page margins as corner insets so watermark position adapts to the active theme.
   const { marginTop, marginBottom, marginLeft, marginRight } = t.spacing.page;
@@ -79,18 +79,17 @@ function createWatermarkStyles(t: PdfcnTheme) {
       textTransform: "uppercase",
     },
   });
-}
+};
 
-export function PdfWatermark({
+export const PdfWatermark = ({
   text,
   opacity = 0.15,
   fontSize = 60,
   color = "mutedForeground",
   angle = -45,
   position = "center",
-  fixed = true,
   style,
-}: PdfWatermarkProps) {
+}: PdfWatermarkProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createWatermarkStyles(theme), [theme]);
   const positionMap: Record<WatermarkPosition, Style> = {
@@ -118,4 +117,4 @@ export function PdfWatermark({
       <PDFText style={textStyles}>{text}</PDFText>
     </View>
   );
-}
+};

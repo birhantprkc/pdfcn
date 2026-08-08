@@ -9,10 +9,8 @@ export interface KeepTogetherProps {
   style?: Style;
 }
 
-export function KeepTogether({ children, style }: KeepTogetherProps) {
-  return (
-    <View wrap={false} style={style as never}>
-      {children}
-    </View>
-  );
-}
+export const KeepTogether = ({ children, style }: KeepTogetherProps) => (
+  <View wrap={false} style={style as never}>
+    {children}
+  </View>
+);

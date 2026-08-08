@@ -1,40 +1,31 @@
 import type { CSSProperties, ReactNode, SVGProps } from "react";
 
-export function Svg({
+export const Svg = ({
   children,
   style,
   ...rest
-}: SVGProps<SVGSVGElement> & { style?: CSSProperties }) {
-  return (
-    <svg style={style} {...rest}>
-      {children}
-    </svg>
-  );
-}
+}: SVGProps<SVGSVGElement> & { style?: CSSProperties }) => (
+  <svg style={style} {...rest}>
+    {children}
+  </svg>
+);
 
-export function Rect(props: SVGProps<SVGRectElement>) {
-  return <rect {...props} />;
-}
-export function Circle(props: SVGProps<SVGCircleElement>) {
-  return <circle {...props} />;
-}
-export function G(props: SVGProps<SVGGElement>) {
-  return <g {...props} />;
-}
-export function Line(props: SVGProps<SVGLineElement>) {
-  return <line {...props} />;
-}
-export function Path(props: SVGProps<SVGPathElement>) {
-  return <path {...props} />;
-}
-export function SvgText({
+export const Rect = (props: SVGProps<SVGRectElement>) => <rect {...props} />;
+export const Circle = (props: SVGProps<SVGCircleElement>) => (
+  <circle {...props} />
+);
+export const G = (props: SVGProps<SVGGElement>) => <g {...props} />;
+export const Line = (props: SVGProps<SVGLineElement>) => <line {...props} />;
+export const Path = (props: SVGProps<SVGPathElement>) => <path {...props} />;
+export const SvgText = ({
   children,
   style,
   ...rest
-}: SVGProps<SVGTextElement> & { children?: ReactNode; style?: CSSProperties }) {
-  return (
-    <text style={style} {...rest}>
-      {children}
-    </text>
-  );
-}
+}: SVGProps<SVGTextElement> & {
+  children?: ReactNode;
+  style?: CSSProperties;
+}) => (
+  <text style={style} {...rest}>
+    {children}
+  </text>
+);

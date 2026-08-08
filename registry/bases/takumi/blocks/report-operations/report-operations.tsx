@@ -75,29 +75,27 @@ const sampleOperationsData: BaseReportData = {
   title: "Monthly Operations Report",
 };
 
-export function OperationsReportDocument({
+export const OperationsReportDocument = ({
   theme,
   data = sampleOperationsData,
-}: ReportTemplateProps) {
-  return (
-    <ReportTemplateFrame
-      theme={theme}
-      data={data}
-      titlePrefix="Operations Report"
-      statusLabel="Ops: Watch"
-      statusTone="warning"
-      graphVariant="horizontal-bar"
-      graphTitle="Throughput by week"
-      graphSubtitle="Resolved workload distribution"
-      graphLegend="none"
-      graphShowValues
-      graphColors={["#2563EB"]}
-      graphData={[
-        { label: "Incident", value: 66 },
-        { label: "Automation", value: 77 },
-        { label: "L2 Support", value: 85 },
-        { label: "L1 Support", value: 91 },
-      ]}
-    />
-  );
-}
+}: ReportTemplateProps) => (
+  <ReportTemplateFrame
+    theme={theme}
+    data={data}
+    titlePrefix="Operations Report"
+    statusLabel="Ops: Watch"
+    statusTone="warning"
+    graphVariant="horizontal-bar"
+    graphTitle="Throughput by week"
+    graphSubtitle="Resolved workload distribution"
+    graphLegend="none"
+    graphShowValues
+    graphColors={["#2563EB"]}
+    graphData={[
+      { label: "Incident", value: 66 },
+      { label: "Automation", value: 77 },
+      { label: "L2 Support", value: 85 },
+      { label: "L1 Support", value: 91 },
+    ]}
+  />
+);

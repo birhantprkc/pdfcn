@@ -51,7 +51,7 @@ export interface PageFooterProps extends Omit<PDFComponentProps, "children"> {
   noWrap?: boolean;
 }
 
-function createPageFooterStyles(t: PdfcnTheme) {
+const createPageFooterStyles = (t: PdfcnTheme) => {
   const { spacing, fontWeights } = t.primitives;
   const c = t.colors;
   const { body } = t.typography;
@@ -211,9 +211,144 @@ function createPageFooterStyles(t: PdfcnTheme) {
       flexDirection: "column",
     },
   });
-}
+};
 
-export function PageFooter({
+type Styles = ReturnType<typeof createPageFooterStyles>;
+
+const applyTextColor = (
+  styles: Style[],
+  color: string | undefined
+): Style[] => {
+  if (!color) {
+    return styles;
+  }
+  return [...styles, { color }];
+};
+
+const renderBranded = (
+  styles: Styles,
+  containerStyles: Style[],
+  leftStyle: Style[],
+  rightStyle: Style[],
+  leftText: string | undefined,
+  rightText: string | undefined,
+  noWrap: boolean
+) => (
+  <View wrap={!noWrap} style={containerStyles}>
+    {leftText && <PDFText style={leftStyle}>{leftText}</PDFText>}
+    {rightText && <PDFText style={rightStyle}>{rightText}</PDFText>}
+  </View>
+);
+
+const renderCentered = (
+  styles: Styles,
+  containerStyles: Style[],
+  textStyle: Style[],
+  leftText: string | undefined,
+  rightText: string | undefined,
+  noWrap: boolean
+) => (
+  <View wrap={!noWrap} style={containerStyles}>
+    {leftText && <PDFText style={textStyle}>{leftText}</PDFText>}
+    {rightText && <PDFText style={textStyle}>{rightText}</PDFText>}
+  </View>
+);
+
+const renderThreeColumn = (
+  styles: Styles,
+  containerStyles: Style[],
+  leftStyle: Style[],
+  centerStyle: Style[],
+  rightStyle: Style[],
+  leftText: string | undefined,
+  rightText: string | undefined,
+  address: string | undefined,
+  phone: string | undefined,
+  email: string | undefined,
+  website: string | undefined,
+  noWrap: boolean
+) => (
+  <View wrap={!noWrap} style={containerStyles}>
+    <View style={styles.threeColumnLeft}>
+      {leftText && <PDFText style={leftStyle}>{leftText}</PDFText>}
+      {address && <PDFText style={styles.textLeft}>{address}</PDFText>}
+    </View>
+    <View style={styles.threeColumnCenter}>
+      {phone && <PDFText style={centerStyle}>{phone}</PDFText>}
+      {email && <PDFText style={centerStyle}>{email}</PDFText>}
+      {website && <PDFText style={centerStyle}>{website}</PDFText>}
+    </View>
+    <View style={styles.threeColumnRight}>
+      {rightText && <PDFText style={rightStyle}>{rightText}</PDFText>}
+    </View>
+  </View>
+);
+
+const renderDetailed = (
+  styles: Styles,
+  containerStyles: Style[],
+  companyStyle: Style[],
+  addrStyle: Style[],
+  contactStyle: Style[],
+  pageNumStyle: Style[],
+  leftText: string | undefined,
+  rightText: string | undefined,
+  address: string | undefined,
+  phone: string | undefined,
+  email: string | undefined,
+  website: string | undefined,
+  noWrap: boolean
+) => (
+  <View wrap={!noWrap} style={containerStyles}>
+    <View style={styles.detailedTopRow}>
+      <View style={styles.detailedLeft}>
+        {leftText && <PDFText style={companyStyle}>{leftText}</PDFText>}
+        {address && <PDFText style={addrStyle}>{address}</PDFText>}
+      </View>
+      <View style={styles.detailedRight}>
+        {phone && <PDFText style={contactStyle}>{`Phone: ${phone}`}</PDFText>}
+        {email && <PDFText style={contactStyle}>{`Email: ${email}`}</PDFText>}
+        {website && <PDFText style={contactStyle}>{`Web: ${website}`}</PDFText>}
+      </View>
+    </View>
+    {rightText && <PDFText style={pageNumStyle}>{rightText}</PDFText>}
+  </View>
+);
+
+const renderMinimal = (
+  styles: Styles,
+  containerStyles: Style[],
+  leftStyle: Style[],
+  rightStyle: Style[],
+  leftText: string | undefined,
+  rightText: string | undefined,
+  noWrap: boolean
+) => (
+  <View wrap={!noWrap} style={containerStyles}>
+    {leftText && <PDFText style={leftStyle}>{leftText}</PDFText>}
+    {rightText && <PDFText style={rightStyle}>{rightText}</PDFText>}
+  </View>
+);
+
+const renderSimple = (
+  styles: Styles,
+  containerStyles: Style[],
+  leftStyle: Style[],
+  centerStyle: Style[],
+  rightStyle: Style[],
+  leftText: string | undefined,
+  centerText: string | undefined,
+  rightText: string | undefined,
+  noWrap: boolean
+) => (
+  <View wrap={!noWrap} style={containerStyles}>
+    {leftText && <PDFText style={leftStyle}>{leftText}</PDFText>}
+    {centerText && <PDFText style={centerStyle}>{centerText}</PDFText>}
+    {rightText && <PDFText style={rightStyle}>{rightText}</PDFText>}
+  </View>
+);
+
+export const PageFooter = ({
   leftText,
   rightText,
   centerText,
@@ -230,11 +365,10 @@ export function PageFooter({
   pagePadding = 0,
   noWrap = true,
   style,
-}: PageFooterProps) {
+}: PageFooterProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createPageFooterStyles(theme), [theme]);
-  // sticky implies fixed; marginTop is irrelevant with absolute positioning
-  const isFixed = fixed || sticky;
+  const _isFixed = fixed || sticky;
   const mt = sticky ? 0 : (marginTop ?? theme.spacing.sectionGap);
   const resolvedTextColor = textColor
     ? resolveColor(textColor, theme.colors)
@@ -248,7 +382,7 @@ export function PageFooter({
       }
     : {};
 
-  function applyOverrides(base: Style[]): Style[] {
+  const applyOverrides = (base: Style[]): Style[] => {
     if (background) {
       base.push({ backgroundColor: resolveColor(background, theme.colors) });
     }
@@ -259,162 +393,82 @@ export function PageFooter({
       base.push(stickyStyle);
     }
     return base;
-  }
+  };
 
-  if (variant === "branded") {
-    const containerStyles = applyOverrides([
-      styles.brandedContainer,
-      { marginTop: mt },
-    ]);
+  const variantRenderers: Record<PageFooterVariant, () => React.ReactNode> = {
+    branded: () =>
+      renderBranded(
+        styles,
+        applyOverrides([styles.brandedContainer, { marginTop: mt }]),
+        applyTextColor([styles.textBranded], resolvedTextColor),
+        applyTextColor([styles.textBrandedRight], resolvedTextColor),
+        leftText,
+        rightText,
+        noWrap
+      ),
+    centered: () =>
+      renderCentered(
+        styles,
+        applyOverrides([styles.centeredContainer, { marginTop: mt }]),
+        applyTextColor([styles.textCenteredVariant], resolvedTextColor),
+        leftText,
+        rightText,
+        noWrap
+      ),
+    detailed: () =>
+      renderDetailed(
+        styles,
+        applyOverrides([styles.detailedContainer, { marginTop: mt }]),
+        applyTextColor([styles.companyBold], resolvedTextColor),
+        applyTextColor([styles.textLeft], resolvedTextColor),
+        applyTextColor([styles.textRight], resolvedTextColor),
+        applyTextColor([styles.detailedPageNumber], resolvedTextColor),
+        leftText,
+        rightText,
+        address,
+        phone,
+        email,
+        website,
+        noWrap
+      ),
+    minimal: () =>
+      renderMinimal(
+        styles,
+        applyOverrides([styles.minimalContainer, { marginTop: mt }]),
+        applyTextColor([styles.textLeft], resolvedTextColor),
+        applyTextColor([styles.textRight], resolvedTextColor),
+        leftText,
+        rightText,
+        noWrap
+      ),
+    simple: () =>
+      renderSimple(
+        styles,
+        applyOverrides([styles.simpleContainer, { marginTop: mt }]),
+        applyTextColor([styles.textLeft], resolvedTextColor),
+        applyTextColor([styles.textCenter], resolvedTextColor),
+        applyTextColor([styles.textRight], resolvedTextColor),
+        leftText,
+        centerText,
+        rightText,
+        noWrap
+      ),
+    "three-column": () =>
+      renderThreeColumn(
+        styles,
+        applyOverrides([styles.threeColumnContainer, { marginTop: mt }]),
+        applyTextColor([styles.companyName], resolvedTextColor),
+        applyTextColor([styles.contactInfoCenter], resolvedTextColor),
+        applyTextColor([styles.textRight], resolvedTextColor),
+        leftText,
+        rightText,
+        address,
+        phone,
+        email,
+        website,
+        noWrap
+      ),
+  };
 
-    const lStyle: Style[] = [styles.textBranded];
-    const rStyle: Style[] = [styles.textBrandedRight];
-    if (resolvedTextColor) {
-      lStyle.push({ color: resolvedTextColor });
-      rStyle.push({ color: resolvedTextColor });
-    }
-
-    return (
-      <View wrap={!noWrap} style={containerStyles}>
-        {leftText && <PDFText style={lStyle}>{leftText}</PDFText>}
-        {rightText && <PDFText style={rStyle}>{rightText}</PDFText>}
-      </View>
-    );
-  }
-
-  if (variant === "centered") {
-    const containerStyles = applyOverrides([
-      styles.centeredContainer,
-      { marginTop: mt },
-    ]);
-
-    const tStyle: Style[] = [styles.textCenteredVariant];
-    if (resolvedTextColor) {
-      tStyle.push({ color: resolvedTextColor });
-    }
-
-    return (
-      <View wrap={!noWrap} style={containerStyles}>
-        {leftText && <PDFText style={tStyle}>{leftText}</PDFText>}
-        {rightText && <PDFText style={tStyle}>{rightText}</PDFText>}
-      </View>
-    );
-  }
-
-  if (variant === "three-column") {
-    const containerStyles = applyOverrides([
-      styles.threeColumnContainer,
-      { marginTop: mt },
-    ]);
-
-    const leftStyle: Style[] = [styles.companyName];
-    const centerStyle: Style[] = [styles.contactInfoCenter];
-    const rightStyle: Style[] = [styles.textRight];
-    if (resolvedTextColor) {
-      leftStyle.push({ color: resolvedTextColor });
-      centerStyle.push({ color: resolvedTextColor });
-      rightStyle.push({ color: resolvedTextColor });
-    }
-
-    return (
-      <View wrap={!noWrap} style={containerStyles}>
-        <View style={styles.threeColumnLeft}>
-          {leftText && <PDFText style={leftStyle}>{leftText}</PDFText>}
-          {address && <PDFText style={styles.textLeft}>{address}</PDFText>}
-        </View>
-        <View style={styles.threeColumnCenter}>
-          {phone && <PDFText style={centerStyle}>{phone}</PDFText>}
-          {email && <PDFText style={centerStyle}>{email}</PDFText>}
-          {website && <PDFText style={centerStyle}>{website}</PDFText>}
-        </View>
-        <View style={styles.threeColumnRight}>
-          {rightText && <PDFText style={rightStyle}>{rightText}</PDFText>}
-        </View>
-      </View>
-    );
-  }
-
-  if (variant === "detailed") {
-    const containerStyles = applyOverrides([
-      styles.detailedContainer,
-      { marginTop: mt },
-    ]);
-
-    const companyStyle: Style[] = [styles.companyBold];
-    const addrStyle: Style[] = [styles.textLeft];
-    const contactStyle: Style[] = [styles.textRight];
-    const pageNumStyle: Style[] = [styles.detailedPageNumber];
-    if (resolvedTextColor) {
-      companyStyle.push({ color: resolvedTextColor });
-      addrStyle.push({ color: resolvedTextColor });
-      contactStyle.push({ color: resolvedTextColor });
-      pageNumStyle.push({ color: resolvedTextColor });
-    }
-
-    return (
-      <View wrap={!noWrap} style={containerStyles}>
-        <View style={styles.detailedTopRow}>
-          <View style={styles.detailedLeft}>
-            {leftText && <PDFText style={companyStyle}>{leftText}</PDFText>}
-            {address && <PDFText style={addrStyle}>{address}</PDFText>}
-          </View>
-          <View style={styles.detailedRight}>
-            {phone && (
-              <PDFText style={contactStyle}>{`Phone: ${phone}`}</PDFText>
-            )}
-            {email && (
-              <PDFText style={contactStyle}>{`Email: ${email}`}</PDFText>
-            )}
-            {website && (
-              <PDFText style={contactStyle}>{`Web: ${website}`}</PDFText>
-            )}
-          </View>
-        </View>
-        {rightText && <PDFText style={pageNumStyle}>{rightText}</PDFText>}
-      </View>
-    );
-  }
-
-  if (variant === "minimal") {
-    const containerStyles = applyOverrides([
-      styles.minimalContainer,
-      { marginTop: mt },
-    ]);
-
-    const lStyle: Style[] = [styles.textLeft];
-    const rStyle: Style[] = [styles.textRight];
-    if (resolvedTextColor) {
-      lStyle.push({ color: resolvedTextColor });
-      rStyle.push({ color: resolvedTextColor });
-    }
-
-    return (
-      <View wrap={!noWrap} style={containerStyles}>
-        {leftText && <PDFText style={lStyle}>{leftText}</PDFText>}
-        {rightText && <PDFText style={rStyle}>{rightText}</PDFText>}
-      </View>
-    );
-  }
-
-  const containerStyles = applyOverrides([
-    styles.simpleContainer,
-    { marginTop: mt },
-  ]);
-
-  const lStyle: Style[] = [styles.textLeft];
-  const cStyle: Style[] = [styles.textCenter];
-  const rStyle: Style[] = [styles.textRight];
-  if (resolvedTextColor) {
-    lStyle.push({ color: resolvedTextColor });
-    cStyle.push({ color: resolvedTextColor });
-    rStyle.push({ color: resolvedTextColor });
-  }
-
-  return (
-    <View wrap={!noWrap} style={containerStyles}>
-      {leftText && <PDFText style={lStyle}>{leftText}</PDFText>}
-      {centerText && <PDFText style={cStyle}>{centerText}</PDFText>}
-      {rightText && <PDFText style={rStyle}>{rightText}</PDFText>}
-    </View>
-  );
-}
+  return variantRenderers[variant]() as React.ReactNode;
+};

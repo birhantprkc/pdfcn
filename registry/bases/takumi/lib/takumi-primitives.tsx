@@ -20,7 +20,7 @@ interface ViewProps {
   minPresenceAhead?: number;
 }
 
-function flatten(style?: StyleInput): Record<string, unknown> | undefined {
+const flatten = (style?: StyleInput): Record<string, unknown> | undefined => {
   if (!style) {
     return undefined;
   }
@@ -28,9 +28,9 @@ function flatten(style?: StyleInput): Record<string, unknown> | undefined {
     return Object.assign({}, ...style.filter(Boolean));
   }
   return style;
-}
+};
 
-export function View({ children, style, className, ...rest }: ViewProps) {
+export const View = ({ children, style, className, ...rest }: ViewProps) => {
   const {
     wrap: _w,
     fixed: _f,
@@ -51,7 +51,7 @@ export function View({ children, style, className, ...rest }: ViewProps) {
       {children}
     </div>
   );
-}
+};
 
 interface TextProps {
   children?: ReactNode;
@@ -63,7 +63,7 @@ interface TextProps {
   src?: string;
 }
 
-export function Text({
+export const Text = ({
   children,
   style,
   className,
@@ -71,7 +71,7 @@ export function Text({
   href,
   src,
   ...rest
-}: TextProps) {
+}: TextProps) => {
   const merged = flatten(style) as React.CSSProperties | undefined;
   const link = href ?? src;
   if (link) {
@@ -86,16 +86,16 @@ export function Text({
       {children}
     </span>
   );
-}
+};
 
-export function Image({
+export const Image = ({
   src,
   style,
   ...rest
 }: {
   src: string | { uri: string };
   style?: StyleInput;
-} & Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "style">) {
+} & Omit<ImgHTMLAttributes<HTMLImageElement>, "src" | "style">) => {
   const resolved = typeof src === "string" ? src : src.uri;
   return (
     <img
@@ -105,9 +105,9 @@ export function Image({
       {...rest}
     />
   );
-}
+};
 
-export function Link({
+export const Link = ({
   src,
   children,
   style,
@@ -116,15 +116,13 @@ export function Link({
   src: string;
   children?: ReactNode;
   style?: StyleInput;
-} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "style">) {
-  return (
-    <a href={src} style={flatten(style) as React.CSSProperties} {...rest}>
-      {children}
-    </a>
-  );
-}
+} & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "style">) => (
+  <a href={src} style={flatten(style) as React.CSSProperties} {...rest}>
+    {children}
+  </a>
+);
 
-export function Document({
+export const Document = ({
   children,
   title,
   style,
@@ -132,18 +130,13 @@ export function Document({
   children?: ReactNode;
   title?: string;
   style?: StyleInput;
-}) {
-  return (
-    <div
-      data-pdf-document={title}
-      style={flatten(style) as React.CSSProperties}
-    >
-      {children}
-    </div>
-  );
-}
+}) => (
+  <div data-pdf-document={title} style={flatten(style) as React.CSSProperties}>
+    {children}
+  </div>
+);
 
-export function Page({
+export const Page = ({
   children,
   size: _size,
   style,
@@ -151,10 +144,8 @@ export function Page({
   children?: ReactNode;
   size?: string | { width: number; height: number };
   style?: StyleInput;
-}) {
-  return (
-    <div data-pdf-page style={flatten(style) as React.CSSProperties}>
-      {children}
-    </div>
-  );
-}
+}) => (
+  <div data-pdf-page style={flatten(style) as React.CSSProperties}>
+    {children}
+  </div>
+);

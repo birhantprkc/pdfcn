@@ -45,10 +45,10 @@ interface ReportLayoutProps {
   graphData?: { label: string; value: number }[];
 }
 
-function toneColor(
+const toneColor = (
   theme: PdfcnTheme,
   tone: "success" | "warning" | "destructive" | "info"
-) {
+) => {
   if (tone === "success") {
     return theme.colors.success;
   }
@@ -59,9 +59,9 @@ function toneColor(
     return theme.colors.destructive;
   }
   return theme.colors.info;
-}
+};
 
-export function ReportLayout({
+export const ReportLayout = ({
   data,
   titlePrefix,
   statusLabel,
@@ -73,7 +73,7 @@ export function ReportLayout({
   graphShowValues = false,
   graphColors,
   graphData,
-}: ReportLayoutProps) {
+}: ReportLayoutProps) => {
   const theme = usePdfcnTheme();
   const accent = toneColor(theme, statusTone);
 
@@ -318,9 +318,9 @@ export function ReportLayout({
       </Page>
     </Document>
   );
-}
+};
 
-export function ReportTemplateFrame({
+export const ReportTemplateFrame = ({
   theme,
   data,
   titlePrefix,
@@ -344,7 +344,7 @@ export function ReportTemplateFrame({
   graphShowValues?: boolean;
   graphColors?: string[];
   graphData?: { label: string; value: number }[];
-}) {
+}) => {
   if (!data) {
     return null;
   }
@@ -366,4 +366,4 @@ export function ReportTemplateFrame({
       />
     </PdfcnThemeProvider>
   );
-}
+};

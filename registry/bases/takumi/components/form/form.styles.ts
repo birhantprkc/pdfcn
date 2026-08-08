@@ -4,14 +4,16 @@ import { StyleSheet } from "../../lib/takumi-primitives";
 import type { PdfFormVariant } from "./form.types";
 
 /** Style factory for fillable form layouts, derived from the active theme. */
-export function createFormStyles(
+export const createFormStyles = (
   t: PdfcnTheme,
   variant: PdfFormVariant = "underline"
-) {
+) => {
   const { spacing, borderRadius, fontWeights, typography } = t.primitives;
   const borderColor = t.colors.border;
-  const hairline = 0.75; // lighter than spacing[0.5]=2pt — more refined
-  const rule = 1; // group title rule
+  // lighter than spacing[0.5]=2pt — more refined
+  const hairline = 0.75;
+  // group title rule
+  const rule = 1;
 
   const fieldAreaByVariant: Record<PdfFormVariant, object> = {
     box: {
@@ -139,4 +141,4 @@ export function createFormStyles(
       width: "100%",
     },
   });
-}
+};

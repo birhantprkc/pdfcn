@@ -60,7 +60,7 @@ export interface KeyValueProps extends Omit<PDFComponentProps, "children"> {
   dividerMargin?: number;
 }
 
-function createKeyValueStyles(t: PdfcnTheme) {
+const createKeyValueStyles = (t: PdfcnTheme) => {
   const { spacing, fontWeights } = t.primitives;
   const c = t.colors;
   const { body } = t.typography;
@@ -98,9 +98,9 @@ function createKeyValueStyles(t: PdfcnTheme) {
     valueMd: { ...valueBase, fontSize: body.fontSize },
     valueSm: { ...valueBase, fontSize: t.primitives.typography.xs },
   });
-}
+};
 
-export function KeyValue({
+export const KeyValue = ({
   items,
   direction = "horizontal",
   divided = false,
@@ -114,7 +114,7 @@ export function KeyValue({
   dividerThickness,
   dividerMargin,
   style,
-}: KeyValueProps) {
+}: KeyValueProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createKeyValueStyles(theme), [theme]);
   const keyStyleMap = {
@@ -202,4 +202,4 @@ export function KeyValue({
       })}
     </View>
   );
-}
+};

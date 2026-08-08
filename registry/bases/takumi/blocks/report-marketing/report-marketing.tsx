@@ -65,23 +65,21 @@ const sampleMarketingData: BaseReportData = {
   title: "Growth & Marketing Report",
 };
 
-export function MarketingReportDocument({
+export const MarketingReportDocument = ({
   theme,
   data = sampleMarketingData,
-}: ReportTemplateProps) {
-  return (
-    <ReportTemplateFrame
-      theme={theme}
-      data={data}
-      titlePrefix="Growth Report"
-      statusLabel="Growth: Strong"
-      statusTone="success"
-      graphVariant="bar"
-      graphTitle="Pipeline build by week"
-      graphSubtitle="Demand creation output trend"
-      graphLegend="none"
-      graphShowValues
-      graphColors={["#0EA5E9"]}
-    />
-  );
-}
+}: ReportTemplateProps) => (
+  <ReportTemplateFrame
+    theme={theme}
+    data={data}
+    titlePrefix="Growth Report"
+    statusLabel="Growth: Strong"
+    statusTone="success"
+    graphVariant="bar"
+    graphTitle="Pipeline build by week"
+    graphSubtitle="Demand creation output trend"
+    graphLegend="none"
+    graphShowValues
+    graphColors={["#0EA5E9"]}
+  />
+);

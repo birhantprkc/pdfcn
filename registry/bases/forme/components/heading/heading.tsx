@@ -40,7 +40,7 @@ export interface HeadingProps extends PDFComponentProps {
   keepWithNext?: boolean;
 }
 
-function createHeadingStyles(t: PdfcnTheme) {
+const createHeadingStyles = (t: PdfcnTheme) => {
   const { heading } = t.typography;
   const { spacing, fontWeights, letterSpacing } = t.primitives;
   const { sectionGap, componentGap, paragraphGap } = t.spacing;
@@ -104,9 +104,9 @@ function createHeadingStyles(t: PdfcnTheme) {
     weightNormal: { fontWeight: fontWeights.regular },
     weightSemibold: { fontWeight: fontWeights.semibold },
   });
-}
+};
 
-export function Heading({
+export const Heading = ({
   level = 1,
   align,
   color,
@@ -114,10 +114,9 @@ export function Heading({
   weight,
   tracking,
   noMargin,
-  keepWithNext = true,
   children,
   style,
-}: HeadingProps) {
+}: HeadingProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createHeadingStyles(theme), [theme]);
   const safeLevel = Math.min(Math.max(Math.round(level), 1), 6) as
@@ -174,4 +173,4 @@ export function Heading({
     styleArray.push(...[style].flat());
   }
   return <Text style={styleArray as never}>{children}</Text>;
-}
+};

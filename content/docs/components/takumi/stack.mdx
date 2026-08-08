@@ -1,0 +1,106 @@
+---
+title: "Stack"
+description: "Vertical stack with spacing."
+---
+
+<ComponentPreview base="takumi" name="stack" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/stack
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/stack/stack.tsx"
+  base="takumi"
+  title="components/pdf/stack.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme-context.tsx"
+  base="takumi"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme.ts"
+  base="takumi"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-primitives.tsx"
+  base="takumi"
+  title="components/pdf/takumi-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-svg.tsx"
+  base="takumi"
+  title="components/pdf/takumi-svg.tsx"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Stack } from "@/components/pdf/stack";
+import { Text } from "@/components/pdf/text";
+```
+
+```tsx
+<Stack gap="md">
+  <Text>One</Text>
+  <Text>Two</Text>
+</Stack>
+```
+
+## API Reference
+
+### Stack
+
+| Prop        | Type             | Default    |
+| ----------- | ---------------- | ---------- |
+| `gap`       | `StackGap`       | 'md'       |
+| `direction` | `StackDirection` | 'vertical' |
+| `align`     | `StackAlign`     | 'start'    |
+| `justify`   | `StackJustify`   | 'start'    |
+| `wrap`      | `boolean`        | false      |
+| `noWrap`    | `boolean`        | false      |

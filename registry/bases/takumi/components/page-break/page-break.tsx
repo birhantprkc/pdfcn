@@ -6,8 +6,6 @@ export interface PageBreakProps extends Omit<PDFComponentProps, "children"> {
   children?: never;
 }
 
-export function PageBreak({ style }: PageBreakProps) {
-  return (
-    <View style={[{ breakBefore: "page" }, style].filter(Boolean) as never} />
-  );
-}
+export const PageBreak = ({ style }: PageBreakProps) => (
+  <View style={[{ breakBefore: "page" }, style].filter(Boolean) as never} />
+);

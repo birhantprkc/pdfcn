@@ -7,7 +7,7 @@ import { StyleSheet } from "../../lib/takumi-primitives";
  * Used when `size="compact"` to render denser rows with smaller font sizes.
  * @param t - The resolved PdfcnTheme instance.
  */
-export function createCompactStyles(t: PdfcnTheme) {
+export const createCompactStyles = (t: PdfcnTheme) => {
   const { spacing, fontWeights, lineHeights } = t.primitives;
   return StyleSheet.create({
     cell: {
@@ -35,14 +35,14 @@ export function createCompactStyles(t: PdfcnTheme) {
       lineHeight: lineHeights.normal,
     },
   });
-}
+};
 
 /**
  * Converts an arbitrary cell value to a display string.
  * Returns an empty string for null/undefined values.
  * @param value - The raw cell value to format.
  */
-export function formatValue(value: unknown): string {
+export const formatValue = (value: unknown): string => {
   if (value === null || value === undefined) {
     return "";
   }
@@ -50,4 +50,4 @@ export function formatValue(value: unknown): string {
     return String(value);
   }
   return String(value);
-}
+};

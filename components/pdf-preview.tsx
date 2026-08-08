@@ -21,12 +21,12 @@ interface PdfPreviewProps {
   height?: number;
 }
 
-export function PdfPreview({
+export const PdfPreview = ({
   base,
   name,
   className,
   height = 640,
-}: PdfPreviewProps) {
+}: PdfPreviewProps) => {
   const [data, setData] = useState<Uint8Array | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [numPages, setNumPages] = useState(0);
@@ -129,4 +129,4 @@ export function PdfPreview({
       )}
     </div>
   );
-}
+};

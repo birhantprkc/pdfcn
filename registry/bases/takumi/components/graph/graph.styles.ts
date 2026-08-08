@@ -2,8 +2,8 @@ import type { PdfcnTheme } from "@/registry/themes";
 
 import { StyleSheet } from "../../lib/takumi-primitives";
 
-export function createGraphStyles(t: PdfcnTheme) {
-  return StyleSheet.create({
+export const createGraphStyles = (t: PdfcnTheme) =>
+  StyleSheet.create({
     chartWithRightLegend: {
       alignItems: "flex-start",
       display: "flex",
@@ -54,4 +54,3 @@ export function createGraphStyles(t: PdfcnTheme) {
       marginBottom: 2,
     },
   });
-}

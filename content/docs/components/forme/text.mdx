@@ -1,0 +1,92 @@
+---
+title: "Text"
+description: "Body text with typography variants."
+---
+
+<ComponentPreview base="forme" name="text" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/text
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/text/text.tsx"
+  base="forme"
+  title="components/pdf/text.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme-context.tsx"
+  base="forme"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme.ts"
+  base="forme"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Text } from "@/components/pdf/text";
+```
+
+```tsx
+<Text>Hello from pdfcn</Text>
+```
+
+## API Reference
+
+### Text
+
+| Prop         | Type             | Default     |
+| ------------ | ---------------- | ----------- | ------------- | ---------- | ------ |
+| `variant`    | `TextVariant`    | 'base'      |
+| `align`      | `"left"          | "center"    | "right"       | "justify"` | 'left' |
+| `color`      | `string`         | -           |
+| `weight`     | `TextWeight`     | 'normal'    |
+| `italic`     | `boolean`        | false       |
+| `decoration` | `TextDecoration` | 'none'      |
+| `transform`  | `"uppercase"     | "lowercase" | "capitalize"` | -          |
+| `noMargin`   | `boolean`        | false       |

@@ -25,7 +25,7 @@ import {
  * Shared Y-axis grid lines and tick labels for cartesian charts (bar, line, area).
  * Extracted to avoid duplicating the identical block across render functions.
  */
-function renderGridAndYAxis(
+const renderGridAndYAxis = (
   ticks: number[],
   toY: (v: number) => number,
   chartX: number,
@@ -33,48 +33,46 @@ function renderGridAndYAxis(
   showGrid: boolean,
   gridColor: string,
   textColor: string
-) {
-  return (
-    <>
-      {ticks.map((tick) => {
-        const ty = toY(tick);
-        return (
-          <G key={`grid-${tick}`}>
-            {showGrid && (
-              <Line
-                x1={chartX}
-                y1={ty}
-                x2={chartX + chartW}
-                y2={ty}
-                stroke={gridColor}
-                strokeWidth={0.5}
-                strokeDasharray="3 3"
-              />
-            )}
-            <SvgText
-              x={chartX - 4}
-              y={ty + 3}
-              fill={textColor}
-              textAnchor="end"
-              style={{ fontSize: 7 }}
-            >
-              {fmtNum(tick)}
-            </SvgText>
-          </G>
-        );
-      })}
-    </>
-  );
-}
+) => (
+  <>
+    {ticks.map((tick) => {
+      const ty = toY(tick);
+      return (
+        <G key={`grid-${tick}`}>
+          {showGrid && (
+            <Line
+              x1={chartX}
+              y1={ty}
+              x2={chartX + chartW}
+              y2={ty}
+              stroke={gridColor}
+              strokeWidth={0.5}
+              strokeDasharray="3 3"
+            />
+          )}
+          <SvgText
+            x={chartX - 4}
+            y={ty + 3}
+            fill={textColor}
+            textAnchor="end"
+            style={{ fontSize: 7 }}
+          >
+            {fmtNum(tick)}
+          </SvgText>
+        </G>
+      );
+    })}
+  </>
+);
 
-function renderBarChart(
+const renderBarChart = (
   series: GraphSeries[],
   layout: ChartLayout,
   palette: string[],
   showGrid: boolean,
   showValues: boolean,
   theme: PdfcnTheme
-) {
+) => {
   const { chartX, chartY, chartW, chartH, yMin, yMax, yTicks, xLabels } =
     layout;
   const nCategories = xLabels.length;
@@ -159,15 +157,15 @@ function renderBarChart(
       })}
     </>
   );
-}
+};
 
-function renderHorizontalBarChart(
+const renderHorizontalBarChart = (
   series: GraphSeries[],
   layout: ChartLayout,
   palette: string[],
   showValues: boolean,
   theme: PdfcnTheme
-) {
+) => {
   const { chartX, chartY, chartW, chartH, xLabels } = layout;
   const nCategories = xLabels.length;
   const allValues = series.flatMap((s) => s.data.map((d) => d.value));
@@ -231,9 +229,9 @@ function renderHorizontalBarChart(
       />
     </>
   );
-}
+};
 
-function renderLineAreaChart(
+const renderLineAreaChart = (
   series: GraphSeries[],
   layout: ChartLayout,
   palette: string[],
@@ -243,7 +241,7 @@ function renderLineAreaChart(
   smooth: boolean,
   isArea: boolean,
   theme: PdfcnTheme
-) {
+) => {
   const { chartX, chartY, chartW, chartH, yMin, yMax, yTicks, xLabels } =
     layout;
   const range = yMax - yMin || 1;
@@ -284,9 +282,11 @@ function renderLineAreaChart(
           ? smoothPath(points)
           : `M ${points.map((p) => `${p.x} ${p.y}`).join(" L ")}`;
 
+        const lastPoint = points.at(-1);
+        const firstPoint = points.at(0);
         const areaPath =
-          isArea && points.length > 1
-            ? `${lineDStr} L ${points.at(-1)!.x} ${chartY + chartH} L ${points[0]!.x} ${chartY + chartH} Z`
+          isArea && points.length > 1 && lastPoint && firstPoint
+            ? `${lineDStr} L ${lastPoint.x} ${chartY + chartH} L ${firstPoint.x} ${chartY + chartH} Z`
             : null;
 
         return (
@@ -339,16 +339,16 @@ function renderLineAreaChart(
       ))}
     </>
   );
-}
+};
 
-function renderPieDonutChart(
+const renderPieDonutChart = (
   series: GraphSeries[],
   layout: ChartLayout,
   palette: string[],
   centerLabel: string | undefined,
   isDonut: boolean,
   theme: PdfcnTheme
-) {
+) => {
   const { svgW, svgH } = layout;
   const cx = svgW / 2;
   const cy = svgH / 2;
@@ -417,9 +417,9 @@ function renderPieDonutChart(
       )}
     </>
   );
-}
+};
 
-function Legend({
+const Legend = ({
   series,
   palette,
   styles,
@@ -429,7 +429,7 @@ function Legend({
   palette: string[];
   styles: ReturnType<typeof createGraphStyles>;
   position?: "bottom" | "right";
-}) {
+}) => {
   const containerStyle =
     position === "right" ? styles.legendColumn : styles.legendRow;
 
@@ -451,7 +451,146 @@ function Legend({
       ))}
     </View>
   );
-}
+};
+
+const renderChartContent = (
+  variant: string,
+  series: GraphSeries[],
+  layout: ChartLayout,
+  palette: string[],
+  showGrid: boolean,
+  showValues: boolean,
+  showDots: boolean,
+  smooth: boolean,
+  centerLabel: string | undefined,
+  theme: PdfcnTheme
+): React.ReactNode => {
+  switch (variant) {
+    case "bar": {
+      return renderBarChart(
+        series,
+        layout,
+        palette,
+        showGrid,
+        showValues,
+        theme
+      );
+    }
+    case "horizontal-bar": {
+      return renderHorizontalBarChart(
+        series,
+        layout,
+        palette,
+        showValues,
+        theme
+      );
+    }
+    case "line":
+    case "area": {
+      return renderLineAreaChart(
+        series,
+        layout,
+        palette,
+        showGrid,
+        showValues,
+        showDots,
+        smooth,
+        variant === "area",
+        theme
+      );
+    }
+    case "pie": {
+      return renderPieDonutChart(
+        series,
+        layout,
+        palette,
+        undefined,
+        false,
+        theme
+      );
+    }
+    case "donut": {
+      return renderPieDonutChart(
+        series,
+        layout,
+        palette,
+        centerLabel,
+        true,
+        theme
+      );
+    }
+    default: {
+      return null;
+    }
+  }
+};
+
+const renderAxisLabels = (
+  isPieOrDonut: boolean,
+  xLabel: string | undefined,
+  yLabel: string | undefined,
+  chartX: number,
+  chartW: number,
+  height: number,
+  mutedForeground: string
+) => (
+  <>
+    {!isPieOrDonut && xLabel && (
+      <SvgText
+        x={chartX + chartW / 2}
+        y={height - 2}
+        fill={mutedForeground}
+        textAnchor="middle"
+        style={{ fontSize: 8 }}
+      >
+        {xLabel}
+      </SvgText>
+    )}
+    {!isPieOrDonut && yLabel && (
+      <SvgText
+        x={2}
+        y={10}
+        fill={mutedForeground}
+        textAnchor="start"
+        style={{ fontSize: 8 }}
+      >
+        {yLabel}
+      </SvgText>
+    )}
+  </>
+);
+
+const renderGraphContent = (
+  title: string | undefined,
+  subtitle: string | undefined,
+  chartContent: React.ReactNode,
+  axisLabels: React.ReactNode,
+  width: number,
+  height: number,
+  legend: string,
+  showLegend: boolean,
+  isPieOrDonut: boolean,
+  series: GraphSeries[],
+  palette: string[],
+  styles: ReturnType<typeof createGraphStyles>
+) => (
+  <>
+    {title && <PDFText style={styles.title}>{title}</PDFText>}
+    {subtitle && <PDFText style={styles.subtitle}>{subtitle}</PDFText>}
+    <View style={legend === "right" ? styles.chartWithRightLegend : undefined}>
+      <Svg width={width} height={height}>
+        {chartContent}
+        {axisLabels}
+      </Svg>
+      {showLegend &&
+        legend === "right" &&
+        Legend({ palette, position: "right", series, styles })}
+    </View>
+    {showLegend &&
+      legend === "bottom" &&
+      Legend({ palette, position: "bottom", series, styles })}
+  </>
+);
 
 /**
  * PdfGraph — renders bar, horizontal-bar, line, area, pie, and donut charts
@@ -492,7 +631,7 @@ function Legend({
  * - SVG Text inside charts uses SVG font attributes (not react-pdf StyleSheet fonts)
  * - For print PDFs use SVG-friendly fonts registered with Font.register()
  */
-export function PdfGraph({
+export const PdfGraph = ({
   variant = "bar",
   data,
   title,
@@ -514,7 +653,7 @@ export function PdfGraph({
   yTicks: yTickCount = 5,
   noWrap = true,
   style,
-}: GraphProps) {
+}: GraphProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createGraphStyles(theme), [theme]);
   const palette = colors ?? getDefaultPalette(theme);
@@ -531,68 +670,18 @@ export function PdfGraph({
   const layout = buildLayout(series, width, height, isPieOrDonut, yTickCount);
   const { chartX, chartW } = layout;
 
-  let chartContent: React.ReactNode = null;
-
-  switch (variant) {
-    case "bar": {
-      chartContent = renderBarChart(
-        series,
-        layout,
-        palette,
-        showGrid,
-        showValues,
-        theme
-      );
-      break;
-    }
-    case "horizontal-bar": {
-      chartContent = renderHorizontalBarChart(
-        series,
-        layout,
-        palette,
-        showValues,
-        theme
-      );
-      break;
-    }
-    case "line":
-    case "area": {
-      chartContent = renderLineAreaChart(
-        series,
-        layout,
-        palette,
-        showGrid,
-        showValues,
-        showDots,
-        smooth,
-        variant === "area",
-        theme
-      );
-      break;
-    }
-    case "pie": {
-      chartContent = renderPieDonutChart(
-        series,
-        layout,
-        palette,
-        undefined,
-        false,
-        theme
-      );
-      break;
-    }
-    case "donut": {
-      chartContent = renderPieDonutChart(
-        series,
-        layout,
-        palette,
-        centerLabel,
-        true,
-        theme
-      );
-      break;
-    }
-  }
+  const chartContent = renderChartContent(
+    variant,
+    series,
+    layout,
+    palette,
+    showGrid,
+    showValues,
+    showDots,
+    smooth,
+    centerLabel,
+    theme
+  );
 
   const showLegend = legend !== "none" && !isPieOrDonut;
 
@@ -603,45 +692,30 @@ export function PdfGraph({
 
   const content = (
     <View style={containerStyles as never}>
-      {title && <PDFText style={styles.title}>{title}</PDFText>}
-      {subtitle && <PDFText style={styles.subtitle}>{subtitle}</PDFText>}
-      <View
-        style={legend === "right" ? styles.chartWithRightLegend : undefined}
-      >
-        <Svg width={width} height={height}>
-          {chartContent}
-          {!isPieOrDonut && xLabel && (
-            <SvgText
-              x={chartX + chartW / 2}
-              y={height - 2}
-              fill={theme.colors.mutedForeground}
-              textAnchor="middle"
-              style={{ fontSize: 8 }}
-            >
-              {xLabel}
-            </SvgText>
-          )}
-          {!isPieOrDonut && yLabel && (
-            <SvgText
-              x={2}
-              y={10}
-              fill={theme.colors.mutedForeground}
-              textAnchor="start"
-              style={{ fontSize: 8 }}
-            >
-              {yLabel}
-            </SvgText>
-          )}
-        </Svg>
-        {showLegend &&
-          legend === "right" &&
-          Legend({ palette, position: "right", series, styles })}
-      </View>
-      {showLegend &&
-        legend === "bottom" &&
-        Legend({ palette, position: "bottom", series, styles })}
+      {renderGraphContent(
+        title,
+        subtitle,
+        chartContent,
+        renderAxisLabels(
+          isPieOrDonut,
+          xLabel,
+          yLabel,
+          chartX,
+          chartW,
+          height,
+          theme.colors.mutedForeground
+        ),
+        width,
+        height,
+        legend,
+        showLegend,
+        isPieOrDonut,
+        series,
+        palette,
+        styles
+      )}
     </View>
   );
 
   return noWrap ? <View wrap={false}>{content}</View> : content;
-}
+};

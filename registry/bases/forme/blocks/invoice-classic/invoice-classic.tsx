@@ -53,21 +53,7 @@ const sampleData: InvoiceClassicData = {
   },
 };
 
-export function InvoiceClassicDocument({
-  theme,
-  data = sampleData,
-}: {
-  theme?: PdfcnTheme;
-  data?: InvoiceClassicData;
-}) {
-  return (
-    <PdfcnThemeProvider theme={theme}>
-      <InvoiceClassicContent data={data} />
-    </PdfcnThemeProvider>
-  );
-}
-
-function InvoiceClassicContent({ data }: { data: InvoiceClassicData }) {
+const InvoiceClassicContent = ({ data }: { data: InvoiceClassicData }) => {
   const theme = usePdfcnTheme();
 
   const styles = StyleSheet.create({
@@ -208,4 +194,16 @@ function InvoiceClassicContent({ data }: { data: InvoiceClassicData }) {
       </Page>
     </Document>
   );
-}
+};
+
+export const InvoiceClassicDocument = ({
+  theme,
+  data = sampleData,
+}: {
+  theme?: PdfcnTheme;
+  data?: InvoiceClassicData;
+}) => (
+  <PdfcnThemeProvider theme={theme}>
+    <InvoiceClassicContent data={data} />
+  </PdfcnThemeProvider>
+);

@@ -2,7 +2,7 @@ import { renderDocument } from "@formepdf/core";
 
 import { demos } from "@/examples/__index__";
 
-export async function GET(request: Request) {
+export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
 
@@ -24,4 +24,4 @@ export async function GET(request: Request) {
     const message = error instanceof Error ? error.message : "Render failed";
     return new Response(message, { status: 500 });
   }
-}
+};

@@ -26,7 +26,7 @@ export interface PdfQRCodeProps extends Omit<PDFComponentProps, "children"> {
   children?: never;
 }
 
-function createQRCodeStyles(t: PdfcnTheme) {
+const createQRCodeStyles = (t: PdfcnTheme) => {
   const { spacing } = t.primitives;
   return StyleSheet.create({
     caption: {
@@ -38,20 +38,20 @@ function createQRCodeStyles(t: PdfcnTheme) {
     },
     container: { alignItems: "center" },
   });
-}
+};
 
-function generateQRMatrix(
+const generateQRMatrix = (
   value: string,
   errorLevel: QRCodeErrorLevel,
   margin: number
-): boolean[][] {
+): boolean[][] => {
   const qr = QRCode.create(value, { errorCorrectionLevel: errorLevel });
   const { size, data } = qr.modules;
   const totalSize = size + margin * 2;
   const matrix: boolean[][] = [];
-  for (let row = 0; row < totalSize; row++) {
+  for (let row = 0; row < totalSize; row += 1) {
     const rowData: boolean[] = [];
-    for (let col = 0; col < totalSize; col++) {
+    for (let col = 0; col < totalSize; col += 1) {
       const isInMargin =
         row < margin ||
         row >= size + margin ||
@@ -66,9 +66,9 @@ function generateQRMatrix(
     matrix.push(rowData);
   }
   return matrix;
-}
+};
 
-export function PdfQRCode({
+export const PdfQRCode = ({
   value,
   size = 100,
   color = "#000000",
@@ -77,7 +77,7 @@ export function PdfQRCode({
   margin = 2,
   caption,
   style,
-}: PdfQRCodeProps) {
+}: PdfQRCodeProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createQRCodeStyles(theme), [theme]);
   const matrix = useSafeMemo(
@@ -121,4 +121,4 @@ export function PdfQRCode({
       {caption && <PDFText style={styles.caption}>{caption}</PDFText>}
     </View>
   );
-}
+};

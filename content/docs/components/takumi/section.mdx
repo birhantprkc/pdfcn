@@ -1,0 +1,106 @@
+---
+title: "Section"
+description: "Section wrapper with optional title."
+---
+
+<ComponentPreview base="takumi" name="section" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/takumi/section
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install takumi-pdf @takumi-rs/helpers
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/takumi/components/section/section.tsx"
+  base="takumi"
+  title="components/pdf/section.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme-context.tsx"
+  base="takumi"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/pdfcn-theme.ts"
+  base="takumi"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/resolve-color.ts"
+  base="takumi"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-primitives.tsx"
+  base="takumi"
+  title="components/pdf/takumi-primitives.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/takumi/lib/takumi-svg.tsx"
+  base="takumi"
+  title="components/pdf/takumi-svg.tsx"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Section } from "@/components/pdf/section";
+import { Text } from "@/components/pdf/text";
+```
+
+```tsx
+<Section>
+  <Text>Section body</Text>
+</Section>
+```
+
+## API Reference
+
+### Section
+
+| Prop          | Type             | Default   |
+| ------------- | ---------------- | --------- |
+| `spacing`     | `SectionSpacing` | 'md'      |
+| `padding`     | `SectionPadding` | -         |
+| `background`  | `string`         | -         |
+| `border`      | `boolean`        | false     |
+| `variant`     | `SectionVariant` | 'default' |
+| `accentColor` | `string`         | -         |
+| `noWrap`      | `boolean`        | false     |

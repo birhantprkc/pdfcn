@@ -41,7 +41,7 @@ export interface PdfPageNumberProps extends Omit<
   children?: never;
 }
 
-function createPageNumberStyles(t: PdfcnTheme) {
+const createPageNumberStyles = (t: PdfcnTheme) => {
   const { typography, colors, primitives } = t;
   return StyleSheet.create({
     alignCenter: { textAlign: "center" },
@@ -55,26 +55,24 @@ function createPageNumberStyles(t: PdfcnTheme) {
     sizeXs: { fontSize: primitives.typography.xs },
     text: { fontFamily: typography.body.fontFamily },
   });
-}
+};
 
-function formatPageNumber(
+const _formatPageNumber = (
   format: string,
   pageNumber: number,
   totalPages: number
-): string {
-  return format
+): string =>
+  format
     .replace("{page}", String(pageNumber))
     .replace("{total}", String(totalPages));
-}
 
-export function PdfPageNumber({
+export const PdfPageNumber = ({
   format = "Page {page} of {total}",
   align = "center",
   size = "sm",
-  fixed = false,
   muted = true,
   style,
-}: PdfPageNumberProps) {
+}: PdfPageNumberProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createPageNumberStyles(theme), [theme]);
   const alignMap = {
@@ -105,4 +103,4 @@ export function PdfPageNumber({
       </PDFText>
     </View>
   );
-}
+};

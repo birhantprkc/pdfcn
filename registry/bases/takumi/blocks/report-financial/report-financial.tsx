@@ -70,22 +70,20 @@ const sampleFinancialData: BaseReportData = {
   title: "Quarterly Financial Report",
 };
 
-export function FinancialReportDocument({
+export const FinancialReportDocument = ({
   theme,
   data = sampleFinancialData,
-}: ReportTemplateProps) {
-  return (
-    <ReportTemplateFrame
-      theme={theme}
-      data={data}
-      titlePrefix="Financial Report"
-      statusLabel="Finance: Healthy"
-      statusTone="success"
-      graphVariant="line"
-      graphTitle="Revenue trajectory"
-      graphSubtitle="Quarterly weighted revenue index"
-      graphLegend="none"
-      graphColors={["#0F172A"]}
-    />
-  );
-}
+}: ReportTemplateProps) => (
+  <ReportTemplateFrame
+    theme={theme}
+    data={data}
+    titlePrefix="Financial Report"
+    statusLabel="Finance: Healthy"
+    statusTone="success"
+    graphVariant="line"
+    graphTitle="Revenue trajectory"
+    graphSubtitle="Quarterly weighted revenue index"
+    graphLegend="none"
+    graphColors={["#0F172A"]}
+  />
+);

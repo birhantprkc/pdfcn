@@ -136,18 +136,23 @@ const ICON_MAP = {
   ),
 };
 
-function AlertIcon({
+const AlertIcon = ({
   variant,
   color,
 }: {
   variant: AlertVariant;
   color: string;
-}) {
+}) => {
   const Icon = ICON_MAP[variant];
   return <Icon color={color} />;
-}
+};
 
-function createAlertStyles(theme: PdfcnTheme) {
+const borderLeft = (color: string) => ({
+  borderLeftColor: color,
+  borderLeftWidth: 4,
+});
+
+const createAlertStyles = (theme: PdfcnTheme) => {
   const { typography, colors, primitives } = theme;
 
   const variantColors = {
@@ -157,19 +162,14 @@ function createAlertStyles(theme: PdfcnTheme) {
     warning: colors.warning ?? "#F59E0B",
   } satisfies Record<AlertVariant, string>;
 
-  const bl = (color: string) => ({
-    borderLeftColor: color,
-    borderLeftWidth: 4,
-  });
-
   const sheet = StyleSheet.create({
     bg: {
       backgroundColor: colors.muted,
     },
-    borderError: bl(variantColors.error),
-    borderInfo: bl(variantColors.info),
-    borderSuccess: bl(variantColors.success),
-    borderWarning: bl(variantColors.warning),
+    borderError: borderLeft(variantColors.error),
+    borderInfo: borderLeft(variantColors.info),
+    borderSuccess: borderLeft(variantColors.success),
+    borderWarning: borderLeft(variantColors.warning),
     container: {
       borderRadius: 4,
       flexDirection: "row",
@@ -210,16 +210,16 @@ function createAlertStyles(theme: PdfcnTheme) {
     /** Resolved hex colors for each variant — used to tint the SVG icons. */
     variantColors,
   };
-}
+};
 
-export function PdfAlert({
+export const PdfAlert = ({
   variant = "info",
   title,
   children,
   showIcon = true,
   showBorder = true,
   style,
-}: PdfAlertProps) {
+}: PdfAlertProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createAlertStyles(theme), [theme]);
 
@@ -251,4 +251,4 @@ export function PdfAlert({
       </View>
     </View>
   );
-}
+};

@@ -56,21 +56,7 @@ const sampleData: InvoiceCorporateData = {
   },
 };
 
-export function InvoiceCorporateDocument({
-  theme,
-  data = sampleData,
-}: {
-  theme?: PdfcnTheme;
-  data?: InvoiceCorporateData;
-}) {
-  return (
-    <PdfcnThemeProvider theme={theme}>
-      <InvoiceCorporateContent data={data} />
-    </PdfcnThemeProvider>
-  );
-}
-
-function InvoiceCorporateContent({ data }: { data: InvoiceCorporateData }) {
+const InvoiceCorporateContent = ({ data }: { data: InvoiceCorporateData }) => {
   const theme = usePdfcnTheme();
 
   const styles = StyleSheet.create({
@@ -221,4 +207,16 @@ function InvoiceCorporateContent({ data }: { data: InvoiceCorporateData }) {
       </Page>
     </Document>
   );
-}
+};
+
+export const InvoiceCorporateDocument = ({
+  theme,
+  data = sampleData,
+}: {
+  theme?: PdfcnTheme;
+  data?: InvoiceCorporateData;
+}) => (
+  <PdfcnThemeProvider theme={theme}>
+    <InvoiceCorporateContent data={data} />
+  </PdfcnThemeProvider>
+);

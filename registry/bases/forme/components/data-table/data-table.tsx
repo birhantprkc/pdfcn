@@ -14,7 +14,7 @@ import {
 import { createCompactStyles, formatValue } from "./data-table.styles";
 import type { DataTableProps } from "./data-table.types";
 
-export function DataTable<T extends Record<string, unknown>>({
+export const DataTable = <T extends Record<string, unknown>>({
   columns,
   data,
   variant = "grid",
@@ -23,7 +23,7 @@ export function DataTable<T extends Record<string, unknown>>({
   size = "default",
   noWrap = false,
   style,
-}: DataTableProps<T>) {
+}: DataTableProps<T>) => {
   const theme = usePdfcnTheme();
   const compact = useSafeMemo(() => createCompactStyles(theme), [theme]);
   const isCompact = size === "compact";
@@ -74,28 +74,22 @@ export function DataTable<T extends Record<string, unknown>>({
                     width={col.width}
                     style={isCompact ? compact.cell : undefined}
                   >
-                    {isCompact ? (
-                      rendered !== null ? (
-                        rendered
-                      ) : (
-                        <PDFText
-                          style={
-                            [
-                              compact.text,
-                              col.align
-                                ? ({ textAlign: col.align } as Style)
-                                : {},
-                            ] as never
-                          }
-                        >
-                          {text}
-                        </PDFText>
-                      )
-                    ) : (rendered !== null ? (
-                      rendered
-                    ) : (
-                      text
-                    ))}
+                    {isCompact
+                      ? (rendered ?? (
+                          <PDFText
+                            style={
+                              [
+                                compact.text,
+                                col.align
+                                  ? ({ textAlign: col.align } as Style)
+                                  : {},
+                              ] as never
+                            }
+                          >
+                            {text}
+                          </PDFText>
+                        ))
+                      : (rendered ?? text)}
                   </TableCell>
                 );
               })}
@@ -120,28 +114,22 @@ export function DataTable<T extends Record<string, unknown>>({
                   width={col.width}
                   style={isCompact ? compact.cell : undefined}
                 >
-                  {isCompact ? (
-                    rendered !== null ? (
-                      rendered
-                    ) : (
-                      <PDFText
-                        style={
-                          [
-                            value ? compact.footerText : compact.text,
-                            col.align
-                              ? ({ textAlign: col.align } as Style)
-                              : {},
-                          ] as never
-                        }
-                      >
-                        {text}
-                      </PDFText>
-                    )
-                  ) : (rendered !== null ? (
-                    rendered
-                  ) : (
-                    text
-                  ))}
+                  {isCompact
+                    ? (rendered ?? (
+                        <PDFText
+                          style={
+                            [
+                              value ? compact.footerText : compact.text,
+                              col.align
+                                ? ({ textAlign: col.align } as Style)
+                                : {},
+                            ] as never
+                          }
+                        >
+                          {text}
+                        </PDFText>
+                      ))
+                    : (rendered ?? text)}
                 </TableCell>
               );
             })}
@@ -150,4 +138,4 @@ export function DataTable<T extends Record<string, unknown>>({
       )}
     </Table>
   );
-}
+};

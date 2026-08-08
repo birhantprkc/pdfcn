@@ -1,0 +1,90 @@
+---
+title: "Divider"
+description: "Horizontal rule to separate sections."
+---
+
+<ComponentPreview base="forme" name="divider" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/divider
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/divider/divider.tsx"
+  base="forme"
+  title="components/pdf/divider.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme-context.tsx"
+  base="forme"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme.ts"
+  base="forme"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Divider } from "@/components/pdf/divider";
+```
+
+```tsx
+<Divider />
+```
+
+## API Reference
+
+### Divider
+
+| Prop        | Type               | Default |
+| ----------- | ------------------ | ------- | --- |
+| `spacing`   | `DividerSpacing`   | 'md'    |
+| `variant`   | `DividerVariant`   | 'solid' |
+| `color`     | `string`           | -       |
+| `thickness` | `DividerThickness` | 'thin'  |
+| `label`     | `string`           | -       |
+| `width`     | `string            | number` | -   |

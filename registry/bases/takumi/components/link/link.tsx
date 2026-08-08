@@ -30,7 +30,7 @@ export interface LinkProps extends PDFComponentProps {
   underline?: LinkUnderline;
 }
 
-function createLinkStyles(t: PdfcnTheme) {
+const createLinkStyles = (t: PdfcnTheme) => {
   const { fontWeights } = t.primitives;
   const base = {
     fontFamily: t.typography.body.fontFamily,
@@ -60,9 +60,9 @@ function createLinkStyles(t: PdfcnTheme) {
     underlineAlways: { textDecoration: "underline" },
     underlineNone: { textDecoration: "none" },
   });
-}
+};
 
-export function Link({
+export const Link = ({
   href,
   align,
   color,
@@ -70,7 +70,7 @@ export function Link({
   underline,
   children,
   style,
-}: LinkProps) {
+}: LinkProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createLinkStyles(theme), [theme]);
   const variantMap = {
@@ -104,4 +104,4 @@ export function Link({
       {children}
     </PDFLink>
   );
-}
+};

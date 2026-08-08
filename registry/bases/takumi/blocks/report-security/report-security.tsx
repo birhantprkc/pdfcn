@@ -70,29 +70,27 @@ const sampleSecurityData: BaseReportData = {
   title: "Security Posture Report",
 };
 
-export function SecurityReportDocument({
+export const SecurityReportDocument = ({
   theme,
   data = sampleSecurityData,
-}: ReportTemplateProps) {
-  return (
-    <ReportTemplateFrame
-      theme={theme}
-      data={data}
-      titlePrefix="Security Report"
-      statusLabel="Security: Action Needed"
-      statusTone="destructive"
-      graphVariant="donut"
-      graphTitle="Open risk distribution"
-      graphSubtitle="High/Medium/Low workload share"
-      graphLegend="right"
-      graphShowValues
-      graphColors={["#DC2626", "#F59E0B", "#16A34A", "#0EA5E9"]}
-      graphData={[
-        { label: "High Risk", value: 14 },
-        { label: "Medium Risk", value: 17 },
-        { label: "Low Risk", value: 8 },
-        { label: "Info", value: 4 },
-      ]}
-    />
-  );
-}
+}: ReportTemplateProps) => (
+  <ReportTemplateFrame
+    theme={theme}
+    data={data}
+    titlePrefix="Security Report"
+    statusLabel="Security: Action Needed"
+    statusTone="destructive"
+    graphVariant="donut"
+    graphTitle="Open risk distribution"
+    graphSubtitle="High/Medium/Low workload share"
+    graphLegend="right"
+    graphShowValues
+    graphColors={["#DC2626", "#F59E0B", "#16A34A", "#0EA5E9"]}
+    graphData={[
+      { label: "High Risk", value: 14 },
+      { label: "Medium Risk", value: 17 },
+      { label: "Low Risk", value: 8 },
+      { label: "Info", value: 4 },
+    ]}
+  />
+);

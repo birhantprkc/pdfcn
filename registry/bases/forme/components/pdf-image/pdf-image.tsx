@@ -81,23 +81,27 @@ const VARIANT_DEFAULTS: Record<PdfImageVariant, VariantDefaults> = {
 
 const UNSUPPORTED_FORMATS = new Set(["webp", "avif", "heic", "heif", "ico"]);
 
-function detectFormat(src: PdfImageSrc): string | null {
-  if (typeof src !== "string") {return null;}
+const detectFormat = (src: PdfImageSrc): string | null => {
+  if (typeof src !== "string") {
+    return null;
+  }
   const dataMatch = src.match(/^data:image\/([a-zA-Z0-9+.-]+)/);
-  if (dataMatch) {return dataMatch[1].toLowerCase();}
+  if (dataMatch) {
+    return dataMatch[1].toLowerCase();
+  }
   return src.split("?")[0].split(".").pop()?.toLowerCase() ?? null;
-}
+};
 
-function warnIfUnsupported(src: PdfImageSrc): void {
+const warnIfUnsupported = (src: PdfImageSrc): void => {
   const fmt = detectFormat(src);
   if (fmt && UNSUPPORTED_FORMATS.has(fmt)) {
     console.warn(
       `[PdfImage] Unsupported format "${fmt}" detected. react-pdf supports: JPEG, PNG, GIF (first frame), BMP, SVG. Convert to PNG or JPEG before use.`
     );
   }
-}
+};
 
-function createImageStyles(t: PdfcnTheme) {
+const createImageStyles = (t: PdfcnTheme) => {
   const { spacing } = t.primitives;
   return StyleSheet.create({
     caption: {
@@ -115,9 +119,9 @@ function createImageStyles(t: PdfcnTheme) {
       borderWidth: 1,
     },
   });
-}
+};
 
-export function PdfImage({
+export const PdfImage = ({
   src,
   variant = "default",
   width,
@@ -129,7 +133,7 @@ export function PdfImage({
   borderRadius,
   noWrap = true,
   style,
-}: PdfImageProps) {
+}: PdfImageProps) => {
   warnIfUnsupported(src);
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createImageStyles(theme), [theme]);
@@ -146,7 +150,6 @@ export function PdfImage({
     if (aspectRatio !== undefined && typeof resolvedWidth === "number") {
       return resolvedWidth / aspectRatio;
     }
-    return;
   })();
 
   const resolvedFit = fit ?? defaults.fit;
@@ -181,4 +184,4 @@ export function PdfImage({
   );
 
   return noWrap ? <View wrap={false}>{content}</View> : content;
-}
+};

@@ -44,7 +44,7 @@ export interface TextProps extends PDFComponentProps {
   noMargin?: boolean;
 }
 
-function createTextStyles(t: PdfcnTheme) {
+const createTextStyles = (t: PdfcnTheme) => {
   const { fontWeights, letterSpacing } = t.primitives;
   const base = {
     color: t.colors.foreground,
@@ -78,9 +78,9 @@ function createTextStyles(t: PdfcnTheme) {
     xl: { ...base, fontSize: t.primitives.typography.xl },
     xs: { ...base, fontSize: t.primitives.typography.xs },
   });
-}
+};
 
-export function Text({
+export const Text = ({
   variant,
   align,
   color,
@@ -91,7 +91,7 @@ export function Text({
   noMargin,
   children,
   style,
-}: TextProps) {
+}: TextProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createTextStyles(theme), [theme]);
   const weightMap = {
@@ -140,4 +140,4 @@ export function Text({
     styleArray.push(...[style].flat());
   }
   return <PDFText style={styleArray as never}>{children}</PDFText>;
-}
+};

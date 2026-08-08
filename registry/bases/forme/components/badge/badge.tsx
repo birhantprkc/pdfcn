@@ -45,7 +45,7 @@ export interface BadgeProps extends Omit<PDFComponentProps, "children"> {
   color?: string;
 }
 
-function createBadgeStyles(t: PdfcnTheme) {
+const createBadgeStyles = (t: PdfcnTheme) => {
   const { spacing, borderRadius, fontWeights } = t.primitives;
   const c = t.colors;
   const textBase = {
@@ -118,9 +118,9 @@ function createBadgeStyles(t: PdfcnTheme) {
       warning: sheet.textWarning,
     } as Record<BadgeVariant, Style>,
   };
-}
+};
 
-export function Badge({
+export const Badge = ({
   label,
   children,
   variant = "default",
@@ -128,7 +128,7 @@ export function Badge({
   background,
   color,
   style,
-}: BadgeProps) {
+}: BadgeProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createBadgeStyles(theme), [theme]);
   // `label` takes precedence; fall back to string children for React idiom compatibility
@@ -152,4 +152,4 @@ export function Badge({
       <PDFText style={textStyles as never}>{text}</PDFText>
     </View>
   );
-}
+};

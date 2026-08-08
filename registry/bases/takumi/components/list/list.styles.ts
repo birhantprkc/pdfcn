@@ -6,7 +6,7 @@ import { StyleSheet } from "../../lib/takumi-primitives";
  * Creates all list styles derived from the active theme.
  * @param t - The resolved PdfcnTheme instance.
  */
-export function createListStyles(t: PdfcnTheme) {
+export const createListStyles = (t: PdfcnTheme) => {
   const { borderRadius, spacing, fontWeights, typography } = t.primitives;
 
   return StyleSheet.create({
@@ -161,4 +161,4 @@ export function createListStyles(t: PdfcnTheme) {
       fontWeight: fontWeights.bold,
     },
   });
-}
+};

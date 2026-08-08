@@ -42,7 +42,7 @@ export interface StackProps extends PDFComponentProps {
   noWrap?: boolean;
 }
 
-function createStackStyles(t: PdfcnTheme) {
+const createStackStyles = (t: PdfcnTheme) => {
   const { spacing } = t.primitives;
   return StyleSheet.create({
     alignCenter: { alignItems: "center" },
@@ -63,9 +63,9 @@ function createStackStyles(t: PdfcnTheme) {
     vertical: { flexDirection: "column" },
     wrap: { flexWrap: "wrap" },
   });
-}
+};
 
-export function Stack({
+export const Stack = ({
   gap = "md",
   direction = "vertical",
   align,
@@ -74,7 +74,7 @@ export function Stack({
   noWrap,
   children,
   style,
-}: StackProps) {
+}: StackProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createStackStyles(theme), [theme]);
   const gapMap = {
@@ -118,4 +118,4 @@ export function Stack({
       {children}
     </View>
   );
-}
+};

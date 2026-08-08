@@ -1,0 +1,95 @@
+---
+title: "PDF Image"
+description: "Embedded image with fit options."
+---
+
+<ComponentPreview base="forme" name="pdf-image" hideCode />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/forme/pdf-image
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install @formepdf/react @formepdf/core
+```
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/bases/forme/components/pdf-image/pdf-image.tsx"
+  base="forme"
+  title="components/pdf/pdf-image.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme-context.tsx"
+  base="forme"
+  title="components/pdf/pdfcn-theme-context.tsx"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/pdfcn-theme.ts"
+  base="forme"
+  title="components/pdf/pdfcn-theme.ts"
+/>
+
+<ComponentSource
+  src="registry/bases/forme/lib/resolve-color.ts"
+  base="forme"
+  title="components/pdf/resolve-color.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfImage } from "@/components/pdf/pdf-image";
+```
+
+```tsx
+<PdfImage src="/logo.png" width={120} />
+```
+
+## API Reference
+
+### PdfImage
+
+| Prop           | Type              | Default   |
+| -------------- | ----------------- | --------- | --- |
+| `src`          | `PdfImageSrc`     | -         |
+| `variant`      | `PdfImageVariant` | 'default' |
+| `width`        | `number           | string`   | -   |
+| `height`       | `number           | string`   | -   |
+| `fit`          | `PdfImageFit`     | -         |
+| `position`     | `string`          | '50% 50%' |
+| `caption`      | `string`          | -         |
+| `aspectRatio`  | `number`          | -         |
+| `borderRadius` | `number`          | -         |
+| `noWrap`       | `boolean`         | true      |
+| `style`        | `Style`           | -         |

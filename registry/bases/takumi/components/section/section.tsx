@@ -36,7 +36,7 @@ export interface SectionProps extends PDFComponentProps {
   noWrap?: boolean;
 }
 
-function createSectionStyles(t: PdfcnTheme) {
+const createSectionStyles = (t: PdfcnTheme) => {
   const { spacing, borderRadius } = t.primitives;
   return StyleSheet.create({
     base: { flexDirection: "column" },
@@ -77,19 +77,18 @@ function createSectionStyles(t: PdfcnTheme) {
     spacingSm: { marginVertical: spacing[4] },
     spacingXl: { marginVertical: spacing[12] },
   });
-}
+};
 
-export function Section({
+export const Section = ({
   spacing = "md",
   padding,
   background,
   border,
   variant = "default",
   accentColor,
-  noWrap = false,
   children,
   style,
-}: SectionProps) {
+}: SectionProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createSectionStyles(theme), [theme]);
   const spacingMap = {
@@ -136,4 +135,4 @@ export function Section({
     styleArray.push(...[style].flat());
   }
   return <View style={styleArray}>{children}</View>;
-}
+};
