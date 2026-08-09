@@ -20,8 +20,8 @@ export const SITE = {
     TWITTER: "@alaymanguy",
   },
   DESCRIPTION: {
-    LONG: "A shadcn registry of PDF components for Takumi PDF and Forme PDF — invoices, reports, tables, and primitives with live PDF preview.",
-    SHORT: "PDF component registry for Takumi and Forme",
+    LONG: "A collection of beautifully designed, accessible, and customizable PDF components. Built on Takumi PDF and Forme. Works with shadcn/ui.",
+    SHORT: "Beautiful PDFs, made simple",
   },
   KEYWORDS: [
     "shadcn",

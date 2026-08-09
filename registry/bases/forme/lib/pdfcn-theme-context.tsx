@@ -5,7 +5,7 @@
 // All PDF components import from a single file — splitting would break the public API.
 
 import * as React from "react";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext } from "react";
 import type { DependencyList, ReactNode } from "react";
 
 import { theme as defaultTheme } from "./pdfcn-theme";
@@ -33,27 +33,24 @@ const hasActiveDispatcher = (): boolean => {
   const dispatcher =
     maybeInternals
       .__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?.H;
-  return dispatcher !== null;
+  return dispatcher != null;
 };
 
 export const PdfcnThemeProvider = ({
   theme,
   children,
-}: PdfcnThemeProviderProps) => {
-  const resolvedTheme = useMemo(() => theme ?? defaultTheme, [theme]);
-  return (
-    <PdfcnThemeContext.Provider value={resolvedTheme}>
-      {children}
-    </PdfcnThemeContext.Provider>
-  );
-};
+}: PdfcnThemeProviderProps) => (
+  <PdfcnThemeContext.Provider value={theme ?? defaultTheme}>
+    {children}
+  </PdfcnThemeContext.Provider>
+);
 
 /**
  * Regex patterns that indicate a hook was called outside a valid React render tree.
  * These errors are caught and suppressed so components fall back to safe defaults.
  */
 const HOOK_ERROR_PATTERNS =
-  /invalid hook call|useContext|useMemo|cannot read properties of null|dispatcher|renderWithHooks|resolveDispatcher|hooks can only be called|rendered fewer hooks/i;
+  /invalid hook call|minified react error #321|useContext|useMemo|cannot read properties of null|dispatcher|renderWithHooks|resolveDispatcher|hooks can only be called|rendered fewer hooks/i;
 
 /**
  * Calls a React hook with a graceful fallback for non-render environments (e.g. unit tests).

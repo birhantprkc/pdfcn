@@ -72,40 +72,37 @@ const COMPONENT_EXPORTS = {
   watermark: "PdfWatermark",
 };
 
-function titleCase(slug) {
-  return slug
+const titleCase = (slug) =>
+  slug
     .split("-")
     .map((p) => p.charAt(0).toUpperCase() + p.slice(1))
     .join(" ");
-}
 
-function demoForComponent(base, name) {
+const demoForComponent = (base, name) => {
   const exportName =
-    COMPONENT_EXPORTS[name] ?? titleCase(name).replaceAll(' ', "");
+    COMPONENT_EXPORTS[name] ?? titleCase(name).replaceAll(" ", "");
   const isForme = base === "forme";
 
   const wrappers = isForme
     ? `import { Document, Page } from "@formepdf/react";
-import { PdfcnThemeProvider } from "@/registry/bases/forme/lib/pdfcn-theme-context";
 import { ${exportName} } from "@/registry/bases/forme/components/${name}";
 
-export default function Demo() {
+const Demo =() => {
   return (
     <Document>
       <Page size="A4" margin={48}>
-        <PdfcnThemeProvider>
-          <DemoBody />
-        </PdfcnThemeProvider>
+        <DemoBody />
       </Page>
     </Document>
   );
 }
+export default Demo;
 `
     : `import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
 import { ${exportName} } from "@/registry/bases/takumi/components/${name}";
 
-export default function Demo() {
+const Demo =() => {
   return (
     <Document>
       <Page size="A4">
@@ -116,6 +113,7 @@ export default function Demo() {
     </Document>
   );
 }
+export default Demo;
 `;
 
   const bodies = {
@@ -243,10 +241,11 @@ export default function Demo() {
 
   // table demo has its own imports - prepend carefully
   if (name === "table") {
+    const providerOpen = isForme ? "" : "        <PdfcnThemeProvider>\n";
+    const providerClose = isForme ? "" : "        </PdfcnThemeProvider>\n";
     return `${
       isForme
         ? `import { Document, Page } from "@formepdf/react";
-import { PdfcnThemeProvider } from "@/registry/bases/forme/lib/pdfcn-theme-context";
 import { Table } from "@/registry/bases/forme/components/table";
 `
         : `import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
@@ -255,19 +254,18 @@ import { Table } from "@/registry/bases/takumi/components/table";
 `
     }import { TableBody, TableCell, TableHeader, TableRow, Text } from "@/registry/bases/${base}/components";
 
-export default function Demo() {
+const Demo =() => {
   return (
     <Document>
       <Page size="A4"${isForme ? " margin={48}" : ""}>
-        <PdfcnThemeProvider>
-          <DemoBody />
-        </PdfcnThemeProvider>
-      </Page>
+${providerOpen}        <DemoBody />
+${providerClose}      </Page>
     </Document>
   );
 }
+export default Demo;
 
-function DemoBody() {
+const DemoBody =() => {
   return (
     <Table>
       <TableHeader>
@@ -291,6 +289,8 @@ function DemoBody() {
   // For stack/section demos need Text import
   const needsText = [
     "stack",
+    "section",
+    "pdf-image",
     "page-break",
     "keep-together",
     "watermark",
@@ -303,9 +303,9 @@ function DemoBody() {
     `import { ${exportName} } from "@/registry/bases/${base}/components/${name}";`,
     `import { ${exportName} } from "@/registry/bases/${base}/components/${name}";\n${textImport}`
   )}\n${body}\n`;
-}
+};
 
-function demoForBlock(base, name) {
+const demoForBlock = (base, name) => {
   const exportMap = {
     "invoice-classic": "InvoiceClassicDocument",
     "invoice-consultant": "InvoiceConsultantDocument",
@@ -325,18 +325,19 @@ function demoForBlock(base, name) {
     `registry/bases/${base}/blocks/${name}/${name}.tsx`
   );
   const src = fs.readFileSync(file, "utf-8");
-  const match = src.match(/export function (\w+)/);
+  const match = src.match(/export (?:const|function) (\w+)/);
   const fn = match?.[1] ?? exp;
 
   return `import { ${fn} } from "@/registry/bases/${base}/blocks/${name}/${name}";
 
-export default function Demo() {
+const Demo =() => {
   return <${fn} />;
 }
+export default Demo;
 `;
-}
+};
 
-function collectFiles(base, kind, name) {
+const collectFiles = (base, kind, name) => {
   const dir = path.join(
     ROOT,
     `registry/bases/${base}/${kind === "block" ? "blocks" : "components"}/${name}`
@@ -352,9 +353,9 @@ function collectFiles(base, kind, name) {
       path: `registry/bases/${base}/${kind === "block" ? "blocks" : "components"}/${name}/${f}`,
       type: kind === "block" ? "registry:block" : "registry:component",
     }));
-}
+};
 
-function libFiles(base) {
+const libFiles = (base) => {
   const files = [
     "pdfcn-theme.ts",
     "pdfcn-theme-context.tsx",
@@ -373,9 +374,9 @@ function libFiles(base) {
       path: `registry/bases/${base}/lib/${f}`,
       type: "registry:lib",
     }));
-}
+};
 
-function main() {
+const main = () => {
   const items = [];
   const demoImports = { forme: [], takumi: [] };
 
@@ -511,7 +512,7 @@ function main() {
   let indexSrc = `import type { ComponentType } from "react";\nimport type { BaseName } from "@/registry/bases";\n\n`;
   for (const base of ["takumi", "forme"]) {
     for (const name of demoImports[base]) {
-      const ident = `${base}_${name.replaceAll('-', "_")}`;
+      const ident = `${base}_${name.replaceAll("-", "_")}`;
       indexSrc += `import ${ident} from "@/examples/${base}/${name}";\n`;
     }
   }
@@ -519,7 +520,7 @@ function main() {
   for (const base of ["takumi", "forme"]) {
     indexSrc += `  ${base}: {\n`;
     for (const name of demoImports[base]) {
-      const ident = `${base}_${name.replaceAll('-', "_")}`;
+      const ident = `${base}_${name.replaceAll("-", "_")}`;
       indexSrc += `    "${name}": ${ident},\n`;
     }
     indexSrc += `  },\n`;
@@ -530,6 +531,6 @@ function main() {
   console.log("items:", items.length);
   console.log("demos takumi:", demoImports.takumi.length);
   console.log("demos forme:", demoImports.forme.length);
-}
+};
 
 main();

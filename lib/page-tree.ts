@@ -3,6 +3,7 @@ import type {
   Root as PageTreeRoot,
 } from "fumadocs-core/page-tree";
 
+import { ROUTES } from "@/constants/routes";
 import {
   EXCLUDED_SECTIONS,
   isBlocksFolder,
@@ -41,7 +42,9 @@ export const getPagesFromFolder = (folder: PageTreeFolder): PageTreePage[] =>
 
 const matchesBase = (folder: PageTreeFolder, base: string): boolean =>
   folder.$id === base ||
-  (typeof folder.name === "string" && folder.name.toLowerCase() === base);
+  String(folder.$id ?? "").endsWith(`/${base}`) ||
+  (typeof folder.name === "string" &&
+    folder.name.toLowerCase() === base.toLowerCase());
 
 export const findBaseFolder = (
   folder: PageTreeFolder,
@@ -118,7 +121,9 @@ export const getTreeGroups = (
       if (baseFolder) {
         // Get pages from the base folder
         const pages = getAllPagesFromFolder(baseFolder).filter(
-          (page) => !page.url.endsWith("/components") && !page.url.endsWith("/components/")
+          (page) =>
+            page.url !== ROUTES.DOCS_COMPONENTS &&
+            page.url !== `${ROUTES.DOCS_COMPONENTS}/${currentBase}`
         );
         if (pages.length > 0) {
           groups.push({
@@ -129,7 +134,7 @@ export const getTreeGroups = (
       } else {
         // No base folder found, get all pages from components folder
         const pages = getAllPagesFromFolder(item).filter(
-          (page) => !page.url.endsWith("/components") && !page.url.endsWith("/components/")
+          (page) => page.url !== ROUTES.DOCS_COMPONENTS
         );
         if (pages.length > 0) {
           groups.push({
@@ -140,7 +145,9 @@ export const getTreeGroups = (
       }
     } else if (isBlocksFolder(item)) {
       const pages = getFolderPages(item, currentBase).filter(
-        (page) => !page.url.endsWith("/blocks") && !page.url.endsWith("/blocks/")
+        (page) =>
+          page.url !== ROUTES.DOCS_BLOCKS &&
+          page.url !== `${ROUTES.DOCS_BLOCKS}/${currentBase}`
       );
       if (pages.length > 0) {
         groups.push({

@@ -13,13 +13,15 @@
   "files": [
     {
       "path": "registry/bases/takumi/components/page-break/page-break.tsx",
-      "content": "import type { PDFComponentProps } from \"@/registry/themes\";\n\nimport { View } from \"../../lib/takumi-primitives\";\n\nexport interface PageBreakProps extends Omit<PDFComponentProps, \"children\"> {\n  children?: never;\n}\n\nexport function PageBreak({ style }: PageBreakProps) {\n  return (\n    <View style={[{ breakBefore: \"page\" }, style].filter(Boolean) as never} />\n  );\n}\n",
-      "type": "registry:component"
+      "content": "import type { PDFComponentProps } from \"@/registry/themes\";\n\nimport { View } from \"../../lib/takumi-primitives\";\n\nexport interface PageBreakProps extends Omit<PDFComponentProps, \"children\"> {\n  children?: never;\n}\n\nexport const PageBreak = ({ style }: PageBreakProps) => (\n  <View style={[{ breakBefore: \"page\" }, style].filter(Boolean) as never} />\n);\n",
+      "type": "registry:component",
+      "target": "components/pdf/components/page-break/page-break.tsx"
     },
     {
       "path": "registry/bases/takumi/components/page-break/index.ts",
       "content": "export { PageBreak } from \"./page-break\";\nexport type { PageBreakProps } from \"./page-break\";\n",
-      "type": "registry:component"
+      "type": "registry:component",
+      "target": "components/pdf/components/page-break/index.ts"
     }
   ],
   "type": "registry:ui"

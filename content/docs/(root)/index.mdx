@@ -1,22 +1,73 @@
 ---
-title: Introduction
-description: pdfcn is a shadcn registry of PDF components for Takumi PDF and Forme PDF.
+title: "Introduction"
+description: "Copy-paste PDF components for React. Built on Takumi PDF and Forme, works with the shadcn CLI."
 ---
 
-# pdfcn
+**pdfcn** provides beautifully designed, accessible, and customizable PDF components. Built on [Takumi PDF](https://takumi.kane.tw/docs/pdf) and [Forme](https://docs.formepdf.com), and designed to work seamlessly with the [shadcn CLI](https://ui.shadcn.com).
 
-A registry of PDF primitives, layouts, and document blocks with **100% parity** across two bases:
+## Philosophy
 
-- **Takumi PDF** — JSX/Tailwind to paged PDF (WASM). Browser preview via `react-pdf`.
-- **Forme PDF** — React primitives with Forme’s layout engine. Client and server render.
+pdfcn follows the shadcn model for document generation: copy-paste components you can own, with zero lock-in and sensible defaults that work immediately.
 
-## Install
+PDF layouts are often treated as one-off templates — assembled with renderer-specific primitives, duplicated styling, and brittle page-break logic. pdfcn takes a different approach. It stays close to each renderer's primitives, keeps the API familiar across Takumi PDF and Forme, and lets you drop down to the underlying renderer whenever you need more control.
 
-```bash
-npx shadcn@latest add @pdfcn/takumi/text
-npx shadcn@latest add @pdfcn/forme/invoice-minimal
-```
+The goal is simple: make generated PDFs feel like the rest of your stack — composable, themeable, accessible, and easy to customize.
 
-## Bases
+## Why pdfcn?
 
-Switch bases in the docs to see the same component implemented for each engine. Public props and variants match [pdfx](https://github.com/akii09/pdfx) — only the PDF primitives differ.
+Most PDF component setups are either too opinionated or too scattered. pdfcn is built for teams that want to ship quickly without giving up control:
+
+- **Own Your Code:** Copy the components into your project and customize everything.
+- **Start Fast:** Run one command and render your first document with production-ready defaults.
+- **Choose Your Engine:** Use the same component API with Takumi PDF or Forme, then drop to raw renderer APIs when needed.
+
+## Two Rendering Bases
+
+Every component and block ships in two implementations:
+
+- [Takumi PDF](https://takumi.kane.tw/docs/pdf) — JSX and Tailwind-style classes rendered to paged, selectable-text PDFs with WebAssembly.
+- [Forme](https://docs.formepdf.com) — React PDF primitives rendered with a page-native layout engine and first-class browser support.
+
+The public props and variants follow [pdfx](https://github.com/akii09/pdfx); only the renderer-specific primitives differ.
+
+## Features
+
+<div className="not-prose grid gap-4 sm:grid-cols-2 mt-4">
+  <FeatureCard
+    icon={ZapIcon}
+    title="Zero Config"
+    description="Works out of the box with sensible defaults and renderer-aware installation."
+  />
+  <FeatureCard
+    icon={SunMoonIcon}
+    title="Theme Aware"
+    description="Share a consistent PDF theme across components, blocks, and both rendering bases."
+  />
+  <FeatureCard
+    icon={LayoutGridIcon}
+    title="Composable"
+    description="Build invoices, reports, forms, and tables from small declarative components."
+  />
+  <FeatureCard
+    icon={Code2Icon}
+    title="TypeScript"
+    description="Full type safety with matching public props across Takumi PDF and Forme."
+  />
+  <FeatureCard
+    icon={ClipboardCopyIcon}
+    title="Copy & Paste"
+    description="Own your PDF code. Install it into your project and customize every detail."
+  />
+  <FeatureCard
+    icon={BlocksIcon}
+    title="shadcn Compatible"
+    description="Uses the shadcn registry format — add components and blocks with one command."
+  />
+</div>
+
+import { ZapIcon } from "lucide-react";
+import { SunMoonIcon } from "lucide-react";
+import { LayoutGridIcon } from "lucide-react";
+import { Code2Icon } from "lucide-react";
+import { ClipboardCopyIcon } from "lucide-react";
+import { BlocksIcon } from "lucide-react";

@@ -3,7 +3,7 @@ import path from "node:path";
 
 const ROOT = process.cwd();
 
-function walk(dir, out = []) {
+const walk = (dir, out = []) => {
   if (!fs.existsSync(dir)) {
     return out;
   }
@@ -16,9 +16,9 @@ function walk(dir, out = []) {
     }
   }
   return out;
-}
+};
 
-function fixContent(content, base) {
+const fixContent = (content, base) => {
   let c = content;
   c = c.replaceAll(/,\s*=\s*false,/g, ", fixed = false,");
   c = c.replaceAll(/,\s*=\s*true,/g, ", fixed = true,");
@@ -27,10 +27,10 @@ function fixContent(content, base) {
     ""
   );
   c = c.replaceAll(
-    '@react-pdf/renderer',
+    "@react-pdf/renderer",
     base === "forme" ? "@formepdf/react" : "Takumi PDF primitives"
   );
-  c = c.replaceAll('pdfx-theme', "pdfcn-theme");
+  c = c.replaceAll("pdfx-theme", "pdfcn-theme");
 
   if (base === "takumi") {
     // style={[{ breakInside: "avoid" as const } style={foo}].filter(Boolean)}
@@ -40,7 +40,7 @@ function fixContent(content, base) {
     );
   }
   return c;
-}
+};
 
 for (const base of ["takumi", "forme"]) {
   const baseDir = path.join(ROOT, `registry/bases/${base}`);
@@ -61,14 +61,14 @@ import { Svg as FormeSvg } from "@formepdf/react";
 
 type AnyProps = Record<string, unknown> & { children?: ReactNode; style?: CSSProperties };
 
-export function Svg({
+export const Svg =({
   children,
   width,
   height,
   viewBox,
   style,
   ...rest
-}: AnyProps & { width?: number; height?: number; viewBox?: string }) {
+}: AnyProps & { width?: number; height?: number; viewBox?: string }) => {
   return (
     <FormeSvg
       width={width as number}
@@ -192,43 +192,44 @@ const qrTakumi = path.join(
   "registry/bases/takumi/components/qrcode/qrcode.tsx"
 );
 let qrt = fs.readFileSync(qrTakumi, "utf-8");
-if (qrt.includes("@react-pdf") || qrt.includes("takumi-primitives")) {
-  // ensure Svg/Rect from takumi-svg
-  if (qrt.includes("Svg") && !qrt.includes("takumi-svg")) {
-    qrt = qrt.replace(
-      /import \{([^}]+)\} from "\.\.\/\.\.\/lib\/takumi-primitives";/,
-      (_m, imports) => {
-        const list = imports
-          .split(",")
-          .map((s) => s.trim())
-          .filter(Boolean);
-        const fromPrim = [];
-        const fromSvg = [];
-        for (const i of list) {
-          if (["Svg", "Rect", "Circle", "G", "Line", "Path"].includes(i)) {
-            fromSvg.push(i);
-          } else if (i === "Text as SvgText") {
-            fromSvg.push("SvgText");
-          } else {
-            fromPrim.push(i);
-          }
+if (
+  (qrt.includes("@react-pdf") || qrt.includes("takumi-primitives")) &&
+  qrt.includes("Svg") &&
+  !qrt.includes("takumi-svg")
+) {
+  qrt = qrt.replace(
+    /import \{([^}]+)\} from "\.\.\/\.\.\/lib\/takumi-primitives";/,
+    (_m, imports) => {
+      const list = imports
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const fromPrim = [];
+      const fromSvg = [];
+      for (const i of list) {
+        if (["Svg", "Rect", "Circle", "G", "Line", "Path"].includes(i)) {
+          fromSvg.push(i);
+        } else if (i === "Text as SvgText") {
+          fromSvg.push("SvgText");
+        } else {
+          fromPrim.push(i);
         }
-        const linesOut = [];
-        if (fromPrim.length) {
-          linesOut.push(
-            `import { ${fromPrim.join(", ")} } from "../../lib/takumi-primitives";`
-          );
-        }
-        if (fromSvg.length) {
-          linesOut.push(
-            `import { ${[...new Set(fromSvg)].join(", ")} } from "../../lib/takumi-svg";`
-          );
-        }
-        return linesOut.join("\n");
       }
-    );
-    fs.writeFileSync(qrTakumi, qrt);
-  }
+      const linesOut = [];
+      if (fromPrim.length) {
+        linesOut.push(
+          `import { ${fromPrim.join(", ")} } from "../../lib/takumi-primitives";`
+        );
+      }
+      if (fromSvg.length) {
+        linesOut.push(
+          `import { ${[...new Set(fromSvg)].join(", ")} } from "../../lib/takumi-svg";`
+        );
+      }
+      return linesOut.join("\n");
+    }
+  );
+  fs.writeFileSync(qrTakumi, qrt);
 }
 
 const leftover = [];

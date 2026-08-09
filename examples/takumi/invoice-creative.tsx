@@ -1,4 +1,6 @@
 import { InvoiceCreativeDocument } from "@/registry/bases/takumi/blocks/invoice-creative/invoice-creative";
 
-const Demo = () => <InvoiceCreativeDocument />;
+const Demo =() => {
+  return <InvoiceCreativeDocument />;
+}
 export default Demo;

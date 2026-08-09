@@ -9,6 +9,7 @@ import {
   readOptionalFromRoot,
 } from "@/lib/registry";
 import { cn } from "@/lib/utils";
+import type { BaseName } from "@/registry/bases";
 
 const ComponentCode = ({
   code,
@@ -38,6 +39,7 @@ const ComponentCode = ({
 );
 
 export const ComponentSource = async ({
+  base = "takumi",
   name,
   src,
   title,
@@ -45,6 +47,7 @@ export const ComponentSource = async ({
   className,
   language,
 }: {
+  base?: BaseName;
   name?: string;
   src?: string;
   title?: string;
@@ -55,7 +58,9 @@ export const ComponentSource = async ({
   let code: string | null = null;
 
   if (name) {
-    code = (await getDemoSource(name)) ?? (await getRegistrySource(name));
+    code =
+      (await getDemoSource(name, base)) ??
+      (await getRegistrySource(name, base));
   }
 
   if (src) {

@@ -87,3 +87,29 @@ import { PdfForm } from "@/components/pdf/form";
 ```tsx
 <PdfForm title="Contact" groups={[{ fields: [{ label: "Email" }] }]} />
 ```
+
+### Variants
+
+```tsx
+<PdfForm
+  variant="outlined"
+  labelPosition="left"
+  groups={[{ title: "Contact", layout: "two-column", fields }]}
+/>
+```
+
+## API Reference
+
+### PdfForm
+
+| Prop            | Type                | Default       |
+| --------------- | ------------------- | ------------- |
+| `title`         | `string`            | -             |
+| `subtitle`      | `string`            | -             |
+| `groups`        | `PdfFormGroup[]`    | -             |
+| `variant`       | `PdfFormVariant`    | `'underline'` |
+| `labelPosition` | `'above' \| 'left'` | `'above'`     |
+| `noWrap`        | `boolean`           | `false`       |
+| `style`         | `Style`             | -             |
+
+`PdfFormVariant` is `'underline' | 'box' | 'outlined' | 'ghost'`. Groups support `single`, `two-column`, and `three-column` layouts.

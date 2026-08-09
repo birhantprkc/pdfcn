@@ -9,20 +9,18 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const SRC = path.join(ROOT, ".pdfx-ref/apps/www/src/registry");
 const SHARED = path.join(ROOT, ".pdfx-ref/packages/shared/src");
 
-function ensureDir(dir: string) {
+const ensureDir = (dir: string) => {
   fs.mkdirSync(dir, { recursive: true });
-}
+};
 
-function write(file: string, content: string) {
+const write = (file: string, content: string) => {
   ensureDir(path.dirname(file));
   fs.writeFileSync(file, content, "utf-8");
-}
+};
 
-function read(file: string) {
-  return fs.readFileSync(file, "utf-8");
-}
+const read = (file: string) => fs.readFileSync(file, "utf-8");
 
-function walk(dir: string, out: string[] = []): string[] {
+const walk = (dir: string, out: string[] = []): string[] => {
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
@@ -32,10 +30,10 @@ function walk(dir: string, out: string[] = []): string[] {
     }
   }
   return out;
-}
+};
 
-function renameShared(content: string) {
-  return content
+const renameShared = (content: string) =>
+  content
     .replaceAll("PdfxTheme", "PdfcnTheme")
     .replaceAll("PDFx", "pdfcn")
     .replaceAll("@pdfx/shared", "@/registry/themes")
@@ -54,10 +52,9 @@ function renameShared(content: string) {
     .replaceAll("./blueprint.js", "./blueprint")
     .replaceAll("from './types.js'", "from './component-types'")
     .replaceAll('from "./types.js"', 'from "./component-types"');
-}
 
-function transformCommon(content: string) {
-  return content
+const transformCommon = (content: string) =>
+  content
     .replaceAll("@pdfx/shared", "@/registry/themes")
     .replaceAll("PdfxTheme", "PdfcnTheme")
     .replaceAll("usePdfxTheme", "usePdfcnTheme")
@@ -75,9 +72,8 @@ function transformCommon(content: string) {
       /from ['"]\.\/pdfx-theme-context['"]/g,
       'from "./pdfcn-theme-context"'
     );
-}
 
-function transformForme(content: string) {
+const transformForme = (content: string) => {
   let out = transformCommon(content);
   out = out.replaceAll(
     "@/registry/bases/PLACEHOLDER/components",
@@ -153,9 +149,9 @@ function transformForme(content: string) {
   );
 
   return out;
-}
+};
 
-function transformTakumi(content: string) {
+const transformTakumi = (content: string) => {
   let out = transformCommon(content);
   out = out.replaceAll(
     "@/registry/bases/PLACEHOLDER/components",
@@ -283,9 +279,9 @@ function transformTakumi(content: string) {
   out = out.replaceAll(/\s+fixed\b(?!=)/g, "");
 
   return out;
-}
+};
 
-function portLib(base: "takumi" | "forme") {
+const portLib = (base: "takumi" | "forme") => {
   const libDir = path.join(ROOT, `registry/bases/${base}/lib`);
   ensureDir(libDir);
 
@@ -328,7 +324,7 @@ type ViewProps = {
   minPresenceAhead?: number;
 };
 
-function flatten(style?: ViewProps["style"]): CSSProperties | undefined {
+const flatten =(style?: ViewProps["style"]): CSSProperties | undefined => {
   if (!style) return undefined;
   if (Array.isArray(style)) {
     return Object.assign({}, ...style.filter(Boolean));
@@ -336,7 +332,7 @@ function flatten(style?: ViewProps["style"]): CSSProperties | undefined {
   return style;
 }
 
-export function View({ children, style, className, ...rest }: ViewProps) {
+export const View =({ children, style, className, ...rest }: ViewProps) => {
   const { wrap: _w, fixed: _f, break: br, minPresenceAhead: _m, ...dom } = rest as ViewProps & Record<string, unknown>;
   const merged = flatten(style) ?? {};
   if (br) Object.assign(merged, { breakBefore: "page" });
@@ -356,7 +352,7 @@ type TextProps = {
   href?: string;
 };
 
-export function Text({ children, style, className, render: _render, href, ...rest }: TextProps) {
+export const Text =({ children, style, className, render: _render, href, ...rest }: TextProps) => {
   const merged = flatten(style);
   if (href) {
     return (
@@ -372,15 +368,15 @@ export function Text({ children, style, className, render: _render, href, ...res
   );
 }
 
-export function Image({
+export const Image =({
   src,
   style,
   ...rest
-}: { src: string; style?: Style | Style[] } & ImgHTMLAttributes<HTMLImageElement>) {
+}: { src: string; style?: Style | Style[] } & ImgHTMLAttributes<HTMLImageElement>) => {
   return <img src={src} style={flatten(style)} alt="" {...rest} />;
 }
 
-export function Link({
+export const Link =({
   src,
   children,
   style,
@@ -389,7 +385,7 @@ export function Link({
   src: string;
   children?: ReactNode;
   style?: Style | Style[];
-} & AnchorHTMLAttributes<HTMLAnchorElement>) {
+} & AnchorHTMLAttributes<HTMLAnchorElement>) => {
   return (
     <a href={src} style={flatten(style)} {...rest}>
       {children}
@@ -397,7 +393,7 @@ export function Link({
   );
 }
 
-export function Document({
+export const Document =({
   children,
   title,
   style,
@@ -405,7 +401,7 @@ export function Document({
   children?: ReactNode;
   title?: string;
   style?: Style | Style[];
-}) {
+}) => {
   return (
     <div data-pdf-document={title} style={flatten(style)}>
       {children}
@@ -413,7 +409,7 @@ export function Document({
   );
 }
 
-export function Page({
+export const Page =({
   children,
   size: _size,
   style,
@@ -421,7 +417,7 @@ export function Page({
   children?: ReactNode;
   size?: string | { width: number; height: number };
   style?: Style | Style[];
-}) {
+}) => {
   return (
     <div data-pdf-page style={flatten(style)}>
       {children}
@@ -435,11 +431,11 @@ export function Page({
       path.join(libDir, "takumi-svg.tsx"),
       `import type { CSSProperties, ReactNode, SVGProps } from "react";
 
-export function Svg({
+export const Svg =({
   children,
   style,
   ...rest
-}: SVGProps<SVGSVGElement> & { style?: CSSProperties }) {
+}: SVGProps<SVGSVGElement> & { style?: CSSProperties }) => {
   return (
     <svg style={style} {...rest}>
       {children}
@@ -447,26 +443,26 @@ export function Svg({
   );
 }
 
-export function Rect(props: SVGProps<SVGRectElement>) {
+export const Rect =(props: SVGProps<SVGRectElement>) => {
   return <rect {...props} />;
 }
-export function Circle(props: SVGProps<SVGCircleElement>) {
+export const Circle =(props: SVGProps<SVGCircleElement>) => {
   return <circle {...props} />;
 }
-export function G(props: SVGProps<SVGGElement>) {
+export const G =(props: SVGProps<SVGGElement>) => {
   return <g {...props} />;
 }
-export function Line(props: SVGProps<SVGLineElement>) {
+export const Line =(props: SVGProps<SVGLineElement>) => {
   return <line {...props} />;
 }
-export function Path(props: SVGProps<SVGPathElement>) {
+export const Path =(props: SVGProps<SVGPathElement>) => {
   return <path {...props} />;
 }
-export function SvgText({
+export const SvgText =({
   children,
   style,
   ...rest
-}: SVGProps<SVGTextElement> & { children?: ReactNode; style?: CSSProperties }) {
+}: SVGProps<SVGTextElement> & { children?: ReactNode; style?: CSSProperties }) => {
   return (
     <text style={style} {...rest}>
       {children}
@@ -476,9 +472,9 @@ export function SvgText({
 `
     );
   }
-}
+};
 
-function portFile(rel: string, base: "takumi" | "forme") {
+const portFile = (rel: string, base: "takumi" | "forme") => {
   const srcFile = path.join(SRC, rel);
   if (!fs.existsSync(srcFile)) {
     return;
@@ -490,9 +486,9 @@ function portFile(rel: string, base: "takumi" | "forme") {
     .replaceAll("pdfx-theme", "pdfcn-theme")
     .replaceAll("pdfx-theme-context", "pdfcn-theme-context");
   write(path.join(ROOT, `registry/bases/${base}`, destRel), transformed);
-}
+};
 
-function main() {
+const main = () => {
   // Shared themes
   const themesDir = path.join(ROOT, "registry/themes");
   ensureDir(themesDir);
@@ -649,7 +645,7 @@ export interface PageBreakProps extends Omit<PDFComponentProps, "children"> {
   children?: never;
 }
 
-export function PageBreak(_props: PageBreakProps) {
+export const PageBreak =(_props: PageBreakProps) => {
   return <FormePageBreak />;
 }
 `
@@ -687,7 +683,7 @@ export interface KeepTogetherProps {
   style?: Style;
 }
 
-export function KeepTogether({ children, style }: KeepTogetherProps) {
+export const KeepTogether =({ children, style }: KeepTogetherProps) => {
   return (
     <View wrap={false} style={style as never}>
       {children}
@@ -714,7 +710,7 @@ export interface KeepTogetherProps {
   style?: Style;
 }
 
-export function KeepTogether({ children, style }: KeepTogetherProps) {
+export const KeepTogether =({ children, style }: KeepTogetherProps) => {
   return (
     <View style={[{ breakInside: "avoid" }, style as never].filter(Boolean)}>
       {children}
@@ -736,7 +732,7 @@ export interface PageBreakProps extends Omit<PDFComponentProps, "children"> {
   children?: never;
 }
 
-export function PageBreak({ style }: PageBreakProps) {
+export const PageBreak =({ style }: PageBreakProps) => {
   return <View style={[{ breakBefore: "page" }, style as never].filter(Boolean)} />;
 }
 `
@@ -759,6 +755,6 @@ export function PageBreak({ style }: PageBreakProps) {
     "forme blocks:",
     fs.readdirSync(path.join(ROOT, "registry/bases/forme/blocks")).length
   );
-}
+};
 
 main();

@@ -68,9 +68,9 @@ export const DocsBaseSwitcher = ({
           {baseItem.title}
         </Link>
       ))}
-      {activeBase ? (
-        <div className="ml-auto shrink-0 text-sm text-muted-foreground opacity-80">
-          {activeBase.title}
+      {activeBase?.meta?.logo ? (
+        <div className="ml-auto shrink-0 text-muted-foreground opacity-80 [&_svg]:h-5 [&_svg]:w-fit">
+          <activeBase.meta.logo aria-label={`${activeBase.title} logo`} />
         </div>
       ) : null}
     </div>

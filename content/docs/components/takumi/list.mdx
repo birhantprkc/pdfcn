@@ -87,3 +87,24 @@ import { PdfList } from "@/components/pdf/list";
 ```tsx
 <PdfList items={[{ text: "Alpha" }, { text: "Beta" }]} />
 ```
+
+### Variants
+
+```tsx
+<PdfList variant="numbered" items={items} />
+<PdfList variant="checklist" items={checklistItems} gap="md" />
+```
+
+## API Reference
+
+### PdfList
+
+| Prop      | Type                         | Default    |
+| --------- | ---------------------------- | ---------- |
+| `items`   | `ListItem[]`                 | -          |
+| `variant` | `ListVariant`                | `'bullet'` |
+| `gap`     | `'xs' \| 'sm' \| 'md'`       | `'sm'`     |
+| `noWrap`  | `boolean`                    | `false`    |
+| `style`   | `Style`                      | -          |
+
+`ListVariant` is `'bullet' | 'numbered' | 'checklist' | 'icon' | 'multi-level' | 'descriptive'`.

@@ -1,4 +1,6 @@
 import { FinancialReportDocument } from "@/registry/bases/takumi/blocks/report-financial/report-financial";
 
-const Demo = () => <FinancialReportDocument />;
+const Demo =() => {
+  return <FinancialReportDocument />;
+}
 export default Demo;

@@ -1,103 +1,76 @@
 ---
 title: Installation
-description: How to use this template to build your own shadcn component.
+description: Install PDF components, blocks, and themes from the registry.
 ---
 
-## Building Your Component
+## Prerequisites
 
-### 1. Fork the Template
+A React project that can run either [Takumi PDF](https://takumi.kane.tw/docs/pdf) or [Forme](https://docs.formepdf.com).
 
-Click "Use this template" on [GitHub](https://github.com/shadcn-labs/startercn).
+## Installation
 
-### 2. Install Dependencies
+Run the following command to add a Takumi PDF component:
 
 ```bash
-pnpm install
+npx shadcn@latest add @pdfcn/takumi/text
 ```
 
-### 3. Create Your Component
+Forme components use the `forme/` namespace:
 
-Replace the placeholder at `registry/new-york/your-component.tsx`:
+```bash
+npx shadcn@latest add @pdfcn/forme/text
+```
+
+The registry installs the matching renderer dependencies and the shared theme utilities required by the selected component.
+
+## Usage
+
+Import the installed component and use it inside your renderer's document primitives:
 
 ```tsx
-import { forwardRef, HTMLAttributes } from "react";
-import { cn } from "@/lib/utils";
+import { Document, Page } from "@/components/pdf/takumi-primitives";
+import { PdfcnThemeProvider } from "@/components/pdf/pdfcn-theme-context";
+import { Text } from "@/components/pdf/text";
 
-export interface MyButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "outline";
-}
-
-const MyButton = forwardRef<HTMLButtonElement, MyButtonProps>(
-  ({ className, variant = "default", ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(
-          "rounded-md px-4 py-2 font-medium",
-          variant === "default" && "bg-primary text-primary-foreground",
-          variant === "outline" && "border border-input",
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-
-MyButton.displayName = "MyButton";
-
-export { MyButton };
-```
-
-### 4. Update registry.json
-
-```json
-{
-  "name": "your-name/your-registry",
-  "homepage": "https://your-site.com",
-  "items": [
-    {
-      "name": "my-button",
-      "type": "registry:ui",
-      "title": "My Button",
-      "description": "A custom button component.",
-      "files": [
-        {
-          "path": "registry/new-york/my-button.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/my-button.tsx"
-        }
-      ]
-    }
-  ]
+export function Invoice() {
+  return (
+    <Document>
+      <Page size="A4">
+        <PdfcnThemeProvider>
+          <Text variant="title">Invoice</Text>
+        </PdfcnThemeProvider>
+      </Page>
+    </Document>
+  );
 }
 ```
 
-### 5. Build & Deploy
+For Forme, use `Document` and `Page` from `@formepdf/react`; the installed pdfcn component API stays the same.
+
+## Install a Block
+
+Blocks are complete document templates composed from registry components:
 
 ```bash
-pnpm registry:build
-pnpm build
+npx shadcn@latest add @pdfcn/takumi/invoice-minimal
 ```
 
-Deploy your app and your component is live!
-
----
-
-## Installing Components
-
-To install a component from any registry built with this template:
+Use the `forme/` namespace for the equivalent Forme document:
 
 ```bash
-npx shadcn@latest add https://example.com/r/my-button.json
+npx shadcn@latest add @pdfcn/forme/invoice-minimal
 ```
 
-Then use it:
+## Install a Theme
 
-```tsx
-import { MyButton } from "@/components/ui/my-button";
+pdfcn ships theme presets that integrate with `PdfcnThemeProvider`:
 
-export function Demo() {
-  return <MyButton variant="outline">Click me</MyButton>;
-}
+```bash
+npx shadcn@latest add @pdfcn/takumi/theme-minimal
+```
+
+For Forme:
+
+```bash
+npx shadcn@latest add @pdfcn/forme/theme-minimal
 ```

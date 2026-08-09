@@ -10,7 +10,7 @@ import { ComponentSource } from "@/components/component-source";
 import { ComponentsList } from "@/components/components-list";
 import { CopyButton } from "@/components/copy-button";
 import { getIconForLanguageExtension } from "@/components/icons";
-import { PdfPreview } from "@/components/pdf-preview";
+import { PdfPreview } from "@/components/pdf-preview-wrapper";
 import {
   Accordion,
   AccordionContent,

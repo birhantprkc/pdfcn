@@ -13,13 +13,15 @@
   "files": [
     {
       "path": "registry/bases/forme/components/page-break/page-break.tsx",
-      "content": "import { PageBreak as FormePageBreak } from \"@formepdf/react\";\n\nimport type { PDFComponentProps } from \"@/registry/themes\";\n\nexport interface PageBreakProps extends Omit<PDFComponentProps, \"children\"> {\n  children?: never;\n}\n\nexport function PageBreak(_props: PageBreakProps) {\n  return <FormePageBreak />;\n}\n",
-      "type": "registry:component"
+      "content": "import { PageBreak as FormePageBreak } from \"@formepdf/react\";\n\nimport type { PDFComponentProps } from \"@/registry/themes\";\n\nexport interface PageBreakProps extends Omit<PDFComponentProps, \"children\"> {\n  children?: never;\n}\n\nexport const PageBreak = (_props: PageBreakProps) => <FormePageBreak />;\n",
+      "type": "registry:component",
+      "target": "components/pdf/components/page-break/page-break.tsx"
     },
     {
       "path": "registry/bases/forme/components/page-break/index.ts",
       "content": "export { PageBreak } from \"./page-break\";\nexport type { PageBreakProps } from \"./page-break\";\n",
-      "type": "registry:component"
+      "type": "registry:component",
+      "target": "components/pdf/components/page-break/index.ts"
     }
   ],
   "type": "registry:ui"

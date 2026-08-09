@@ -1,3 +1,4 @@
+import { FormeIcon, TakumiIcon } from "@/components/icons";
 import { formeRegistryBase } from "@/registry/bases/forme/registry";
 import { takumiRegistryBase } from "@/registry/bases/takumi/registry";
 
@@ -7,6 +8,9 @@ export const BASES = [
     dependencies: ["takumi-pdf", "@takumi-rs/helpers"],
     description:
       "Paged selectable-text PDF from JSX/Tailwind via Takumi WASM — preview with react-pdf.",
+    meta: {
+      logo: TakumiIcon,
+    },
     title: "Takumi PDF",
     type: "registry:style" as const,
   },
@@ -15,6 +19,9 @@ export const BASES = [
     dependencies: ["@formepdf/react", "@formepdf/core"],
     description:
       "React PDF components rendered with Forme’s WASM layout engine — browser and server.",
+    meta: {
+      logo: FormeIcon,
+    },
     title: "Forme PDF",
     type: "registry:style" as const,
   },

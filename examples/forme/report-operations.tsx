@@ -1,4 +1,6 @@
 import { OperationsReportDocument } from "@/registry/bases/forme/blocks/report-operations/report-operations";
 
-const Demo = () => <OperationsReportDocument />;
+const Demo =() => {
+  return <OperationsReportDocument />;
+}
 export default Demo;
