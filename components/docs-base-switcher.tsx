@@ -1,28 +1,67 @@
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { BASES, getBase } from "@/registry/bases";
+import { BASE_NAMES, BASES, getBase } from "@/registry/bases";
 import type { BaseName } from "@/registry/bases";
+
+type DocsBaseSwitcherSection = "components" | "blocks";
+
+const DOCS_BASE_SWITCHER_SECTIONS = new Set<DocsBaseSwitcherSection>([
+  "components",
+  "blocks",
+]);
+
+const isDocsBaseSwitcherSection = (
+  section: string
+): section is DocsBaseSwitcherSection =>
+  DOCS_BASE_SWITCHER_SECTIONS.has(section as DocsBaseSwitcherSection);
+
+export const getDocsBaseSwitcherProps = (
+  slug: string[] | undefined
+): {
+  section: DocsBaseSwitcherSection;
+  base: string;
+  slug?: string;
+} | null => {
+  if (!slug || slug.length < 2) {
+    return null;
+  }
+
+  const [section, base, ...rest] = slug;
+
+  if (
+    !BASE_NAMES.includes(base as BaseName) ||
+    !isDocsBaseSwitcherSection(section)
+  ) {
+    return null;
+  }
+
+  if (!rest.length) {
+    return null;
+  }
+
+  return { base, section, slug: rest.join("/") };
+};
 
 export const DocsBaseSwitcher = ({
   base,
-  component,
+  slug,
+  section,
   className,
-  kind = "components",
 }: {
   base: string;
-  component: string;
+  slug?: string;
+  section: DocsBaseSwitcherSection;
   className?: string;
-  kind?: "components" | "blocks" | string;
 }) => {
-  const activeBase = getBase(base as BaseName);
+  const activeBase = getBase(base as (typeof BASES)[number]["name"]);
 
   return (
     <div className={cn("inline-flex w-full items-center gap-6", className)}>
       {BASES.map((baseItem) => (
         <Link
           key={baseItem.name}
-          href={`/docs/${kind}/${baseItem.name}/${component}`}
+          href={`/docs/${section}/${baseItem.name}${slug ? `/${slug}` : ""}`}
           data-active={base === baseItem.name}
           className="relative inline-flex items-center justify-center gap-1 pt-1 pb-0.5 text-base font-medium text-muted-foreground transition-colors after:absolute after:inset-x-0 after:bottom-[-4px] after:h-0.5 after:bg-foreground after:opacity-0 after:transition-opacity hover:text-foreground data-[active=true]:text-foreground data-[active=true]:after:opacity-100"
         >

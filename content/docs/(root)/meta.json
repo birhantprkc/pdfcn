@@ -1,4 +1,4 @@
 {
-  "title": "Get Started",
-  "pages": ["index", "bases"]
+  "pages": ["index", "installation", "mcp", "registry", "bases"],
+  "title": "Overview"
 }

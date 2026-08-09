@@ -13,20 +13,47 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { TOP_LEVEL_SECTIONS } from "@/constants/nav";
 import { ROUTES } from "@/constants/routes";
-import { EXCLUDED_SECTIONS, isComponentsFolder } from "@/lib/docs";
-import { getAllPagesFromFolder, getPagesFromFolder } from "@/lib/page-tree";
+import {
+  getDocsSidebarPanel,
+  isBlocksFolder,
+  isComponentsFolder,
+} from "@/lib/docs";
+import {
+  findBaseFolder,
+  getAllPagesFromFolder,
+  getCurrentBase,
+  getTreeGroups,
+} from "@/lib/page-tree";
+import type { PageTreeFolder } from "@/lib/page-tree";
 import type { source } from "@/lib/source";
-
-const TOP_LEVEL_SECTIONS = [
-  { href: ROUTES.DOCS, name: "Introduction" },
-  { href: ROUTES.DOCS_INSTALLATION, name: "Installation" },
-  { href: ROUTES.DOCS_COMPONENTS, name: "Components" },
-  { href: ROUTES.LLMS, name: "llms.txt" },
-];
 
 const MENU_BUTTON_CLS =
   "relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48";
+
+const SidebarMenuItemLink = ({
+  href,
+  isActive,
+  children,
+}: {
+  href: string;
+  isActive: boolean;
+  children: React.ReactNode;
+}) => (
+  <SidebarMenuItem>
+    <SidebarMenuButton
+      asChild
+      className={MENU_BUTTON_CLS}
+      isActive={isActive}
+    >
+      <Link href={href}>
+        <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
+        {children}
+      </Link>
+    </SidebarMenuButton>
+  </SidebarMenuItem>
+);
 
 const SidebarPageGroup = ({
   label,
@@ -49,22 +76,79 @@ const SidebarPageGroup = ({
       <SidebarGroupContent>
         <SidebarMenu>
           {pages.map((page) => (
-            <SidebarMenuItem key={page.url}>
-              <SidebarMenuButton
-                asChild
-                className={MENU_BUTTON_CLS}
-                isActive={page.url === pathname}
-              >
-                <Link href={page.url}>
-                  <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
-                  {page.name}
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
+            <SidebarMenuItemLink
+              key={page.url}
+              href={page.url}
+              isActive={page.url === pathname}
+            >
+              {page.name}
+            </SidebarMenuItemLink>
           ))}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
+  );
+};
+
+interface SidebarPanelProps {
+  currentBase: string;
+  pathname: string;
+  tree: typeof source.pageTree;
+}
+
+const findTopLevelFolder = (
+  tree: typeof source.pageTree,
+  predicate: (folder: PageTreeFolder) => boolean
+) =>
+  tree.children.find(
+    (item): item is PageTreeFolder => item.type === "folder" && predicate(item)
+  );
+
+const ComponentsSidebarPanel = ({
+  currentBase,
+  pathname,
+  tree,
+}: SidebarPanelProps) => {
+  const folder = findTopLevelFolder(tree, isComponentsFolder);
+  if (!folder) {
+    return null;
+  }
+
+  // Get pages from the base folder
+  const baseFolder = findBaseFolder(folder, currentBase);
+  const pages = (baseFolder ? getAllPagesFromFolder(baseFolder) : getAllPagesFromFolder(folder))
+    .filter((page) => !page.url.endsWith("/components") && !page.url.endsWith("/components/"))
+    .map((page) => ({ url: page.url, name: page.name }));
+
+  return (
+    <SidebarPageGroup
+      label="Components"
+      pages={pages}
+      pathname={pathname}
+    />
+  );
+};
+
+const BlocksSidebarPanel = ({
+  currentBase,
+  pathname,
+  tree,
+}: SidebarPanelProps) => {
+  const folder = findTopLevelFolder(tree, isBlocksFolder);
+  if (!folder) {
+    return null;
+  }
+
+  const pages = getAllPagesFromFolder(folder)
+    .filter((page) => !page.url.endsWith("/blocks") && !page.url.endsWith("/blocks/"))
+    .map((page) => ({ url: page.url, name: page.name }));
+
+  return (
+    <SidebarPageGroup
+      label="Blocks"
+      pages={pages}
+      pathname={pathname}
+    />
   );
 };
 
@@ -73,6 +157,20 @@ export const DocsSidebar = ({
   ...props
 }: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) => {
   const pathname = usePathname();
+  const currentBase = getCurrentBase(pathname);
+  const panel = getDocsSidebarPanel(pathname);
+  const treeGroups = getTreeGroups(tree, currentBase);
+
+  const renderCatalogPanel = () => {
+    const panelProps = { currentBase, pathname, tree };
+    if (panel === "components") {
+      return <ComponentsSidebarPanel {...panelProps} />;
+    }
+    if (panel === "blocks") {
+      return <BlocksSidebarPanel {...panelProps} />;
+    }
+    return null;
+  };
 
   return (
     <Sidebar
@@ -91,49 +189,31 @@ export const DocsSidebar = ({
           <SidebarGroupContent>
             <SidebarMenu>
               {TOP_LEVEL_SECTIONS.map(({ name, href }) => (
-                <SidebarMenuItem key={name}>
-                  <SidebarMenuButton
-                    asChild
-                    className={MENU_BUTTON_CLS}
-                    isActive={
-                      href === ROUTES.DOCS
-                        ? pathname === href
-                        : pathname.startsWith(href)
-                    }
-                  >
-                    <Link href={href}>
-                      <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
-                      {name}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <SidebarMenuItemLink
+                  key={name}
+                  href={href}
+                  isActive={
+                    href === ROUTES.DOCS
+                      ? pathname === href
+                      : pathname.startsWith(href)
+                  }
+                >
+                  {name}
+                </SidebarMenuItemLink>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        {tree.children.map((item) => {
-          if (item.type !== "folder") {
-            return null;
-          }
-          if (EXCLUDED_SECTIONS.has(item.$id ?? "")) {
-            return null;
-          }
-
-          const pages = isComponentsFolder(item)
-            ? getAllPagesFromFolder(item).filter(
-                (page) => page.url !== ROUTES.DOCS_COMPONENTS
-              )
-            : getPagesFromFolder(item);
-
-          return (
-            <SidebarPageGroup
-              key={item.$id}
-              label={item.name}
-              pages={pages}
-              pathname={pathname}
-            />
-          );
-        })}
+        {panel
+          ? renderCatalogPanel()
+          : treeGroups.map((group) => (
+              <SidebarPageGroup
+                key={group.label}
+                label={group.label}
+                pages={group.pages}
+                pathname={pathname}
+              />
+            ))}
         <div className="from-background via-background/80 to-background/50 sticky -bottom-1 z-10 h-16 shrink-0 bg-linear-to-t blur-xs" />
       </SidebarContent>
     </Sidebar>
