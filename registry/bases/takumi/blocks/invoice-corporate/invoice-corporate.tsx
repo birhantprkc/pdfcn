@@ -24,9 +24,9 @@ const sampleData: InvoiceCorporateData = {
     name: "Global Industries Ltd.",
     phone: "+1 (555) 888-9999",
   },
-  companyAddress: "City, Country",
-  companyEmail: "hello@company.com",
-  companyName: "Your Company",
+  companyAddress: "Nagpur, IN",
+  companyEmail: "hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 24, 2026",
   invoiceDate: "February 22, 2026",
   invoiceNumber: "INV-2026-004",
@@ -37,21 +37,26 @@ const sampleData: InvoiceCorporateData = {
       unitPrice: 4500,
     },
     { description: "Implementation Services", quantity: 1, unitPrice: 18_000 },
-    { description: "Training Workshop", quantity: 3, unitPrice: 2500 },
+    {
+      description: "Training Workshop (per session)",
+      quantity: 3,
+      unitPrice: 2500,
+    },
     { description: "Annual Support Package", quantity: 1, unitPrice: 8500 },
   ],
   logo: "/favicon.png",
-  notes: "Corporate billing – Net 30 terms apply.",
+  notes:
+    "Corporate billing – Net 30 terms apply. For inquiries, contact accounts@pdfx.io",
   paymentTerms: {
     dueDate: "March 24, 2026",
     gst: "GSTIN 987654321",
     method: "Wire Transfer / Corporate Account",
   },
-  subtitle: "Professional Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
-    subtotal: 57_000,
-    tax: 4560,
-    total: 61_560,
+    subtotal: 56_500,
+    tax: 4520,
+    total: 61_020,
   },
 };
 
@@ -77,8 +82,11 @@ const InvoiceCorporateContent = ({ data }: { data: InvoiceCorporateData }) => {
     },
     page: {
       backgroundColor: theme.colors.background,
+      boxSizing: "border-box",
+      minHeight: 841,
       padding: theme.spacing.page.marginTop,
       paddingBottom: theme.spacing.page.marginBottom,
+      position: "relative",
     },
     summaryCard: {
       backgroundColor: theme.colors.muted,

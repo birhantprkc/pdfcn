@@ -1,7 +1,7 @@
-import { Text as PDFText } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import { Fragment } from "react";
 
+import { Text as PDFText } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import {
   Table,

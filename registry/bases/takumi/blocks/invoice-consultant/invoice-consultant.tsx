@@ -23,10 +23,10 @@ const sampleData: InvoiceConsultantData = {
     email: "sarah.johnson@acmetech.com",
     name: "Sarah Johnson",
   },
-  companyAddress: "City, Country · hello@consulting.com",
-  companyName: "Your Consulting",
+  companyAddress: "Nagpur, IN · hello@pdfx.io",
+  companyName: "PDFx Inc.",
   consultant: {
-    email: "john.smith@consulting.com",
+    email: "john.smith@pdfx.io",
     name: "John Smith",
     title: "Senior Technical Consultant",
   },
@@ -48,9 +48,9 @@ const sampleData: InvoiceConsultantData = {
   ],
   subtitle: "Professional Consulting Services",
   summary: {
-    subtotal: 10_300,
-    tax: 515,
-    total: 10_815,
+    subtotal: 9500,
+    tax: 475,
+    total: 9975,
     totalHours: 60,
   },
 };
@@ -102,8 +102,11 @@ const InvoiceConsultantContent = ({
     },
     page: {
       backgroundColor: theme.colors.background,
+      boxSizing: "border-box",
+      minHeight: 841,
       padding: theme.spacing.page.marginTop,
       paddingBottom: theme.spacing.page.marginBottom,
+      position: "relative",
     },
     partiesRow: {
       flexDirection: "row",

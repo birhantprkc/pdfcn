@@ -1,8 +1,8 @@
-import { Text as PDFText, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import { Children, cloneElement, isValidElement } from "react";
 import type { ReactElement, ReactNode } from "react";
 
+import { Text as PDFText, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { createTableStyles } from "./table.styles";
 import type {

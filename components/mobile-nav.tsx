@@ -15,7 +15,11 @@ import {
 import { TOP_LEVEL_SECTIONS } from "@/constants/nav";
 import { ROUTES } from "@/constants/routes";
 import { useFeedback } from "@/hooks/use-feedback";
-import { getDocsSidebarPanel, isBlocksFolder, isComponentsFolder } from "@/lib/docs";
+import {
+  getDocsSidebarPanel,
+  isBlocksFolder,
+  isComponentsFolder,
+} from "@/lib/docs";
 import {
   getAllPagesFromFolder,
   getCurrentBase,
@@ -96,11 +100,7 @@ const findTopLevelFolder = (
     (item): item is PageTreeFolder => item.type === "folder" && predicate(item)
   );
 
-const ComponentsMobilePanel = ({
-  currentBase,
-  setOpen,
-  tree,
-}: MobilePanelProps) => {
+const ComponentsMobilePanel = ({ setOpen, tree }: MobilePanelProps) => {
   const folder = findTopLevelFolder(tree, isComponentsFolder);
   if (!folder) {
     return null;
@@ -108,22 +108,12 @@ const ComponentsMobilePanel = ({
 
   const pages = getAllPagesFromFolder(folder)
     .filter((page) => page.url !== ROUTES.DOCS_COMPONENTS)
-    .map((page) => ({ url: page.url, name: page.name }));
+    .map((page) => ({ name: page.name, url: page.url }));
 
-  return (
-    <MobileNavGroup
-      label="Components"
-      pages={pages}
-      setOpen={setOpen}
-    />
-  );
+  return <MobileNavGroup label="Components" pages={pages} setOpen={setOpen} />;
 };
 
-const BlocksMobilePanel = ({
-  currentBase,
-  setOpen,
-  tree,
-}: MobilePanelProps) => {
+const BlocksMobilePanel = ({ setOpen, tree }: MobilePanelProps) => {
   const folder = findTopLevelFolder(tree, isBlocksFolder);
   if (!folder) {
     return null;
@@ -131,15 +121,9 @@ const BlocksMobilePanel = ({
 
   const pages = getAllPagesFromFolder(folder)
     .filter((page) => page.url !== ROUTES.DOCS_BLOCKS)
-    .map((page) => ({ url: page.url, name: page.name }));
+    .map((page) => ({ name: page.name, url: page.url }));
 
-  return (
-    <MobileNavGroup
-      label="Blocks"
-      pages={pages}
-      setOpen={setOpen}
-    />
-  );
+  return <MobileNavGroup label="Blocks" pages={pages} setOpen={setOpen} />;
 };
 
 export const MobileNav = ({

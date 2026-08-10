@@ -1,12 +1,22 @@
 "use client";
 
 import type { ReactNode } from "react";
-import type { PdfInspection } from "./inspect-pdf";
-import type { RenderError, RenderSuccess } from "./use-render-worker";
+
 import { cn } from "@/lib/utils";
 
-function PdfPreview({ url, dimmed }: { url: string | undefined; dimmed: boolean }) {
-  if (!url) return null;
+import type { PdfInspection } from "./inspect-pdf";
+import type { RenderError, RenderSuccess } from "./use-render-worker";
+
+function PdfPreview({
+  url,
+  dimmed,
+}: {
+  url: string | undefined;
+  dimmed: boolean;
+}) {
+  if (!url) {
+    return null;
+  }
   return (
     <object
       data={url}
@@ -37,7 +47,9 @@ function DocumentPanel({ inspection }: { inspection: PdfInspection }) {
     <div className="h-full overflow-auto bg-muted/20 px-4 py-3 font-mono text-xs">
       <Field label="Standards">
         {inspection.standards.length > 0 ? (
-          <span className="text-primary">{inspection.standards.join(" · ")}</span>
+          <span className="text-primary">
+            {inspection.standards.join(" · ")}
+          </span>
         ) : (
           <span className="text-muted-foreground">plain PDF</span>
         )}
@@ -45,8 +57,12 @@ function DocumentPanel({ inspection }: { inspection: PdfInspection }) {
       <Field label="Tagged">{inspection.tagged ? "yes" : "no"}</Field>
       <Field label="Pages">{inspection.pages}</Field>
       {inspection.title && <Field label="Title">{inspection.title}</Field>}
-      {inspection.authors && <Field label="Authors">{inspection.authors.join(", ")}</Field>}
-      {inspection.created && <Field label="Created">{inspection.created}</Field>}
+      {inspection.authors && (
+        <Field label="Authors">{inspection.authors.join(", ")}</Field>
+      )}
+      {inspection.created && (
+        <Field label="Created">{inspection.created}</Field>
+      )}
       <Field label="Bookmarks">
         {inspection.bookmarks.length === 0 ? (
           <span className="text-muted-foreground">none</span>
@@ -70,7 +86,10 @@ function DocumentPanel({ inspection }: { inspection: PdfInspection }) {
             <div key={attachment.name} className="truncate">
               {attachment.name}
               {attachment.description && (
-                <span className="text-muted-foreground"> — {attachment.description}</span>
+                <span className="text-muted-foreground">
+                  {" "}
+                  — {attachment.description}
+                </span>
               )}
             </div>
           ))
@@ -102,7 +121,11 @@ export function OutputPanel({
     );
   }
 
-  if (lastSuccess?.outputKind === "pdf" && pdfView === "document" && lastSuccess.inspection) {
+  if (
+    lastSuccess?.outputKind === "pdf" &&
+    pdfView === "document" &&
+    lastSuccess.inspection
+  ) {
     return <DocumentPanel inspection={lastSuccess.inspection} />;
   }
 
@@ -114,7 +137,10 @@ export function OutputPanel({
       <img
         src={lastSuccess.outputUrl}
         alt="Rendered output"
-        className={cn("border max-h-full max-w-full object-contain", error && "opacity-40")}
+        className={cn(
+          "border max-h-full max-w-full object-contain",
+          error && "opacity-40"
+        )}
       />
     ));
 
@@ -123,7 +149,9 @@ export function OutputPanel({
       {lastSuccess?.outputKind === "pdf" ? (
         <div className="absolute inset-0">{output}</div>
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center">{output}</div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          {output}
+        </div>
       )}
       {error && (
         <div className="absolute inset-x-0 bottom-0 border-t bg-background/95 px-3 py-2 font-mono text-xs">

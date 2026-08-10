@@ -1,9 +1,20 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { Heading, Section } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { Heading } from "@/registry/bases/takumi/components/heading";
+import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <Section spacing="none">
+    <Heading level={1}>Main Title</Heading>
+    <Heading level={2} align="center" color="primary">
+      Subtitle
+    </Heading>
+    <Heading level={3} style={{ color: "#1e3a5f" }}>
+      Custom Styled
+    </Heading>
+  </Section>
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -13,9 +24,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Heading level={1}>Heading</Heading>;
-}
+export default Demo;

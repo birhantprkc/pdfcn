@@ -469,8 +469,8 @@ description: "PDF UI primitives available on Takumi and Forme bases."
 
 Choose a base to browse components.
 
-- [Takumi PDF](/docs/components/takumi)
-- [Forme PDF](/docs/components/forme)
+- [Takumi](/docs/components/takumi)
+- [Forme](/docs/components/forme)
 `;
   }
 
@@ -481,8 +481,8 @@ description: "Full PDF document templates — invoices and reports."
 
 Choose a base to browse blocks.
 
-- [Takumi PDF](/docs/blocks/takumi)
-- [Forme PDF](/docs/blocks/forme)
+- [Takumi](/docs/blocks/takumi)
+- [Forme](/docs/blocks/forme)
 `;
 };
 
@@ -524,7 +524,7 @@ const main = () => {
   ]);
 
   for (const base of ["takumi", "forme"]) {
-    const baseTitle = base === "takumi" ? "Takumi PDF" : "Forme PDF";
+    const baseTitle = base === "takumi" ? "Takumi" : "Forme";
 
     write(
       path.join(ROOT, `content/docs/components/${base}/index.mdx`),

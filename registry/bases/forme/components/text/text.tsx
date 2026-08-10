@@ -1,9 +1,12 @@
-import { Text as PDFText, StyleSheet } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
-
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
+import { Text as PDFText, StyleSheet } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
+import {
+  mergePdfStyles,
+  usePdfcnTheme,
+  useSafeMemo,
+} from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";
 
 export type TextVariant = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
@@ -139,5 +142,5 @@ export const Text = ({
   if (style) {
     styleArray.push(...[style].flat());
   }
-  return <PDFText style={styleArray as never}>{children}</PDFText>;
+  return <PDFText style={mergePdfStyles(styleArray)}>{children}</PDFText>;
 };

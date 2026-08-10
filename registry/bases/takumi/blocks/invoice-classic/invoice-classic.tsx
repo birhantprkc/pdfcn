@@ -26,9 +26,9 @@ const sampleData: InvoiceClassicData = {
     name: "Client Corp.",
     phone: "+1 (555) 123-4567",
   },
-  companyAddress: "City, Country",
-  companyEmail: "hello@company.com",
-  companyName: "Your Company",
+  companyAddress: "Nagpur, IN",
+  companyEmail: "hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 17, 2026",
   invoiceDate: "February 17, 2026",
   invoiceNumber: "INV-2026-001",
@@ -44,7 +44,7 @@ const sampleData: InvoiceClassicData = {
     gst: "GSTIN 123456789",
     method: "UPI / Card / Bank Transfer",
   },
-  subtitle: "Professional Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
     subtotal: 36_250,
     tax: 2537.5,
@@ -58,8 +58,11 @@ const InvoiceClassicContent = ({ data }: { data: InvoiceClassicData }) => {
   const styles = StyleSheet.create({
     page: {
       backgroundColor: theme.colors.background,
+      boxSizing: "border-box",
+      minHeight: 841,
       padding: theme.spacing.page.marginTop,
       paddingBottom: theme.spacing.page.marginBottom,
+      position: "relative",
     },
   });
 

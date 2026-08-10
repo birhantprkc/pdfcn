@@ -27,9 +27,9 @@ const sampleData: InvoiceClassicData = {
     name: "Client Corp.",
     phone: "+1 (555) 123-4567",
   },
-  companyAddress: "City, Country",
-  companyEmail: "hello@company.com",
-  companyName: "Your Company",
+  companyAddress: "Nagpur, IN",
+  companyEmail: "hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 17, 2026",
   invoiceDate: "February 17, 2026",
   invoiceNumber: "INV-2026-001",
@@ -45,7 +45,7 @@ const sampleData: InvoiceClassicData = {
     gst: "GSTIN 123456789",
     method: "UPI / Card / Bank Transfer",
   },
-  subtitle: "Professional Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
     subtotal: 36_250,
     tax: 2537.5,
@@ -59,14 +59,18 @@ const InvoiceClassicContent = ({ data }: { data: InvoiceClassicData }) => {
   const styles = StyleSheet.create({
     page: {
       backgroundColor: theme.colors.background,
-      padding: theme.spacing.page.marginTop,
-      paddingBottom: theme.spacing.page.marginBottom,
     },
   });
 
   return (
     <Document title={`Invoice ${data.invoiceNumber}`}>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={{ bottom: 25, left: 56, right: 56, top: 56 }}>
+        <PageFooter
+          leftText={data.notes}
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={25}
+        />
         <View style={styles.page as never}>
           <PageHeader
             variant="logo-left"
@@ -162,8 +166,15 @@ const InvoiceClassicContent = ({ data }: { data: InvoiceClassicData }) => {
               ))}
             </TableBody>
           </Table>
-          <Section noWrap style={{ flexDirection: "row", marginTop: 16 }}>
-            <View style={{ marginLeft: "auto", width: 220 }}>
+          <Section
+            noWrap
+            style={{
+              flexDirection: "row",
+              justifyContent: "flex-end",
+              marginTop: 16,
+            }}
+          >
+            <View style={{ width: 220 }}>
               <KeyValue
                 size="sm"
                 dividerThickness={1}
@@ -184,12 +195,6 @@ const InvoiceClassicContent = ({ data }: { data: InvoiceClassicData }) => {
               />
             </View>
           </Section>
-          <PageFooter
-            leftText={data.notes}
-            rightText="Page 1 of 1"
-            sticky
-            pagePadding={25}
-          />
         </View>
       </Page>
     </Document>

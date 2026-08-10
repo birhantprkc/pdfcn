@@ -26,9 +26,9 @@ const sampleData: InvoiceModernData = {
     name: "TechStart Solutions",
     phone: "+1 (555) 987-6543",
   },
-  companyAddress: "City, Country",
-  companyEmail: "hello@company.com",
-  companyName: "Your Company",
+  companyAddress: "Nagpur, IN",
+  companyEmail: "hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 20, 2026",
   invoiceDate: "February 18, 2026",
   invoiceNumber: "INV-2026-002",
@@ -43,7 +43,7 @@ const sampleData: InvoiceModernData = {
     gst: "GSTIN 123456789",
     method: "Wire Transfer / Bank Account",
   },
-  subtitle: "Professional Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
     subtotal: 33_200,
     tax: 2324,
@@ -82,14 +82,18 @@ const InvoiceModernContent = ({ data }: { data: InvoiceModernData }) => {
     },
     page: {
       backgroundColor: theme.colors.background,
-      padding: theme.spacing.page.marginTop,
-      paddingBottom: theme.spacing.page.marginBottom,
     },
   });
 
   return (
     <Document title={`Invoice ${data.invoiceNumber}`}>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={{ bottom: 25, left: 56, right: 56, top: 56 }}>
+        <PageFooter
+          leftText={data.notes}
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={25}
+        />
         <View style={styles.page as never}>
           <PageHeader
             variant="branded"
@@ -222,12 +226,6 @@ const InvoiceModernContent = ({ data }: { data: InvoiceModernData }) => {
               />
             </View>
           </Section>
-          <PageFooter
-            leftText={data.notes}
-            rightText="Page 1 of 1"
-            sticky
-            pagePadding={25}
-          />
         </View>
       </Page>
     </Document>

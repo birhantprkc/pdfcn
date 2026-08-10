@@ -1,10 +1,19 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { PREVIEW_IMAGE_DATA_URI } from "@/examples/preview-assets";
+import { PdfImage } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { PdfImage } from "@/registry/bases/takumi/components/pdf-image";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <PdfImage
+    src={PREVIEW_IMAGE_DATA_URI}
+    variant="default"
+    height={120}
+    width={200}
+    caption="Variant: default"
+  />
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -14,9 +23,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Text>PdfImage demo — pass src in your document.</Text>;
-}
+export default Demo;

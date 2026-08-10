@@ -1,24 +1,33 @@
 import { Document, Page } from "@formepdf/react";
-import { Stack } from "@/registry/bases/forme/components/stack";
-import { Text } from "@/registry/bases/forme/components/text";
 
+import {
+  Divider,
+  Heading,
+  Stack,
+  Text,
+} from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <Stack gap="md">
+    <Heading level={2}>Section</Heading>
+    <Text>First paragraph in the stack.</Text>
+    <Text>Second paragraph with consistent spacing.</Text>
+    <Divider spacing="lg" />
+    <Stack gap="lg">
+      <Heading level={3}>Wider gap</Heading>
+      <Text>Content grouped with a larger vertical rhythm.</Text>
+    </Stack>
+  </Stack>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={30}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return (
-    <Stack gap="md">
-      <Text>One</Text>
-      <Text>Two</Text>
-    </Stack>
-  );
-}
+export default Demo;

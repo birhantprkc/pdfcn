@@ -1,6 +1,5 @@
-import { Text as PDFText, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
-
+import { Text as PDFText, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { createFormStyles } from "./form.styles";
 import type {

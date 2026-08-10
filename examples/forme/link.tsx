@@ -1,18 +1,24 @@
 import { Document, Page } from "@formepdf/react";
-import { Link } from "@/registry/bases/forme/components/link";
 
+import { Link, Section } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <Section spacing="none">
+    <Link href="https://pdfcn.dev">Documentation</Link>
+    <Link href="#section-1" color="primary">
+      Internal link
+    </Link>
+  </Section>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={30}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Link href="https://example.com">Example</Link>;
-}
+export default Demo;

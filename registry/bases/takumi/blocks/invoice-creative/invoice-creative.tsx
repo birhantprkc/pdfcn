@@ -24,8 +24,8 @@ const sampleData: InvoiceCreativeData = {
     name: "Creative Agency Co.",
     phone: "+1 (555) 321-7654",
   },
-  companyAddress: "City, Country · hello@agency.com",
-  companyName: "Your Agency",
+  companyAddress: "Nagpur, IN · hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 26, 2026",
   invoiceDate: "February 24, 2026",
   invoiceNumber: "INV-2026-005",
@@ -50,7 +50,7 @@ const sampleData: InvoiceCreativeData = {
     gst: "GSTIN 456789123",
     method: "Credit Card / PayPal / Stripe",
   },
-  subtitle: "Creative Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
     subtotal: 22_700,
     tax: 1475.5,
@@ -106,8 +106,11 @@ const InvoiceCreativeContent = ({ data }: { data: InvoiceCreativeData }) => {
     },
     page: {
       backgroundColor: theme.colors.background,
+      boxSizing: "border-box",
+      minHeight: 841,
       padding: theme.spacing.page.marginTop,
       paddingBottom: theme.spacing.page.marginBottom,
+      position: "relative",
     },
     sectionLabel: {
       color: theme.colors.accent,

@@ -1,9 +1,9 @@
-import { Text as PDFText, StyleSheet, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type { ReactNode } from "react";
 
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
+import { Text as PDFText, StyleSheet, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 
 export type CardVariant = "default" | "bordered" | "muted";

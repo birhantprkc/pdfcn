@@ -11,7 +11,7 @@ export const BASES = [
     meta: {
       logo: TakumiIcon,
     },
-    title: "Takumi PDF",
+    title: "Takumi",
     type: "registry:style" as const,
   },
   {
@@ -22,7 +22,7 @@ export const BASES = [
     meta: {
       logo: FormeIcon,
     },
-    title: "Forme PDF",
+    title: "Forme",
     type: "registry:style" as const,
   },
 ] as const;

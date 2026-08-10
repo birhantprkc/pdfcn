@@ -1,9 +1,12 @@
-import { StyleSheet, Text } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
-
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
+import { StyleSheet, Text } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
+import {
+  mergePdfStyles,
+  usePdfcnTheme,
+  useSafeMemo,
+} from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";
 
 export type HeadingWeight = "normal" | "medium" | "semibold" | "bold";
@@ -172,5 +175,5 @@ export const Heading = ({
   if (style) {
     styleArray.push(...[style].flat());
   }
-  return <Text style={styleArray as never}>{children}</Text>;
+  return <Text style={mergePdfStyles(styleArray)}>{children}</Text>;
 };

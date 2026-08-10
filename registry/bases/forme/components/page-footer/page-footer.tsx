@@ -1,17 +1,40 @@
-import { Text as PDFText, StyleSheet, View, Fixed } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type React from "react";
 
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
+import {
+  Fixed,
+  Text as PDFText,
+  StyleSheet,
+  View,
+} from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";
 
-const wrapFixed = (fixed: boolean | undefined, node: React.ReactElement) => {
+const wrapFixed = (
+  fixed: boolean | undefined,
+  node: React.ReactElement,
+  footerOffset = 0
+) => {
   if (!fixed) {
     return node;
   }
-  return <Fixed position="footer">{node}</Fixed>;
+  const nodeProps = node.props as {
+    children?: React.ReactNode;
+    style?: Style;
+  };
+  return (
+    <Fixed
+      position="footer"
+      style={[
+        nodeProps.style,
+        footerOffset ? { marginBottom: -footerOffset } : undefined,
+      ]}
+    >
+      {nodeProps.children}
+    </Fixed>
+  );
 };
 export type PageFooterVariant =
   | "simple"
@@ -161,6 +184,17 @@ const createPageFooterStyles = (t: PdfcnTheme) => {
       flexDirection: "row",
       justifyContent: "space-between",
       paddingTop: spacing[3],
+    },
+    simpleTextCenter: {
+      ...textBase,
+      textAlign: "center",
+    },
+    simpleTextLeft: {
+      ...textBase,
+    },
+    simpleTextRight: {
+      ...textBase,
+      textAlign: "right",
     },
     textBranded: {
       ...textBase,
@@ -389,14 +423,7 @@ export const PageFooter = ({
   const resolvedTextColor = textColor
     ? resolveColor(textColor, theme.colors)
     : undefined;
-  const stickyStyle: Style = sticky
-    ? {
-        bottom: pagePadding,
-        left: pagePadding,
-        position: "absolute",
-        right: pagePadding,
-      }
-    : {};
+  const stickyStyle: Style = {};
 
   const applyOverrides = (base: Style[]): Style[] => {
     if (background) {
@@ -461,9 +488,18 @@ export const PageFooter = ({
       renderSimple(
         styles,
         applyOverrides([styles.simpleContainer, { marginTop: mt }]),
-        applyTextColor([styles.textLeft], resolvedTextColor),
-        applyTextColor([styles.textCenter], resolvedTextColor),
-        applyTextColor([styles.textRight], resolvedTextColor),
+        applyTextColor(
+          [styles.simpleTextLeft, { width: centerText ? 160 : 360 }],
+          resolvedTextColor
+        ),
+        applyTextColor(
+          [styles.simpleTextCenter, { width: 160 }],
+          resolvedTextColor
+        ),
+        applyTextColor(
+          [styles.simpleTextRight, { width: centerText ? 160 : 120 }],
+          resolvedTextColor
+        ),
         leftText,
         centerText,
         rightText,
@@ -486,5 +522,9 @@ export const PageFooter = ({
       ),
   };
 
-  return wrapFixed(_isFixed, variantRenderers[variant]() as React.ReactElement);
+  return wrapFixed(
+    _isFixed,
+    variantRenderers[variant]() as React.ReactElement,
+    sticky ? Math.max(theme.spacing.page.marginBottom - pagePadding, 0) : 0
+  );
 };

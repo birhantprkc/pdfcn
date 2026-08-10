@@ -42,11 +42,7 @@ const SidebarMenuItemLink = ({
   children: React.ReactNode;
 }) => (
   <SidebarMenuItem>
-    <SidebarMenuButton
-      asChild
-      className={MENU_BUTTON_CLS}
-      isActive={isActive}
-    >
+    <SidebarMenuButton asChild className={MENU_BUTTON_CLS} isActive={isActive}>
       <Link href={href}>
         <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
         {children}
@@ -116,40 +112,35 @@ const ComponentsSidebarPanel = ({
 
   // Get pages from the base folder
   const baseFolder = findBaseFolder(folder, currentBase);
-  const pages = (baseFolder ? getAllPagesFromFolder(baseFolder) : getAllPagesFromFolder(folder))
-    .filter((page) => !page.url.endsWith("/components") && !page.url.endsWith("/components/"))
-    .map((page) => ({ url: page.url, name: page.name }));
+  const pages = (
+    baseFolder
+      ? getAllPagesFromFolder(baseFolder)
+      : getAllPagesFromFolder(folder)
+  )
+    .filter(
+      (page) =>
+        !page.url.endsWith("/components") && !page.url.endsWith("/components/")
+    )
+    .map((page) => ({ name: page.name, url: page.url }));
 
   return (
-    <SidebarPageGroup
-      label="Components"
-      pages={pages}
-      pathname={pathname}
-    />
+    <SidebarPageGroup label="Components" pages={pages} pathname={pathname} />
   );
 };
 
-const BlocksSidebarPanel = ({
-  currentBase,
-  pathname,
-  tree,
-}: SidebarPanelProps) => {
+const BlocksSidebarPanel = ({ pathname, tree }: SidebarPanelProps) => {
   const folder = findTopLevelFolder(tree, isBlocksFolder);
   if (!folder) {
     return null;
   }
 
   const pages = getAllPagesFromFolder(folder)
-    .filter((page) => !page.url.endsWith("/blocks") && !page.url.endsWith("/blocks/"))
-    .map((page) => ({ url: page.url, name: page.name }));
+    .filter(
+      (page) => !page.url.endsWith("/blocks") && !page.url.endsWith("/blocks/")
+    )
+    .map((page) => ({ name: page.name, url: page.url }));
 
-  return (
-    <SidebarPageGroup
-      label="Blocks"
-      pages={pages}
-      pathname={pathname}
-    />
-  );
+  return <SidebarPageGroup label="Blocks" pages={pages} pathname={pathname} />;
 };
 
 export const DocsSidebar = ({

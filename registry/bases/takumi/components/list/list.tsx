@@ -96,9 +96,9 @@ const renderChecklistItem = (
       key={index}
       style={buildRowStyles(index, total, gap, styles, "center")}
     >
-      <View style={[styles.checkBox, isChecked ? styles.checkBoxChecked : {}]}>
-        {isChecked ? <PDFText style={styles.checkMark}>✓</PDFText> : null}
-      </View>
+      <View
+        style={[styles.checkBox, isChecked ? styles.checkBoxChecked : {}]}
+      ></View>
       <View style={styles.itemTextWrap}>
         <PDFText style={styles.itemText}>{item.text}</PDFText>
       </View>

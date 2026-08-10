@@ -91,24 +91,24 @@ Use any `TableVariant` for the table treatment and `size="compact"` for denser r
 
 ### DataTable
 
-| Prop       | Type                  | Default     |
-| ---------- | --------------------- | ----------- |
-| `columns`  | `DataTableColumn<T>[]` | -           |
-| `data`     | `T[]`                 | -           |
-| `variant`  | `TableVariant`        | `'grid'`    |
-| `footer`   | `Partial<Record<keyof T, string \| number>>` | - |
-| `stripe`   | `boolean`             | `false`     |
-| `size`     | `'default' \| 'compact'` | `'default'` |
-| `noWrap`   | `boolean`             | `false`     |
-| `style`    | `Style`               | -           |
+| Prop      | Type                                         | Default     |
+| --------- | -------------------------------------------- | ----------- |
+| `columns` | `DataTableColumn<T>[]`                       | -           |
+| `data`    | `T[]`                                        | -           |
+| `variant` | `TableVariant`                               | `'grid'`    |
+| `footer`  | `Partial<Record<keyof T, string \| number>>` | -           |
+| `stripe`  | `boolean`                                    | `false`     |
+| `size`    | `'default' \| 'compact'`                     | `'default'` |
+| `noWrap`  | `boolean`                                    | `false`     |
+| `style`   | `Style`                                      | -           |
 
 ### DataTableColumn
 
-| Prop           | Type                                      | Default  |
-| -------------- | ----------------------------------------- | -------- |
-| `key`          | `keyof T & string`                        | -        |
-| `header`       | `string`                                  | -        |
-| `align`        | `'left' \| 'center' \| 'right'`           | `'left'` |
-| `width`        | `string \| number`                         | -        |
-| `render`       | `(value, row) => ReactNode`               | -        |
-| `renderFooter` | `(value) => ReactNode`                    | -        |
+| Prop           | Type                            | Default  |
+| -------------- | ------------------------------- | -------- |
+| `key`          | `keyof T & string`              | -        |
+| `header`       | `string`                        | -        |
+| `align`        | `'left' \| 'center' \| 'right'` | `'left'` |
+| `width`        | `string \| number`              | -        |
+| `render`       | `(value, row) => ReactNode`     | -        |
+| `renderFooter` | `(value) => ReactNode`          | -        |

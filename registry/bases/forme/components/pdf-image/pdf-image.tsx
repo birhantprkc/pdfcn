@@ -1,8 +1,12 @@
-import { Image, Text as PDFText, StyleSheet, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
-
 import type { PdfcnTheme } from "@/registry/themes";
 
+import {
+  Image,
+  Text as PDFText,
+  StyleSheet,
+  View,
+} from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 
 /** HTTP method used when fetching the image from a URL. */

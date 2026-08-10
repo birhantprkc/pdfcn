@@ -1,9 +1,12 @@
 "use client";
 
 import { useState } from "react";
+
 import { cn } from "@/lib/utils";
+
+import { OutputPanel } from "./output-panel";
+import type { PdfView } from "./output-panel";
 import { useRenderWorker } from "./use-render-worker";
-import { OutputPanel, type PdfView } from "./output-panel";
 
 interface TakumiPreviewProps {
   code: string;
@@ -11,7 +14,11 @@ interface TakumiPreviewProps {
   height?: number;
 }
 
-export function TakumiPreview({ code, className, height = 640 }: TakumiPreviewProps) {
+export function TakumiPreview({
+  code,
+  className,
+  height = 640,
+}: TakumiPreviewProps) {
   const [pdfView, setPdfView] = useState<PdfView>("preview");
   const { isReady, lastSuccess, renderError } = useRenderWorker(code);
 

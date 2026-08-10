@@ -60,9 +60,10 @@ export const ComponentsList = ({
       ? ROUTES.DOCS_BLOCKS
       : ROUTES.DOCS_COMPONENTS;
   const basePages = getFolderPages(folder, base);
-  const pages = (basePages.length > 0 ? basePages : getFolderPages(folder)).filter(
-    (page) =>
-      page.url !== sectionUrl && page.url !== `${sectionUrl}/${base}`
+  const pages = (
+    basePages.length > 0 ? basePages : getFolderPages(folder)
+  ).filter(
+    (page) => page.url !== sectionUrl && page.url !== `${sectionUrl}/${base}`
   );
 
   return pages.length > 0 ? (

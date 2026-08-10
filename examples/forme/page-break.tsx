@@ -1,25 +1,25 @@
-import { Document, Page } from "@formepdf/react";
-import { PageBreak } from "@/registry/bases/forme/components/page-break";
-import { Text } from "@/registry/bases/forme/components/text";
+import { Document, Page, View } from "@formepdf/react";
 
+import { Heading, PageBreak, Text } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <View>
+    <Heading level={1}>Section 1</Heading>
+    <Text>Content on the first page.</Text>
+    <PageBreak />
+    <Heading level={1}>Section 2</Heading>
+    <Text>Content on the second page.</Text>
+  </View>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={30}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return (
-    <>
-      <Text>Before</Text>
-      <PageBreak />
-      <Text>After</Text>
-    </>
-  );
-}
+export default Demo;

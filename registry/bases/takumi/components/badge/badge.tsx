@@ -21,7 +21,7 @@ export type BadgeSize = "sm" | "md" | "lg";
  * Accepts text via either `label` prop or `children` (string). `label` takes
  * precedence when both are provided. The children pattern (`<Badge>text</Badge>`)
  * is supported for compatibility with common React idioms, but note that
- * `Takumi PDF primitives` doesn't support JSX children the way HTML does — only
+ * `Takumi primitives` doesn't support JSX children the way HTML does — only
  * string children are accepted.
  *
  * Props - `label` | `children` | `variant` | `size` | `background` | `color` | `style`

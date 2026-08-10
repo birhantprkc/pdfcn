@@ -25,8 +25,8 @@ const sampleData: InvoiceCreativeData = {
     name: "Creative Agency Co.",
     phone: "+1 (555) 321-7654",
   },
-  companyAddress: "City, Country · hello@agency.com",
-  companyName: "Your Agency",
+  companyAddress: "Nagpur, IN · hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 26, 2026",
   invoiceDate: "February 24, 2026",
   invoiceNumber: "INV-2026-005",
@@ -51,7 +51,7 @@ const sampleData: InvoiceCreativeData = {
     gst: "GSTIN 456789123",
     method: "Credit Card / PayPal / Stripe",
   },
-  subtitle: "Creative Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
     subtotal: 22_700,
     tax: 1475.5,
@@ -107,8 +107,6 @@ const InvoiceCreativeContent = ({ data }: { data: InvoiceCreativeData }) => {
     },
     page: {
       backgroundColor: theme.colors.background,
-      padding: theme.spacing.page.marginTop,
-      paddingBottom: theme.spacing.page.marginBottom,
     },
     sectionLabel: {
       color: theme.colors.accent,
@@ -136,7 +134,13 @@ const InvoiceCreativeContent = ({ data }: { data: InvoiceCreativeData }) => {
 
   return (
     <Document title={`Invoice ${data.invoiceNumber}`}>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={{ bottom: 25, left: 56, right: 56, top: 56 }}>
+        <PageFooter
+          variant="centered"
+          centerText="Thank you for choosing us for your creative needs!"
+          sticky
+          pagePadding={25}
+        />
         <View style={styles.page as never}>
           <View style={styles.heroSection}>
             <View style={{ flex: 1 }}>
@@ -252,12 +256,6 @@ const InvoiceCreativeContent = ({ data }: { data: InvoiceCreativeData }) => {
               />
             </View>
           </Section>
-          <PageFooter
-            variant="centered"
-            centerText="Thank you for choosing us for your creative needs!"
-            sticky
-            pagePadding={25}
-          />
         </View>
       </Page>
     </Document>

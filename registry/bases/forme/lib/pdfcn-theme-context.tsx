@@ -1,82 +1,71 @@
-"use client";
-
 /* eslint-disable react-refresh/only-export-components */
-// Exports both a component (PdfcnThemeProvider) and hooks/context intentionally.
+// Exports both a component (PdfcnThemeProvider) and theme helpers intentionally.
 // All PDF components import from a single file — splitting would break the public API.
 
-import * as React from "react";
-import { createContext, useContext } from "react";
+import type { Style } from "@formepdf/react";
+import { isValidElement } from "react";
 import type { DependencyList, ReactNode } from "react";
 
 import { theme as defaultTheme } from "./pdfcn-theme";
 
 export type PdfcnTheme = typeof defaultTheme;
 
-export const PdfcnThemeContext = createContext<PdfcnTheme>(defaultTheme);
+let serializedTheme = defaultTheme;
 
 export interface PdfcnThemeProviderProps {
   theme?: PdfcnTheme;
   children: ReactNode;
 }
 
-/**
- * Detect whether React currently has an active dispatcher.
- * When components are invoked as plain functions in tests, dispatcher is null.
- */
-const hasActiveDispatcher = (): boolean => {
-  const maybeInternals = React as unknown as {
-    __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?: {
-      H?: unknown;
-    };
-  };
+type PdfStyleInput = Style | PdfStyleInput[] | false | null | undefined;
 
-  const dispatcher =
-    maybeInternals
-      .__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?.H;
-  return dispatcher != null;
+const mergeStyleInput = (target: Style, input: PdfStyleInput): void => {
+  if (Array.isArray(input)) {
+    for (const item of input) {
+      mergeStyleInput(target, item);
+    }
+  } else if (input) {
+    Object.assign(target, input);
+  }
+};
+
+/** Flattens React-PDF-style arrays into the object Forme serializes. */
+export const mergePdfStyles = (...inputs: PdfStyleInput[]): Style => {
+  const merged: Style = {};
+  for (const input of inputs) {
+    mergeStyleInput(merged, input);
+  }
+  return merged;
+};
+
+/**
+ * Forme serializes function components directly instead of mounting a React
+ * tree. Resolve the provider's child so <Document> remains the top-level node.
+ */
+const renderForSerializer = (
+  children: ReactNode,
+  theme: PdfcnTheme
+): ReactNode => {
+  serializedTheme = theme;
+
+  if (!isValidElement(children) || typeof children.type !== "function") {
+    return children;
+  }
+  if ((children.type as { __formeType?: string }).__formeType === "Document") {
+    return children;
+  }
+
+  return (children.type as (props: unknown) => ReactNode)(children.props);
 };
 
 export const PdfcnThemeProvider = ({
   theme,
   children,
-}: PdfcnThemeProviderProps) => (
-  <PdfcnThemeContext.Provider value={theme ?? defaultTheme}>
-    {children}
-  </PdfcnThemeContext.Provider>
-);
+}: PdfcnThemeProviderProps) =>
+  renderForSerializer(children, theme ?? defaultTheme);
 
-/**
- * Regex patterns that indicate a hook was called outside a valid React render tree.
- * These errors are caught and suppressed so components fall back to safe defaults.
- */
-const HOOK_ERROR_PATTERNS =
-  /invalid hook call|minified react error #321|useContext|useMemo|cannot read properties of null|dispatcher|renderWithHooks|resolveDispatcher|hooks can only be called|rendered fewer hooks/i;
-
-/**
- * Calls a React hook with a graceful fallback for non-render environments (e.g. unit tests).
- * Uses hasActiveDispatcher() as the primary guard; the try/catch is a safety net for edge
- * cases where the dispatcher check passes but the hook still cannot execute.
- */
-const callHook = <T,>(hook: () => T, fallback: T): T => {
-  if (!hasActiveDispatcher()) {
-    return fallback;
-  }
-  try {
-    return hook();
-  } catch (error) {
-    if (error instanceof Error && HOOK_ERROR_PATTERNS.test(error.message)) {
-      return fallback;
-    }
-    throw error;
-  }
-};
-
-/**
- * Returns the active PdfcnTheme from context, or the default theme when called
- * outside a React render tree (e.g. unit tests).
- */
-export const usePdfcnTheme = (): PdfcnTheme =>
-  callHook(() => useContext(PdfcnThemeContext), defaultTheme);
+/** Returns the theme selected by the nearest serialized provider. */
+export const usePdfcnTheme = (): PdfcnTheme => serializedTheme;
 
 /**
  * Calls factory() and returns the result.

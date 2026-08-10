@@ -1,9 +1,17 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { Link, Section } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { Link } from "@/registry/bases/takumi/components/link";
+import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <Section spacing="none">
+    <Link href="https://pdfcn.dev">Documentation</Link>
+    <Link href="#section-1" color="primary">
+      Internal link
+    </Link>
+  </Section>
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -13,9 +21,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Link href="https://example.com">Example</Link>;
-}
+export default Demo;

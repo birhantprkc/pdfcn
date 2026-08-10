@@ -5,7 +5,6 @@ import type { PdfcnTheme } from "@/registry/themes";
 import {
   Badge,
   DataTable,
-  Divider,
   KeyValue,
   PageFooter,
   PageHeader,
@@ -13,7 +12,6 @@ import {
   PdfList,
   PdfcnThemeProvider,
   Section,
-  Stack,
   Text,
   usePdfcnTheme,
 } from "../../components";
@@ -77,10 +75,42 @@ export const ReportLayout = ({
 }: ReportLayoutProps) => {
   const theme = usePdfcnTheme();
   const accent = toneColor(theme, statusTone);
+  const graphHeight: Record<ReportGraphVariant, number> = {
+    area: 191,
+    bar: 181,
+    donut: 191,
+    "horizontal-bar": 148,
+    line: 191,
+    pie: 191,
+  };
+  const deliveryOffset: Record<ReportGraphVariant, number> = {
+    area: 0,
+    bar: 59,
+    donut: -3,
+    "horizontal-bar": -4,
+    line: -30,
+    pie: 0,
+  };
+  const sectionOffset: Record<ReportGraphVariant, number> = {
+    area: 0,
+    bar: 32,
+    donut: 0,
+    "horizontal-bar": 0,
+    line: 0,
+    pie: 0,
+  };
+  const titleOffset: Record<ReportGraphVariant, number> = {
+    area: 0,
+    bar: 0,
+    donut: 0,
+    "horizontal-bar": 0,
+    line: 0,
+    pie: 0,
+  };
 
   const styles = StyleSheet.create({
     col: {
-      flex: 1,
+      width: 225,
     },
     graphShell: {
       backgroundColor: theme.colors.background,
@@ -91,13 +121,15 @@ export const ReportLayout = ({
       padding: 12,
     },
     metricCard: {
+      alignItems: "flex-start",
       backgroundColor: theme.colors.background,
       borderColor: theme.colors.border,
       borderRadius: theme.primitives.borderRadius.md,
       borderStyle: "solid",
       borderWidth: 1,
+      height: 75,
       padding: 8,
-      width: "48.6%",
+      width: 225,
     },
     metricLabel: {
       color: theme.colors.mutedForeground,
@@ -117,22 +149,22 @@ export const ReportLayout = ({
       marginBottom: 2,
     },
     metricsGrid: {
+      flexDirection: "column",
+      gap: 8,
+    },
+    metricsRow: {
       flexDirection: "row",
-      flexWrap: "wrap",
       gap: 8,
     },
     page: {
       backgroundColor: theme.colors.background,
-      paddingBottom: theme.spacing.page.marginBottom,
-      paddingLeft: theme.spacing.page.marginLeft,
-      paddingRight: theme.spacing.page.marginRight,
-      paddingTop: theme.spacing.page.marginTop,
     },
     toolbar: {
       alignItems: "center",
       flexDirection: "row",
       justifyContent: "space-between",
       marginBottom: 8,
+      width: 499,
     },
     twoColumn: {
       alignItems: "flex-start",
@@ -143,7 +175,15 @@ export const ReportLayout = ({
 
   return (
     <Document title={`${titlePrefix} ${data.period}`}>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={{ bottom: 48, left: 48, right: 48, top: 56 }}>
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with PDFx"
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
         <View style={styles.page as never}>
           <PageHeader
             variant="two-column"
@@ -166,44 +206,88 @@ export const ReportLayout = ({
               Executive Summary
             </Text>
             <View style={styles.metricsGrid}>
-              {data.summary.map((metric) => (
-                <View
-                  key={metric.label}
-                  style={
-                    [
-                      styles.metricCard,
-                      {
-                        borderLeftColor: metric.tone
-                          ? toneColor(theme, metric.tone)
-                          : accent,
-                        borderLeftWidth: 3,
-                      },
-                    ] as never
-                  }
-                >
-                  <Text style={styles.metricLabel} noMargin>
-                    {metric.label}
-                  </Text>
-                  <Text style={styles.metricValue} noMargin>
-                    {metric.value}
-                  </Text>
-                  {metric.trend ? (
-                    <Badge
-                      label={metric.trend}
-                      size="sm"
-                      variant={metric.tone ?? "info"}
-                    />
-                  ) : null}
+              {[0, 2].map((startIndex) => (
+                <View key={startIndex} style={styles.metricsRow}>
+                  {data.summary
+                    .slice(startIndex, startIndex + 2)
+                    .map((metric) => (
+                      <View
+                        key={metric.label}
+                        style={
+                          {
+                            ...styles.metricCard,
+                            borderLeftColor: metric.tone
+                              ? toneColor(theme, metric.tone)
+                              : accent,
+                            borderLeftWidth: 3,
+                          } as never
+                        }
+                      >
+                        <Text style={styles.metricLabel} noMargin>
+                          {metric.label}
+                        </Text>
+                        <Text style={styles.metricValue} noMargin>
+                          {metric.value}
+                        </Text>
+                        {metric.trend ? (
+                          <Badge
+                            label={metric.trend}
+                            size="sm"
+                            variant={metric.tone ?? "info"}
+                            style={{
+                              height: 16,
+                              width: metric.trend.endsWith("QoQ")
+                                ? metric.trend.length * 6.5 + 10
+                                : metric.trend.length * 5 + 18,
+                            }}
+                          />
+                        ) : null}
+                      </View>
+                    ))}
                 </View>
               ))}
             </View>
           </Section>
+        </View>
+      </Page>
 
-          <Section padding="md" noWrap>
-            <Text variant="sm" transform="uppercase" color="mutedForeground">
+      <Page size="A4" margin={{ bottom: 48, left: 48, right: 48, top: 56 }}>
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with PDFx"
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
+        <View style={styles.page as never}>
+          <Section
+            padding="md"
+            noWrap
+            style={{
+              position: "relative",
+              top: sectionOffset[graphVariant],
+            }}
+          >
+            <Text
+              variant="sm"
+              transform="uppercase"
+              color="mutedForeground"
+              style={{
+                position: "relative",
+                top: titleOffset[graphVariant],
+              }}
+            >
               Performance Trend
             </Text>
-            <View style={styles.graphShell}>
+            <View
+              style={
+                {
+                  ...styles.graphShell,
+                  paddingBottom: graphVariant === "horizontal-bar" ? 56 : 12,
+                } as never
+              }
+            >
               <PdfGraph
                 variant={graphVariant}
                 data={graphData ?? data.series}
@@ -215,7 +299,7 @@ export const ReportLayout = ({
                 showValues={graphShowValues}
                 smooth={graphVariant === "line" || graphVariant === "area"}
                 legend={graphLegend}
-                height={200}
+                height={graphHeight[graphVariant]}
                 colors={graphColors}
                 fullWidth
                 containerPadding={12}
@@ -225,7 +309,13 @@ export const ReportLayout = ({
             </View>
           </Section>
 
-          <Section padding="md">
+          <Section
+            padding="md"
+            style={{
+              position: "relative",
+              top: deliveryOffset[graphVariant],
+            }}
+          >
             <Text variant="sm" transform="uppercase" color="mutedForeground">
               Delivery Table
             </Text>
@@ -258,7 +348,19 @@ export const ReportLayout = ({
               }}
             />
           </Section>
+        </View>
+      </Page>
 
+      <Page size="A4" margin={{ bottom: 48, left: 48, right: 48, top: 56 }}>
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with PDFx"
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
+        <View style={styles.page as never}>
           <Section padding="md" variant="card" noWrap>
             <Text variant="sm" transform="uppercase" color="mutedForeground">
               Highlights & Risks
@@ -288,7 +390,7 @@ export const ReportLayout = ({
                       value: `${data.rows.filter((r) => r.status === "On Track").length}/${data.rows.length}`,
                     },
                     {
-                      key: "Average Progress",
+                      key: "Avg Progress",
                       value: `${Math.round(
                         data.rows.reduce((sum, row) => sum + row.progress, 0) /
                           Math.max(data.rows.length, 1)
@@ -298,27 +400,7 @@ export const ReportLayout = ({
                 />
               </View>
             </View>
-            <Divider />
-            <Stack gap="sm">
-              <Text variant="xs" color="mutedForeground" noMargin>
-                Best practice: keep each section under one page using `noWrap`
-                for concise blocks.
-              </Text>
-              <Text variant="xs" color="mutedForeground" noMargin>
-                Best practice: pass explicit row keys/owners to avoid ambiguous
-                reporting handoffs.
-              </Text>
-            </Stack>
           </Section>
-
-          <PageFooter
-            variant="three-column"
-            leftText="Confidential — Internal Use"
-            centerText="Generated with PDFx"
-            rightText="Page 1 of 1"
-            sticky
-            pagePadding={theme.spacing.page.marginLeft}
-          />
         </View>
       </Page>
     </Document>

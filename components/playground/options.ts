@@ -1,6 +1,8 @@
 import type { RenderOptions } from "takumi-pdf";
 
-type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown
+  ? Omit<T, K>
+  : never;
 
 export type PlaygroundPdfOptions = DistributiveOmit<
   RenderOptions,
@@ -8,7 +10,7 @@ export type PlaygroundPdfOptions = DistributiveOmit<
 >;
 
 declare global {
-  type PlaygroundOptions = {
+  interface PlaygroundOptions {
     width?: number;
     height?: number;
     format?: "png" | "jpeg" | "webp";
@@ -16,5 +18,5 @@ declare global {
     devicePixelRatio?: number;
     stylesheets?: string[];
     pdf?: PlaygroundPdfOptions;
-  };
+  }
 }

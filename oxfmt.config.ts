@@ -14,7 +14,10 @@ export default defineConfig({
   experimentalSortPackageJson: true,
   extends: [ultracite],
   ignorePatterns: [
+    ...(ultracite.ignorePatterns ?? []),
     "public/r/**",
+    ".pnpm-store/**",
+    ".registry-build/**",
     ".agents/**",
     ".cursor/**",
     ".changeset/**",

@@ -1,9 +1,27 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { PdfGraph } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { PdfGraph } from "@/registry/bases/takumi/components/graph";
+import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <PdfGraph
+    variant="bar"
+    title="Monthly Revenue"
+    subtitle="FY 2025"
+    data={[
+      { label: "Jan", value: 42_000 },
+      { label: "Feb", value: 38_000 },
+      { label: "Mar", value: 55_000 },
+      { label: "Apr", value: 61_000 },
+      { label: "May", value: 49_000 },
+      { label: "Jun", value: 72_000 },
+    ]}
+    showValues
+    width={480}
+    height={260}
+  />
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -13,18 +31,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return (
-    <PdfGraph
-      variant="bar"
-      data={[
-        { label: "Q1", value: 30 },
-        { label: "Q2", value: 45 },
-        { label: "Q3", value: 28 },
-      ]}
-    />
-  );
-}
+export default Demo;

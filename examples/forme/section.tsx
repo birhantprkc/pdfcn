@@ -1,19 +1,30 @@
 import { Document, Page } from "@formepdf/react";
-import { Section } from "@/registry/bases/forme/components/section";
-import { Text } from "@/registry/bases/forme/components/text";
 
+import { Heading, Section, Text } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <Section spacing="none">
+    <Section spacing="lg">
+      <Heading level={2}>Introduction</Heading>
+      <Text>
+        This section uses generous spacing for a primary document area.
+      </Text>
+    </Section>
+    <Section spacing="md">
+      <Heading level={2}>Details</Heading>
+      <Text>This section groups related content with medium spacing.</Text>
+    </Section>
+  </Section>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={30}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Section><Text>Section body</Text></Section>;
-}
+export default Demo;

@@ -1,11 +1,15 @@
-import { Text as PDFText, StyleSheet, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type { ReactNode } from "react";
 
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
+import { Text as PDFText, StyleSheet, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { Circle, Line, Path, Svg } from "../../lib/forme-svg";
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
+import {
+  mergePdfStyles,
+  usePdfcnTheme,
+  useSafeMemo,
+} from "../../lib/pdfcn-theme-context";
 
 export type AlertVariant = "info" | "success" | "warning" | "error";
 
@@ -235,7 +239,7 @@ export const PdfAlert = ({
   ];
 
   return (
-    <View wrap={false} style={containerStyles as never}>
+    <View wrap={false} style={mergePdfStyles(containerStyles)}>
       {showIcon && (
         <View style={styles.iconContainer}>
           <AlertIcon variant={variant} color={styles.variantColors[variant]} />

@@ -1,9 +1,12 @@
-import { StyleSheet, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
-
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
+import { StyleSheet, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
+import {
+  mergePdfStyles,
+  usePdfcnTheme,
+  useSafeMemo,
+} from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";
 
 export type SectionSpacing = "none" | "sm" | "md" | "lg" | "xl";
@@ -137,7 +140,7 @@ export const Section = ({
     styleArray.push(...[style].flat());
   }
   return (
-    <View wrap={noWrap ? false : undefined} style={styleArray as never}>
+    <View wrap={noWrap ? false : undefined} style={mergePdfStyles(styleArray)}>
       {children}
     </View>
   );

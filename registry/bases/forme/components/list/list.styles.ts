@@ -26,11 +26,9 @@ export const createListStyles = (t: PdfcnTheme) => {
       backgroundColor: t.colors.success,
       borderColor: t.colors.success,
     },
-    checkMark: {
-      color: t.colors.background,
-      fontFamily: t.typography.body.fontFamily,
-      fontSize: 8,
-      fontWeight: fontWeights.bold,
+    checklistTextWrap: {
+      flex: 1,
+      marginLeft: spacing[2],
     },
     childrenContainer: {
       display: "flex",

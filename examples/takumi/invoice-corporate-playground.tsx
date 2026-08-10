@@ -1,29 +1,33 @@
 const sampleData = {
-  invoiceNumber: "INV-2026-004",
-  invoiceDate: "February 22, 2026",
-  dueDate: "March 24, 2026",
-  companyName: "Your Company",
-  subtitle: "Professional Services",
-  companyAddress: "City, Country",
   billTo: {
-    name: "Global Industries Ltd.",
     address: "100 Corporate Plaza, Tower B",
     email: "accounts@globalindustries.com",
+    name: "Global Industries Ltd.",
     phone: "+1 (555) 888-9999",
   },
+  companyAddress: "City, Country",
+  companyName: "Your Company",
+  dueDate: "March 24, 2026",
+  invoiceDate: "February 22, 2026",
+  invoiceNumber: "INV-2026-004",
   items: [
-    { description: "Enterprise Software License", quantity: 5, unitPrice: 4500 },
-    { description: "Implementation Services", quantity: 1, unitPrice: 18000 },
+    {
+      description: "Enterprise Software License",
+      quantity: 5,
+      unitPrice: 4500,
+    },
+    { description: "Implementation Services", quantity: 1, unitPrice: 18_000 },
     { description: "Training Workshop", quantity: 3, unitPrice: 2500 },
     { description: "Annual Support Package", quantity: 1, unitPrice: 8500 },
   ],
-  summary: { subtotal: 57000, tax: 4560, total: 61560 },
+  notes: "Corporate billing – Net 30 terms apply.",
   paymentTerms: {
     dueDate: "March 24, 2026",
-    method: "Wire Transfer / Corporate Account",
     gst: "GSTIN 987654321",
+    method: "Wire Transfer / Corporate Account",
   },
-  notes: "Corporate billing – Net 30 terms apply.",
+  subtitle: "Professional Services",
+  summary: { subtotal: 57_000, tax: 4560, total: 61_560 },
 };
 
 const money = (v: number) => `$${v.toLocaleString("en-US")}`;
@@ -69,8 +73,12 @@ export default function InvoiceCorporate() {
         <div key={item.description} tw="flex break-inside-avoid pt-3 text-xs">
           <span tw="flex-1">{item.description}</span>
           <span tw="w-[60px] text-right text-[#687385]">{item.quantity}</span>
-          <span tw="w-[100px] text-right text-[#687385]">{money(item.unitPrice)}</span>
-          <span tw="w-[100px] text-right">{money(item.quantity * item.unitPrice)}</span>
+          <span tw="w-[100px] text-right text-[#687385]">
+            {money(item.unitPrice)}
+          </span>
+          <span tw="w-[100px] text-right">
+            {money(item.quantity * item.unitPrice)}
+          </span>
         </div>
       ))}
 
@@ -97,16 +105,14 @@ export default function InvoiceCorporate() {
         <p tw="m-0 mt-1">{d.paymentTerms.gst}</p>
       </div>
 
-      {d.notes && (
-        <p tw="mt-8 mb-0 text-[11px] text-[#687385]">{d.notes}</p>
-      )}
+      {d.notes && <p tw="mt-8 mb-0 text-[11px] text-[#687385]">{d.notes}</p>}
     </div>
   );
 }
 
 export const options: PlaygroundOptions = {
   pdf: {
-    size: "a4",
     margin: 48,
+    size: "a4",
   },
 };

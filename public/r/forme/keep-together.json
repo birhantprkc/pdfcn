@@ -13,7 +13,7 @@
   "files": [
     {
       "path": "registry/bases/forme/components/keep-together/keep-together.tsx",
-      "content": "import { View } from \"@formepdf/react\";\nimport type { ReactNode } from \"react\";\n\nimport type { Style } from \"@/registry/themes\";\n\nexport interface KeepTogetherProps {\n  children?: ReactNode;\n  minPresenceAhead?: number;\n  style?: Style;\n}\n\nexport const KeepTogether = ({ children, style }: KeepTogetherProps) => (\n  <View wrap={false} style={style as never}>\n    {children}\n  </View>\n);\n",
+      "content": "import type { ReactNode } from \"react\";\n\nimport type { Style } from \"@/registry/themes\";\n\nimport { View } from \"../../lib/forme-primitives\";\n\nexport interface KeepTogetherProps {\n  children?: ReactNode;\n  minPresenceAhead?: number;\n  style?: Style;\n}\n\nexport const KeepTogether = ({ children, style }: KeepTogetherProps) => (\n  <View wrap={false} style={style as never}>\n    {children}\n  </View>\n);\n",
       "type": "registry:component",
       "target": "components/pdf/components/keep-together/keep-together.tsx"
     },

@@ -18,13 +18,13 @@ export interface DataTableColumn<T = Record<string, unknown>> {
   align?: "left" | "center" | "right";
   width?: string | number;
   /**
-   * Custom cell renderer. Must return Takumi PDF primitives elements (Text, View,
+   * Custom cell renderer. Must return Takumi primitives elements (Text, View,
    * Image, etc.) — NOT HTML DOM elements. TypeScript accepts ReactNode but DOM
    * nodes will crash at runtime in the PDF renderer.
    */
   render?: (value: unknown, row: T) => React.ReactNode;
   /**
-   * Custom footer cell renderer. Same constraint: return Takumi PDF primitives
+   * Custom footer cell renderer. Same constraint: return Takumi primitives
    * elements only — no HTML/DOM nodes.
    */
   renderFooter?: (value: unknown) => React.ReactNode;

@@ -1,18 +1,16 @@
 "use client";
 
-import { createElement, useEffect, useMemo, useRef, useState } from "react";
-import { Document, Page, pdfjs } from "react-pdf";
+import { createElement, useEffect, useRef, useState } from "react";
 
+import { replacePreviewImageSources } from "@/examples/preview-assets";
+import { getTakumiPreviewOptions } from "@/examples/preview-config";
 import { cn } from "@/lib/utils";
 import type { BaseName } from "@/registry/bases";
 
-import "react-pdf/dist/Page/AnnotationLayer.css";
-import "react-pdf/dist/Page/TextLayer.css";
+const TAKUMI_WASM_PATH = "/takumi_pdf_wasm_bg.wasm";
+const PREVIEW_LOGO_PATH = "/favicon.png";
 
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  "pdfjs-dist/build/pdf.worker.min.mjs",
-  import.meta.url
-).toString();
+let takumiWasmReady: Promise<unknown> | undefined;
 
 interface PdfPreviewProps {
   base: BaseName;
@@ -21,95 +19,135 @@ interface PdfPreviewProps {
   height?: number;
 }
 
+const startTakumi = async (
+  initialize: (input: { module_or_path: string }) => Promise<unknown>
+) => {
+  try {
+    return await initialize({ module_or_path: TAKUMI_WASM_PATH });
+  } catch (error) {
+    takumiWasmReady = undefined;
+    throw error;
+  }
+};
+
+const initializeTakumi = (
+  initialize: (input: { module_or_path: string }) => Promise<unknown>
+) => {
+  takumiWasmReady ??= startTakumi(initialize);
+  return takumiWasmReady;
+};
+
+const loadPreviewLogo = async () => {
+  const response = await fetch(PREVIEW_LOGO_PATH);
+  if (!response.ok) {
+    throw new Error(`Unable to load preview logo (${response.status})`);
+  }
+
+  return {
+    sources: [
+      {
+        data: await response.arrayBuffer(),
+        src: PREVIEW_LOGO_PATH,
+      },
+    ],
+  };
+};
+
+const assertPdfHasPages = (pdfBytes: Uint8Array) => {
+  const source = new TextDecoder("latin1").decode(pdfBytes);
+  const pageCounts = [...source.matchAll(/\/Count\s+(\d+)/g)].map((match) =>
+    Number(match[1])
+  );
+  if (pageCounts.length > 0 && Math.max(...pageCounts) === 0) {
+    throw new Error("PDF renderer returned a document with no pages");
+  }
+};
+
 export const PdfPreview = ({
   base,
   name,
   className,
   height = 640,
 }: PdfPreviewProps) => {
-  const [data, setData] = useState<Uint8Array | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [numPages, setNumPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const [pageWidth, setPageWidth] = useState(560);
   const containerRef = useRef<HTMLDivElement>(null);
-  const file = useMemo(() => (data ? { data } : null), [data]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) {
-      return;
-    }
-
-    const updateWidth = () => {
-      setPageWidth(Math.min(560, Math.max(240, container.clientWidth - 32)));
-    };
-    const observer = new ResizeObserver(updateWidth);
-    updateWidth();
-    observer.observe(container);
-
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     let cancelled = false;
-    setData(null);
+    let nextPdfUrl: string | undefined;
+    setPdfUrl(null);
     setError(null);
-    setPage(1);
 
     (async () => {
       try {
+        let pdfBytes: Uint8Array;
+
         if (base === "takumi") {
           const [
             { demos },
             { default: initialize, render },
-            pdfWasmModule,
-            { googleFonts },
             { fromJsx },
+            images,
           ] = await Promise.all([
             import("@/examples/__takumi__"),
             import("takumi-pdf"),
-            import("takumi-pdf/takumi_pdf_wasm_bg.wasm"),
-            import("@takumi-rs/helpers"),
             import("@takumi-rs/helpers/jsx"),
+            loadPreviewLogo(),
           ]);
           const Demo = demos[name];
           if (!Demo) {
             throw new Error(`Unknown Takumi demo: ${name}`);
           }
+
+          await initializeTakumi(initialize);
           const { node, stylesheets } = await fromJsx(createElement(Demo));
-          const pdfWasm = (
-            pdfWasmModule as unknown as { default: string }
-          ).default;
-          await initialize({ module_or_path: pdfWasm });
-          const buf = await render(node, {
-            fonts: await googleFonts(["Inter", "Times New Roman"]),
-            margin: { bottom: 48, left: 48, right: 48, top: 48 },
-            size: "a4",
+          const buffer = await render(node, {
+            ...getTakumiPreviewOptions(name),
+            images,
             stylesheets,
           });
-          if (!cancelled) {
-            setData(new Uint8Array(buf));
+          pdfBytes = new Uint8Array(buffer);
+        } else {
+          const [{ demos }, { renderSerializedDoc }, { serialize }] =
+            await Promise.all([
+              import("@/examples/__forme__"),
+              import("@formepdf/core/browser"),
+              import("@formepdf/react"),
+            ]);
+          const Demo = demos[name];
+          if (!Demo) {
+            throw new Error(`Unknown Forme demo: ${name}`);
           }
-          return;
+
+          // Serialize with the same @formepdf/react instance that created the
+          // demo primitives. renderDocument() dynamically imports a second
+          // serializer instance, whose strict Page identity check can drop all
+          // pages when bundled by Next.js.
+          const document = replacePreviewImageSources(
+            serialize(createElement(Demo))
+          );
+          const buffer = await renderSerializedDoc(
+            document as unknown as Record<string, unknown>
+          );
+          pdfBytes = new Uint8Array(buffer);
         }
 
-        const [{ demos }, { renderDocument }] = await Promise.all([
-          import("@/examples/__forme__"),
-          import("@formepdf/core/browser"),
-        ]);
-        const Demo = demos[name];
-        if (!Demo) {
-          throw new Error(`Unknown Forme demo: ${name}`);
+        assertPdfHasPages(pdfBytes);
+        nextPdfUrl = URL.createObjectURL(
+          new Blob([pdfBytes as BlobPart], { type: "application/pdf" })
+        );
+        if (cancelled) {
+          URL.revokeObjectURL(nextPdfUrl);
+          return;
         }
-        const buf = await renderDocument(createElement(Demo));
-        if (!cancelled) {
-          setData(new Uint8Array(buf));
-        }
-      } catch (error) {
+        setPdfUrl(nextPdfUrl);
+      } catch (renderError) {
         if (!cancelled) {
           setError(
-            error instanceof Error ? error.message : "Failed to render PDF"
+            renderError instanceof Error
+              ? renderError.message
+              : "Failed to render PDF"
           );
         }
       }
@@ -117,6 +155,9 @@ export const PdfPreview = ({
 
     return () => {
       cancelled = true;
+      if (nextPdfUrl) {
+        URL.revokeObjectURL(nextPdfUrl);
+      }
     };
   }, [base, name]);
 
@@ -126,51 +167,30 @@ export const PdfPreview = ({
       className={cn("overflow-hidden rounded-lg border bg-muted/30", className)}
       style={{ minHeight: height }}
     >
-      {error && (
-        <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground">
+      {error ? (
+        <div
+          className="flex items-center justify-center p-8 text-sm text-muted-foreground"
+          style={{ minHeight: height }}
+        >
           {error}
         </div>
-      )}
-      {!error && !data && (
-        <div className="flex h-full items-center justify-center p-8 text-sm text-muted-foreground">
+      ) : null}
+      {!error && !pdfUrl ? (
+        <div
+          className="flex items-center justify-center p-8 text-sm text-muted-foreground"
+          style={{ minHeight: height }}
+        >
           Rendering PDF…
         </div>
-      )}
-      {file && (
-        <div className="flex flex-col items-center gap-3 p-4">
-          <Document
-            file={file}
-            onLoadError={(loadError) => setError(loadError.message)}
-            onLoadSuccess={({ numPages: n }) => setNumPages(n)}
-            loading={null}
-          >
-            <Page pageNumber={page} width={pageWidth} />
-          </Document>
-          {numPages > 1 && (
-            <div className="flex items-center gap-3 text-sm">
-              <button
-                type="button"
-                className="rounded border px-2 py-1 disabled:opacity-40"
-                disabled={page <= 1}
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-              >
-                Prev
-              </button>
-              <span>
-                {page} / {numPages}
-              </span>
-              <button
-                type="button"
-                className="rounded border px-2 py-1 disabled:opacity-40"
-                disabled={page >= numPages}
-                onClick={() => setPage((p) => Math.min(numPages, p + 1))}
-              >
-                Next
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+      ) : null}
+      {pdfUrl ? (
+        <iframe
+          className="block w-full bg-background"
+          src={`${pdfUrl}#toolbar=1&navpanes=0`}
+          style={{ height }}
+          title={`${name} PDF preview`}
+        />
+      ) : null}
     </div>
   );
 };

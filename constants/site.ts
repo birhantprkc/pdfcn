@@ -20,7 +20,7 @@ export const SITE = {
     TWITTER: "@alaymanguy",
   },
   DESCRIPTION: {
-    LONG: "A collection of beautifully designed, accessible, and customizable PDF components. Built on Takumi PDF and Forme. Works with shadcn/ui.",
+    LONG: "A collection of beautifully designed, accessible, and customizable PDF components. Built on Takumi and Forme. Works with shadcn/ui.",
     SHORT: "Beautiful PDFs, made simple",
   },
   KEYWORDS: [
@@ -28,7 +28,7 @@ export const SITE = {
     "shadcn registry",
     "pdf components",
     "takumi-pdf",
-    "forme pdf",
+    "forme",
     "react pdf",
     "npx shadcn add",
   ] as const,

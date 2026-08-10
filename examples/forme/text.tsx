@@ -1,18 +1,27 @@
 import { Document, Page } from "@formepdf/react";
-import { Text } from "@/registry/bases/forme/components/text";
 
+import { Section, Text } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <Section spacing="none">
+    <Text>
+      Default body text for paragraphs, descriptions, and document content.
+    </Text>
+    <Text variant="xs" color="mutedForeground">
+      Caption text for metadata and supporting details.
+    </Text>
+    <Text variant="lg">Lead paragraph with a larger typographic scale.</Text>
+  </Section>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={30}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Text>Hello from pdfcn forme</Text>;
-}
+export default Demo;

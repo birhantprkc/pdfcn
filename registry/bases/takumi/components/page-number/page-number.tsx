@@ -48,7 +48,14 @@ const createPageNumberStyles = (t: PdfcnTheme) => {
     alignRight: { textAlign: "right" },
     colorForeground: { color: colors.foreground },
     colorMuted: { color: colors.mutedForeground },
-    container: { width: "100%" },
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      width: "100%",
+    },
+    justifyCenter: { justifyContent: "center" },
+    justifyLeft: { justifyContent: "flex-start" },
+    justifyRight: { justifyContent: "flex-end" },
     sizeMd: { fontSize: primitives.typography.base },
     sizeSm: { fontSize: primitives.typography.sm },
     sizeXs: { fontSize: primitives.typography.xs },
@@ -84,6 +91,11 @@ export const PdfPageNumber = ({
     sm: styles.sizeSm,
     xs: styles.sizeXs,
   } as Record<PageNumberSize, Style>;
+  const justifyMap = {
+    center: styles.justifyCenter,
+    left: styles.justifyLeft,
+    right: styles.justifyRight,
+  } as Record<PageNumberAlign, Style>;
   const textStyles: Style[] = [
     styles.text,
     alignMap[align],
@@ -94,18 +106,32 @@ export const PdfPageNumber = ({
     textStyles.push(...[style].flat());
   }
   return (
-    <View style={styles.container}>
-      <PDFText style={textStyles}>
-        {format.split(/({page}|{total})/).map((part, i) => {
-          if (part === "{page}") {
-            return <span key={i} className="pageNumber" />;
-          }
-          if (part === "{total}") {
-            return <span key={i} className="totalPages" />;
-          }
-          return <span key={i}>{part}</span>;
-        })}
-      </PDFText>
+    <View style={[styles.container, justifyMap[align]]}>
+      {format.split(/({page}|{total})/).map((part, index) => {
+        if (part === "{page}") {
+          return (
+            <PDFText
+              key={`page-${index}`}
+              className="pageNumber"
+              style={textStyles}
+            />
+          );
+        }
+        if (part === "{total}") {
+          return (
+            <PDFText
+              key={`total-${index}`}
+              className="totalPages"
+              style={textStyles}
+            />
+          );
+        }
+        return (
+          <PDFText key={`text-${index}`} style={textStyles}>
+            {part}
+          </PDFText>
+        );
+      })}
     </View>
   );
 };

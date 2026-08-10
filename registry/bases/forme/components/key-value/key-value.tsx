@@ -1,8 +1,7 @@
-import { Text as PDFText, StyleSheet, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
-
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
+import { Text as PDFText, StyleSheet, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";
 
@@ -75,7 +74,7 @@ const createKeyValueStyles = (t: PdfcnTheme) => {
     fontWeight: fontWeights.regular,
   };
   return StyleSheet.create({
-    container: { flexDirection: "column" },
+    container: { flexDirection: "column", width: "100%" },
     divider: {
       borderBottomColor: c.border,
       borderBottomStyle: "solid",
@@ -84,10 +83,16 @@ const createKeyValueStyles = (t: PdfcnTheme) => {
     keyLg: { ...keyBase, fontSize: t.primitives.typography.base },
     keyMd: { ...keyBase, fontSize: body.fontSize },
     keySm: { ...keyBase, fontSize: t.primitives.typography.xs },
+    lastRowStretch: {
+      borderBottomColor: "#ffffff",
+      borderBottomStyle: "solid",
+      borderBottomWidth: 0.01,
+    },
     rowHorizontal: {
       alignItems: "flex-start",
       flexDirection: "row",
       paddingVertical: spacing[1],
+      width: "100%",
     },
     rowVertical: {
       flexDirection: "column",
@@ -159,21 +164,25 @@ export const KeyValue = ({
 
         if (direction === "horizontal") {
           const rowStyles: Style[] = [styles.rowHorizontal];
-          if (divided && !isLast) {
-            const dividerStyle: Style = {};
-            if (dividerColor) {
-              dividerStyle.borderBottomColor = resolveColor(
-                dividerColor,
-                theme.colors
-              );
+          if (divided) {
+            if (isLast) {
+              rowStyles.push(styles.lastRowStretch);
+            } else {
+              const dividerStyle: Style = {};
+              if (dividerColor) {
+                dividerStyle.borderBottomColor = resolveColor(
+                  dividerColor,
+                  theme.colors
+                );
+              }
+              if (dividerThickness) {
+                dividerStyle.borderBottomWidth = dividerThickness;
+              }
+              if (dividerMargin) {
+                dividerStyle.marginBottom = dividerMargin;
+              }
+              rowStyles.push({ ...styles.divider, ...dividerStyle });
             }
-            if (dividerThickness) {
-              dividerStyle.borderBottomWidth = dividerThickness;
-            }
-            if (dividerMargin) {
-              dividerStyle.marginBottom = dividerMargin;
-            }
-            rowStyles.push({ ...styles.divider, ...dividerStyle });
           }
           return (
             <View key={item.key} style={rowStyles as never}>

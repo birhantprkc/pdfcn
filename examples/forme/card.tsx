@@ -1,18 +1,24 @@
 import { Document, Page } from "@formepdf/react";
-import { PdfCard } from "@/registry/bases/forme/components/card";
 
+import { PdfCard, Text } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <PdfCard title="Project Summary" variant="default" padding="md">
+    <Text noMargin>
+      This card groups related content with a title and body area. Use cards to
+      visually separate sections of your PDF document.
+    </Text>
+  </PdfCard>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={40}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <PdfCard title="Card">Card body</PdfCard>;
-}
+export default Demo;

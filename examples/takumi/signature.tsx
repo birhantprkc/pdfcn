@@ -1,9 +1,18 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { PdfSignatureBlock } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { PdfSignatureBlock } from "@/registry/bases/takumi/components/signature";
+import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <PdfSignatureBlock
+    variant="single"
+    label="Authorized By"
+    name="John Doe"
+    title="CEO, Acme Corp"
+    date="15 February 2026"
+  />
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -13,9 +22,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <PdfSignatureBlock name="Jane Doe" label="Authorized Signature" />;
-}
+export default Demo;

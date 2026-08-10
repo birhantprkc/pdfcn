@@ -1,6 +1,7 @@
-import { Fixed, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type { ReactNode } from "react";
+
+import { Fixed, View } from "./forme-primitives";
+import type { Style } from "./forme-primitives";
 
 export const MaybeFixed = ({
   fixed,

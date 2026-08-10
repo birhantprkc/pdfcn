@@ -1,9 +1,9 @@
-import { Text as PDFText, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type React from "react";
 
 import type { PdfcnTheme } from "@/registry/themes";
 
+import { Text as PDFText, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { Circle, G, Line, Path, Rect, Svg, SvgText } from "../../lib/forme-svg";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { createGraphStyles } from "./graph.styles";
@@ -560,11 +560,226 @@ const renderAxisLabels = (
   </>
 );
 
+const renderTextFallback = (
+  variant: GraphProps["variant"],
+  series: GraphSeries[],
+  layout: ChartLayout,
+  showValues: boolean,
+  textColor: string
+) => {
+  if (variant === "pie" || variant === "donut") {
+    const data = series[0]?.data ?? [];
+    const total = data.reduce((sum, point) => sum + point.value, 0) || 1;
+    const cx = layout.svgW / 2;
+    const cy = layout.svgH / 2;
+    const radius = Math.min(layout.svgW, layout.svgH) / 2 - 20;
+    const labelRadius = radius * 1.18;
+    let currentAngle = 0;
+
+    return (
+      <View
+        style={{
+          height: layout.svgH,
+          left: 0,
+          position: "absolute",
+          top: 0,
+          width: layout.svgW,
+        }}
+      >
+        {data.map((point, index) => {
+          const sweep = (point.value / total) * 360;
+          const midAngle = currentAngle + sweep / 2;
+          currentAngle += sweep;
+          if (sweep <= 15) {
+            return null;
+          }
+          const labelPoint = polarToCartesian(cx, cy, labelRadius, midAngle);
+          const onRight = labelPoint.x > cx;
+          return (
+            <PDFText
+              key={`fallback-pie-${point.label}-${index}`}
+              style={{
+                color: textColor,
+                fontSize: 7,
+                left: onRight ? labelPoint.x : labelPoint.x - 60,
+                lineHeight: 1,
+                position: "absolute",
+                textAlign: onRight ? "left" : "right",
+                top: labelPoint.y - 4,
+                width: 60,
+              }}
+            >
+              {truncate(point.label, 10)}
+            </PDFText>
+          );
+        })}
+      </View>
+    );
+  }
+
+  const {
+    chartH,
+    chartW,
+    chartX,
+    chartY,
+    svgH,
+    svgW,
+    xLabels,
+    yMax,
+    yMin,
+    yTicks,
+  } = layout;
+  const range = yMax - yMin || 1;
+  const toY = (value: number) =>
+    chartY + chartH - ((value - yMin) / range) * chartH;
+  const labelStyle = {
+    color: textColor,
+    fontSize: 7,
+    lineHeight: 1,
+    position: "absolute" as const,
+  };
+
+  if (variant === "horizontal-bar") {
+    const labelWidth = 60;
+    const rowHeight = chartH / Math.max(xLabels.length, 1);
+    const maxValue = Math.max(
+      ...series.flatMap((item) => item.data.map((point) => point.value)),
+      1
+    );
+
+    return (
+      <View
+        style={{
+          height: svgH,
+          left: 0,
+          position: "absolute",
+          top: 0,
+          width: svgW,
+        }}
+      >
+        {xLabels.map((label, index) => {
+          const value = series[0]?.data[index]?.value ?? 0;
+          const barWidth = (value / maxValue) * (chartW - labelWidth);
+          return (
+            <View key={`fallback-horizontal-${label}`}>
+              <PDFText
+                style={{
+                  ...labelStyle,
+                  left: chartX,
+                  textAlign: "right",
+                  top: chartY + index * rowHeight + rowHeight / 2 - 4,
+                  width: labelWidth - 4,
+                }}
+              >
+                {truncate(label, 14)}
+              </PDFText>
+              {showValues ? (
+                <PDFText
+                  style={{
+                    ...labelStyle,
+                    color: textColor,
+                    fontSize: 6,
+                    left: chartX + labelWidth + barWidth + 3,
+                    top: chartY + index * rowHeight + rowHeight / 2 - 4,
+                    width: 28,
+                  }}
+                >
+                  {fmtNum(value)}
+                </PDFText>
+              ) : null}
+            </View>
+          );
+        })}
+      </View>
+    );
+  }
+
+  const pointX = (index: number) =>
+    chartX + (index / Math.max(xLabels.length - 1, 1)) * chartW;
+  const groupWidth = chartW / Math.max(xLabels.length, 1);
+  const barGap = 2;
+  const barWidth = Math.max(
+    (groupWidth - barGap * (series.length + 1)) / Math.max(series.length, 1),
+    1
+  );
+
+  return (
+    <View
+      style={{
+        height: svgH,
+        left: 0,
+        position: "absolute",
+        top: 0,
+        width: svgW,
+      }}
+    >
+      {yTicks.map((tick) => (
+        <PDFText
+          key={`fallback-y-${tick}`}
+          style={{
+            ...labelStyle,
+            left: 0,
+            textAlign: "right",
+            top: toY(tick) - 4,
+            width: chartX - 4,
+          }}
+        >
+          {fmtNum(tick)}
+        </PDFText>
+      ))}
+      {(variant === "line" || variant === "area") &&
+        xLabels.map((label, index) => (
+          <PDFText
+            key={`fallback-x-${label}`}
+            style={{
+              ...labelStyle,
+              left: pointX(index) - 12,
+              textAlign: "center",
+              top: chartY + chartH + 3,
+              width: 24,
+            }}
+          >
+            {truncate(label, 8)}
+          </PDFText>
+        ))}
+      {variant === "bar" &&
+        showValues &&
+        xLabels.flatMap((label, categoryIndex) =>
+          series.map((item, seriesIndex) => {
+            const value = item.data[categoryIndex]?.value ?? 0;
+            const left =
+              chartX +
+              categoryIndex * groupWidth +
+              barGap +
+              seriesIndex * (barWidth + barGap);
+            return (
+              <PDFText
+                key={`fallback-bar-${label}-${item.name}-${seriesIndex}`}
+                style={{
+                  ...labelStyle,
+                  fontSize: 6,
+                  left,
+                  textAlign: "center",
+                  top: toY(value) - 8,
+                  width: barWidth,
+                }}
+              >
+                {fmtNum(value)}
+              </PDFText>
+            );
+          })
+        )}
+    </View>
+  );
+};
+
 const renderGraphContent = (
   title: string | undefined,
   subtitle: string | undefined,
   chartContent: React.ReactNode,
+  chartLabels: React.ReactNode,
   axisLabels: React.ReactNode,
+  textFallback: React.ReactNode,
   width: number,
   height: number,
   legend: string,
@@ -578,19 +793,51 @@ const renderGraphContent = (
     {title && <PDFText style={styles.title}>{title}</PDFText>}
     {subtitle && <PDFText style={styles.subtitle}>{subtitle}</PDFText>}
     <View style={legend === "right" ? styles.chartWithRightLegend : undefined}>
-      <Svg width={width} height={height}>
-        {chartContent}
-        {axisLabels}
-      </Svg>
+      <View style={{ height, position: "relative", width }}>
+        <Svg width={width} height={height}>
+          {chartContent}
+          {axisLabels}
+        </Svg>
+        {textFallback}
+      </View>
       {showLegend &&
         legend === "right" &&
         Legend({ palette, position: "right", series, styles })}
     </View>
+    {chartLabels}
     {showLegend &&
       legend === "bottom" &&
       Legend({ palette, position: "bottom", series, styles })}
   </>
 );
+
+const renderBarLabels = (
+  variant: GraphProps["variant"],
+  series: GraphSeries[],
+  chartX: number,
+  chartW: number
+) => {
+  if (variant !== "bar") {
+    return null;
+  }
+
+  return (
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        marginLeft: chartX,
+        width: chartW,
+      }}
+    >
+      {(series[0]?.data ?? []).map((point) => (
+        <View key={point.label} style={{ alignItems: "center", flex: 1 }}>
+          <PDFText style={{ fontSize: 7 }}>{truncate(point.label, 10)}</PDFText>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 /**
  * PdfGraph — renders bar, horizontal-bar, line, area, pie, and donut charts
@@ -684,6 +931,7 @@ export const PdfGraph = ({
   );
 
   const showLegend = legend !== "none" && !isPieOrDonut;
+  const chartLabels = renderBarLabels(variant, series, chartX, chartW);
 
   const containerStyles: Style[] = [styles.container];
   if (style) {
@@ -696,6 +944,7 @@ export const PdfGraph = ({
         title,
         subtitle,
         chartContent,
+        chartLabels,
         renderAxisLabels(
           isPieOrDonut,
           xLabel,
@@ -703,6 +952,13 @@ export const PdfGraph = ({
           chartX,
           chartW,
           height,
+          theme.colors.mutedForeground
+        ),
+        renderTextFallback(
+          variant,
+          series,
+          layout,
+          showValues,
           theme.colors.mutedForeground
         ),
         width,

@@ -1,7 +1,7 @@
-import { Text as PDFText, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type React from "react";
 
+import { Text as PDFText, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { createListStyles } from "./list.styles";
 import type { ListItem, ListVariant, PdfListProps } from "./list.types";
@@ -103,10 +103,8 @@ const renderChecklistItem = (
         style={
           [styles.checkBox, isChecked ? styles.checkBoxChecked : {}] as never
         }
-      >
-        {isChecked ? <PDFText style={styles.checkMark}>✓</PDFText> : null}
-      </View>
-      <View style={styles.itemTextWrap}>
+      ></View>
+      <View style={styles.checklistTextWrap}>
         <PDFText style={styles.itemText}>{item.text}</PDFText>
       </View>
     </View>

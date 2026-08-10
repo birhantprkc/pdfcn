@@ -1,10 +1,15 @@
-import { Text as PDFText, StyleSheet, View, Fixed } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import type React from "react";
 import type { ReactNode } from "react";
 
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
+import {
+  Fixed,
+  Text as PDFText,
+  StyleSheet,
+  View,
+} from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";
 
@@ -86,6 +91,7 @@ const createPageHeaderStyles = (t: PdfcnTheme) => {
     },
 
     logoContainer: {
+      flexShrink: 0,
       height: 48,
       marginRight: spacing[4],
       width: 48,
@@ -95,6 +101,7 @@ const createPageHeaderStyles = (t: PdfcnTheme) => {
       display: "flex",
       flex: 1,
       flexDirection: "column",
+      paddingLeft: spacing[4],
     },
     logoLeftContainer: {
       alignItems: "center",
@@ -123,6 +130,7 @@ const createPageHeaderStyles = (t: PdfcnTheme) => {
     },
 
     logoRightLogoContainer: {
+      flexShrink: 0,
       height: 48,
       marginLeft: spacing[4],
       width: 48,

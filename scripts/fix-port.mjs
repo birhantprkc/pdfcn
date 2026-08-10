@@ -28,7 +28,7 @@ const fixContent = (content, base) => {
   );
   c = c.replaceAll(
     "@react-pdf/renderer",
-    base === "forme" ? "@formepdf/react" : "Takumi PDF primitives"
+    base === "forme" ? "@formepdf/react" : "Takumi primitives"
   );
   c = c.replaceAll("pdfx-theme", "pdfcn-theme");
 

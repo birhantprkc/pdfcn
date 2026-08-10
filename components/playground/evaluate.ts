@@ -1,6 +1,7 @@
 import * as React from "react";
 import { transform } from "sucrase";
 import * as z from "zod/mini";
+
 import { optionsSchema } from "./schema";
 
 const exportsSchema = z.object({
@@ -10,8 +11,8 @@ const exportsSchema = z.object({
 
 function transformCode(code: string) {
   return transform(code, {
-    transforms: ["jsx", "typescript", "imports"],
     production: true,
+    transforms: ["jsx", "typescript", "imports"],
   }).code;
 }
 
@@ -22,9 +23,14 @@ export function evaluateCodeExports(code: string, react: typeof React) {
 }
 
 function mirrorTw<P>(props: P): P {
-  if (!props || typeof props !== "object" || !("tw" in props)) return props;
+  if (!props || typeof props !== "object" || !("tw" in props)) {
+    return props;
+  }
   const { tw, className, class: klass } = props as Record<string, unknown>;
-  return { ...props, className: [className ?? klass, tw].filter(Boolean).join(" ") };
+  return {
+    ...props,
+    className: [className ?? klass, tw].filter(Boolean).join(" "),
+  };
 }
 
 export const renderReact: typeof React = {
@@ -33,5 +39,10 @@ export const renderReact: typeof React = {
     type: React.ElementType,
     props: Record<string, unknown> | null,
     ...children: React.ReactNode[]
-  ) => React.createElement(type, mirrorTw(props), ...children)) as typeof React.createElement,
+  ) =>
+    React.createElement(
+      type,
+      mirrorTw(props),
+      ...children
+    )) as typeof React.createElement,
 };

@@ -1,9 +1,9 @@
-import { Text as PDFText, StyleSheet, View } from "@formepdf/react";
-import type { Style } from "@formepdf/react";
 import QRCode from "qrcode";
 
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
+import { Text as PDFText, StyleSheet, View } from "../../lib/forme-primitives";
+import type { Style } from "../../lib/forme-primitives";
 import { Rect, Svg } from "../../lib/forme-svg";
 import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { resolveColor } from "../../lib/resolve-color";

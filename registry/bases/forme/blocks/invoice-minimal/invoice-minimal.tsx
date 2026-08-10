@@ -26,14 +26,14 @@ const sampleData: InvoiceMinimalData = {
     name: "Enterprise Corp",
     phone: "+1 (555) 246-8135",
   },
-  companyAddress: "City, Country",
-  companyEmail: "hello@company.com",
-  companyName: "Your Company",
+  companyAddress: "Nagpur, IN",
+  companyEmail: "hello@pdfx.io",
+  companyName: "PDFx Inc.",
   dueDate: "March 22, 2026",
   invoiceDate: "February 20, 2026",
   invoiceNumber: "INV-2026-003",
   items: [
-    { description: "Annual Licenselan", quantity: 1, unitPrice: 25_000 },
+    { description: "Annual License Plan", quantity: 1, unitPrice: 25_000 },
     { description: "Support & Maintenance", quantity: 12, unitPrice: 1500 },
     { description: "Custom Integration", quantity: 1, unitPrice: 12_000 },
   ],
@@ -44,7 +44,7 @@ const sampleData: InvoiceMinimalData = {
     gst: "GSTIN 123456789",
     method: "ACH Transfer / Check",
   },
-  subtitle: "Professional Services",
+  subtitle: "Innovative PDF Solutions",
   summary: {
     subtotal: 55_000,
     tax: 3850,
@@ -66,7 +66,7 @@ const InvoiceMinimalContent = ({ data }: { data: InvoiceMinimalData }) => {
     },
     infoRow: {
       flexDirection: "row",
-      marginBottom: theme.spacing.sectionGap,
+      marginBottom: 28,
     },
     invoiceStamp: {
       alignSelf: "flex-start",
@@ -79,14 +79,18 @@ const InvoiceMinimalContent = ({ data }: { data: InvoiceMinimalData }) => {
     },
     page: {
       backgroundColor: theme.colors.background,
-      padding: theme.spacing.page.marginTop,
-      paddingBottom: theme.spacing.page.marginBottom,
     },
   });
 
   return (
     <Document title={`Invoice ${data.invoiceNumber}`}>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={{ bottom: 25, left: 56, right: 56, top: 56 }}>
+        <PageFooter
+          leftText={data.notes}
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={25}
+        />
         <View style={styles.page as never}>
           <Section
             noWrap
@@ -141,7 +145,7 @@ const InvoiceMinimalContent = ({ data }: { data: InvoiceMinimalData }) => {
             </View>
           </Section>
           <View style={styles.infoRow}>
-            <View style={{ flex: 1, paddingRight: 20 }}>
+            <View style={{ paddingRight: 20, width: 251 }}>
               <Text style={styles.infoLabel} noMargin>
                 Bill To
               </Text>
@@ -158,7 +162,7 @@ const InvoiceMinimalContent = ({ data }: { data: InvoiceMinimalData }) => {
                 {data.billTo.phone}
               </Text>
             </View>
-            <View style={{ flex: 1 }}>
+            <View style={{ width: 232 }}>
               <Text style={styles.infoLabel} noMargin>
                 Invoice Details
               </Text>
@@ -220,12 +224,6 @@ const InvoiceMinimalContent = ({ data }: { data: InvoiceMinimalData }) => {
               />
             </View>
           </Section>
-          <PageFooter
-            leftText={data.notes}
-            rightText="Page 1 of 1"
-            sticky
-            pagePadding={25}
-          />
         </View>
       </Page>
     </Document>

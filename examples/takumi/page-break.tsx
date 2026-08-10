@@ -1,10 +1,22 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { Heading, PageBreak, Text } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { PageBreak } from "@/registry/bases/takumi/components/page-break";
-import { Text } from "@/registry/bases/takumi/components/text";
+import {
+  Document,
+  Page,
+  View,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <View>
+    <Heading level={1}>Section 1</Heading>
+    <Text>Content on the first page.</Text>
+    <PageBreak />
+    <Heading level={1}>Section 2</Heading>
+    <Text>Content on the second page.</Text>
+  </View>
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -14,15 +26,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return (
-    <>
-      <Text>Before</Text>
-      <PageBreak />
-      <Text>After</Text>
-    </>
-  );
-}
+export default Demo;

@@ -26,14 +26,10 @@ export const ComponentPreview = ({
   <>
     {children}
     {name ? (
-      <PdfPreview
-        base={base}
-        name={name}
-        className={cn("mt-4", className)}
-      />
+      <PdfPreview base={base} name={name} className={cn("mt-4", className)} />
     ) : null}
-    {!hideCode ? (
+    {hideCode ? null : (
       <ComponentSource base={base} name={name} src={src} title={title} />
-    ) : null}
+    )}
   </>
 );

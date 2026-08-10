@@ -1,19 +1,26 @@
 import { Document, Page } from "@formepdf/react";
-import { PdfImage } from "@/registry/bases/forme/components/pdf-image";
-import { Text } from "@/registry/bases/forme/components/text";
 
+import { PREVIEW_IMAGE_DATA_URI } from "@/examples/preview-assets";
+import { PdfImage } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <PdfImage
+    src={PREVIEW_IMAGE_DATA_URI}
+    variant="default"
+    height={120}
+    width={200}
+    caption="Variant: default"
+  />
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={40}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Text>PdfImage demo — pass src in your document.</Text>;
-}
+export default Demo;

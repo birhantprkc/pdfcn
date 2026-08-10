@@ -1,24 +1,31 @@
-import { Document, Page } from "@formepdf/react";
-import { PdfWatermark } from "@/registry/bases/forme/components/watermark";
-import { Text } from "@/registry/bases/forme/components/text";
+import { Document, Page, View } from "@formepdf/react";
 
+import { Heading, PdfWatermark, Text } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <View style={{ minHeight: 680, position: "relative" }}>
+    <PdfWatermark text="DRAFT" />
+    <Heading level={1}>Draft Document</Heading>
+    <Text>
+      This report is under review and should not be distributed externally.
+    </Text>
+    <Text>
+      The watermark sits behind the content while remaining clearly visible.
+    </Text>
+    <Text>
+      Use watermarks for draft, confidential, sample, or approval states.
+    </Text>
+  </View>
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={40}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return (
-    <>
-      <PdfWatermark text="DRAFT" />
-      <Text>Document content</Text>
-    </>
-  );
-}
+export default Demo;

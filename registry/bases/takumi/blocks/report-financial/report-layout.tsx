@@ -3,7 +3,6 @@ import type { PdfcnTheme } from "@/registry/themes";
 import {
   Badge,
   DataTable,
-  Divider,
   KeyValue,
   PageFooter,
   PageHeader,
@@ -11,7 +10,6 @@ import {
   PdfList,
   PdfcnThemeProvider,
   Section,
-  Stack,
   Text,
   usePdfcnTheme,
 } from "../../components";
@@ -76,7 +74,30 @@ export const ReportLayout = ({
 }: ReportLayoutProps) => {
   const theme = usePdfcnTheme();
   const accent = toneColor(theme, statusTone);
-
+  const deliveryOffset: Record<ReportGraphVariant, number> = {
+    area: 0,
+    bar: 31,
+    donut: 65,
+    "horizontal-bar": -2,
+    line: -31,
+    pie: 0,
+  };
+  const graphHeight: Record<ReportGraphVariant, number> = {
+    area: 191,
+    bar: 184,
+    donut: 193,
+    "horizontal-bar": 163,
+    line: 195,
+    pie: 191,
+  };
+  const graphOffset: Record<ReportGraphVariant, number> = {
+    area: 0,
+    bar: 0,
+    donut: 0,
+    "horizontal-bar": 0,
+    line: 0,
+    pie: 0,
+  };
   const styles = StyleSheet.create({
     col: {
       flex: 1,
@@ -122,10 +143,16 @@ export const ReportLayout = ({
     },
     page: {
       backgroundColor: theme.colors.background,
+      boxSizing: "border-box",
+      minHeight: 841,
       paddingBottom: theme.spacing.page.marginBottom,
       paddingLeft: theme.spacing.page.marginLeft,
       paddingRight: theme.spacing.page.marginRight,
       paddingTop: theme.spacing.page.marginTop,
+      position: "relative",
+    },
+    pageBreak: {
+      breakAfter: "page",
     },
     toolbar: {
       alignItems: "center",
@@ -142,7 +169,7 @@ export const ReportLayout = ({
 
   return (
     <Document title={`${titlePrefix} ${data.period}`}>
-      <Page size="A4" style={styles.page}>
+      <Page size="A4" style={[styles.page, styles.pageBreak]}>
         <PageHeader
           variant="two-column"
           title={data.title}
@@ -195,11 +222,37 @@ export const ReportLayout = ({
           </View>
         </Section>
 
-        <Section padding="md" noWrap>
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with PDFx"
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
+      </Page>
+
+      <Page size="A4" style={[styles.page, styles.pageBreak]}>
+        <Section
+          padding="md"
+          noWrap
+          style={
+            graphVariant === "horizontal-bar" ? { marginTop: -6 } : undefined
+          }
+        >
           <Text variant="sm" transform="uppercase" color="mutedForeground">
             Performance Trend
           </Text>
-          <View style={styles.graphShell}>
+          <View
+            style={[
+              styles.graphShell,
+              {
+                marginTop: graphVariant === "horizontal-bar" ? 34 : 0,
+                position: "relative",
+                top: graphOffset[graphVariant],
+              },
+            ]}
+          >
             <PdfGraph
               variant={graphVariant}
               data={graphData ?? data.series}
@@ -211,7 +264,7 @@ export const ReportLayout = ({
               showValues={graphShowValues}
               smooth={graphVariant === "line" || graphVariant === "area"}
               legend={graphLegend}
-              height={200}
+              height={graphHeight[graphVariant]}
               colors={graphColors}
               fullWidth
               containerPadding={12}
@@ -221,7 +274,13 @@ export const ReportLayout = ({
           </View>
         </Section>
 
-        <Section padding="md">
+        <Section
+          padding="md"
+          style={{
+            position: "relative",
+            top: deliveryOffset[graphVariant],
+          }}
+        >
           <Text variant="sm" transform="uppercase" color="mutedForeground">
             Delivery Table
           </Text>
@@ -255,6 +314,17 @@ export const ReportLayout = ({
           />
         </Section>
 
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with PDFx"
+          rightText="Page 1 of 1"
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
+      </Page>
+
+      <Page size="A4" style={styles.page}>
         <Section padding="md" variant="card" noWrap>
           <Text variant="sm" transform="uppercase" color="mutedForeground">
             Highlights & Risks
@@ -284,7 +354,7 @@ export const ReportLayout = ({
                     value: `${data.rows.filter((r) => r.status === "On Track").length}/${data.rows.length}`,
                   },
                   {
-                    key: "Average Progress",
+                    key: "Avg Progress",
                     value: `${Math.round(
                       data.rows.reduce((sum, row) => sum + row.progress, 0) /
                         Math.max(data.rows.length, 1)
@@ -294,17 +364,6 @@ export const ReportLayout = ({
               />
             </View>
           </View>
-          <Divider />
-          <Stack gap="sm">
-            <Text variant="xs" color="mutedForeground" noMargin>
-              Best practice: keep each section under one page using `noWrap` for
-              concise blocks.
-            </Text>
-            <Text variant="xs" color="mutedForeground" noMargin>
-              Best practice: pass explicit row keys/owners to avoid ambiguous
-              reporting handoffs.
-            </Text>
-          </Stack>
         </Section>
 
         <PageFooter

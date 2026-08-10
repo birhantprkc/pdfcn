@@ -1,9 +1,20 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { Section, Text } from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <Section spacing="none">
+    <Text>
+      Default body text for paragraphs, descriptions, and document content.
+    </Text>
+    <Text variant="xs" color="mutedForeground">
+      Caption text for metadata and supporting details.
+    </Text>
+    <Text variant="lg">Lead paragraph with a larger typographic scale.</Text>
+  </Section>
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -13,9 +24,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <Text>Hello from pdfcn takumi</Text>;
-}
+export default Demo;

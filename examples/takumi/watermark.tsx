@@ -1,10 +1,32 @@
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import {
+  Heading,
+  PdfWatermark,
+  Text,
+} from "@/registry/bases/takumi/components";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { PdfWatermark } from "@/registry/bases/takumi/components/watermark";
-import { Text } from "@/registry/bases/takumi/components/text";
+import {
+  Document,
+  Page,
+  View,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
 
+const DemoBody = () => (
+  <View style={{ minHeight: 680, position: "relative" }}>
+    <PdfWatermark text="DRAFT" />
+    <Heading level={1}>Draft Document</Heading>
+    <Text>
+      This report is under review and should not be distributed externally.
+    </Text>
+    <Text>
+      The watermark sits behind the content while remaining clearly visible.
+    </Text>
+    <Text>
+      Use watermarks for draft, confidential, sample, or approval states.
+    </Text>
+  </View>
+);
 
-const Demo =() => {
+const Demo = () => {
   return (
     <Document>
       <Page size="A4">
@@ -14,14 +36,6 @@ const Demo =() => {
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return (
-    <>
-      <PdfWatermark text="DRAFT" />
-      <Text>Document content</Text>
-    </>
-  );
-}
+export default Demo;

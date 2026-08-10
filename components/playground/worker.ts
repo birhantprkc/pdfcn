@@ -1,55 +1,84 @@
-import initPdf, { render, type PageSize } from "takumi-pdf";
-import { googleFonts } from "@takumi-rs/helpers";
 import type * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import initPdf, { render } from "takumi-pdf";
+import type { PageSize } from "takumi-pdf";
+
 import { evaluateCodeExports, renderReact } from "./evaluate";
 import { outputGeometry } from "./geometry";
 import { inspectPdf } from "./inspect-pdf";
-import { messageSchema, type RenderMessageInput } from "./schema";
+import { messageSchema } from "./schema";
+import type { RenderMessageInput } from "./schema";
 
 function postMessage(message: RenderMessageInput, transfer?: Transferable[]) {
   return self.postMessage(message, { transfer });
 }
 
-const GOOGLE_FONT_NAMES = ["Inter", "Times New Roman"];
+const TAKUMI_WASM_URL = new URL(
+  "/takumi_pdf_wasm_bg.wasm",
+  self.location.origin
+);
+const PREVIEW_LOGO_PATH = "/favicon.png";
 
-let fontsReady: ReturnType<typeof googleFonts> | undefined;
+let imagesReady:
+  | Promise<{
+      sources: { data: ArrayBuffer; src: string }[];
+    }>
+  | undefined;
 let wasmReady: Promise<unknown> | undefined;
 
-function getFonts() {
-  fontsReady ??= googleFonts(GOOGLE_FONT_NAMES);
-  return fontsReady;
+async function loadImages() {
+  const response = await fetch(PREVIEW_LOGO_PATH);
+  if (!response.ok) {
+    throw new Error(`Unable to load preview logo (${response.status})`);
+  }
+  return {
+    sources: [
+      {
+        data: await response.arrayBuffer(),
+        src: PREVIEW_LOGO_PATH,
+      },
+    ],
+  };
+}
+
+function getImages() {
+  imagesReady ??= loadImages();
+  return imagesReady;
 }
 
 async function initWasm() {
-  wasmReady ??= initPdf();
+  wasmReady ??= initPdf({ module_or_path: TAKUMI_WASM_URL });
   await wasmReady;
 }
 
 async function renderRequest(id: number, code: string) {
   await initWasm();
 
-  const { default: component, options } = evaluateCodeExports(code, renderReact);
-  const element = renderReact.createElement(component as React.JSXElementConstructor<unknown>);
+  const { default: component, options } = evaluateCodeExports(
+    code,
+    renderReact
+  );
+  const element = renderReact.createElement(
+    component as React.JSXElementConstructor<unknown>
+  );
   const geometry = outputGeometry(options);
 
   postMessage({
-    type: "preview-result",
-    id,
-    html: renderToStaticMarkup(element),
-    width: geometry.width,
     height: geometry.height,
+    html: renderToStaticMarkup(element),
+    id,
     padding: geometry.padding,
+    type: "preview-result",
+    width: geometry.width,
   });
 
-  const fonts = await getFonts();
   const start = performance.now();
 
-  const pdfOptions = options.pdf ?? {} as Record<string, unknown>;
+  const pdfOptions = options.pdf ?? ({} as Record<string, unknown>);
   const pdfBytes = await render(element, {
-    fonts,
-    size: (pdfOptions.size as PageSize | undefined) ?? "a4",
+    images: await getImages(),
     margin: pdfOptions.margin ?? { top: 48, right: 48, bottom: 48, left: 48 },
+    size: (pdfOptions.size as PageSize | undefined) ?? "a4",
     ...pdfOptions,
   });
 
@@ -57,19 +86,19 @@ async function renderRequest(id: number, code: string) {
 
   postMessage(
     {
-      type: "render-result",
       result: {
-        status: "success",
-        id,
-        outputBuffer: pdfBytes,
         duration,
-        outputKind: "pdf",
-        outputFormat: "pdf",
-        label: geometry.label,
+        id,
         inspection: inspectPdf(pdfBytes),
+        label: geometry.label,
+        outputBuffer: pdfBytes,
+        outputFormat: "pdf",
+        outputKind: "pdf",
+        status: "success",
       },
+      type: "render-result",
     },
-    [pdfBytes.buffer],
+    [pdfBytes.buffer]
   );
 }
 
@@ -82,12 +111,12 @@ self.onmessage = async (event: MessageEvent) => {
         await renderRequest(payload.id, payload.code);
       } catch (error) {
         postMessage({
-          type: "render-result",
           result: {
-            status: "error",
             id: payload.id,
             message: error instanceof Error ? error.message : "Unknown error",
+            status: "error",
           },
+          type: "render-result",
         });
       }
       break;

@@ -1,7 +1,8 @@
-import { renderDocument } from "@formepdf/core";
+import { renderPdf } from "@formepdf/core";
 import { serialize } from "@formepdf/react";
 
 import { demos } from "@/examples/__forme__";
+import { replacePreviewImageSources } from "@/examples/preview-assets";
 
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
@@ -17,7 +18,11 @@ export const GET = async (request: Request) => {
       return Response.json({ document: serialize(<Demo />) });
     }
 
-    const pdfBytes = await renderDocument(<Demo />);
+    // Keep serialization in this module so Forme sees the same primitive
+    // identities used by the demo tree. renderDocument() dynamically imports
+    // another serializer instance and can otherwise discard nested Pages.
+    const document = replacePreviewImageSources(serialize(<Demo />));
+    const pdfBytes = await renderPdf(JSON.stringify(document));
 
     return new Response(Buffer.from(pdfBytes), {
       headers: {

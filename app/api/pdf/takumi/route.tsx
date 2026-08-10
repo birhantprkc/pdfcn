@@ -1,8 +1,11 @@
-import { googleFonts } from "@takumi-rs/helpers";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 import { fromJsx } from "@takumi-rs/helpers/jsx";
 import { render } from "takumi-pdf";
 
 import { demos } from "@/examples/__takumi__";
+import { getTakumiPreviewOptions } from "@/examples/preview-config";
 
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
@@ -14,15 +17,18 @@ export const GET = async (request: Request) => {
 
   try {
     const Demo = demos[name as keyof typeof demos];
+    const { node, stylesheets } = await fromJsx(<Demo />);
     if (searchParams.get("format") === "document") {
-      const { node, stylesheets } = await fromJsx(<Demo />);
       return Response.json({ node, stylesheets });
     }
 
-    const pdf = await render(<Demo />, {
-      fonts: await googleFonts(["Inter", "Times New Roman"]),
-      margin: { bottom: 48, left: 48, right: 48, top: 48 },
-      size: "a4",
+    const logo = await readFile(path.join(process.cwd(), "public/favicon.png"));
+    const pdf = await render(node, {
+      ...getTakumiPreviewOptions(name),
+      images: {
+        sources: [{ data: logo, src: "/favicon.png" }],
+      },
+      stylesheets,
     });
 
     return new Response(Buffer.from(pdf), {

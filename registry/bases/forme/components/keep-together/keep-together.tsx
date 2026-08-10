@@ -1,7 +1,8 @@
-import { View } from "@formepdf/react";
 import type { ReactNode } from "react";
 
 import type { Style } from "@/registry/themes";
+
+import { View } from "../../lib/forme-primitives";
 
 export interface KeepTogetherProps {
   children?: ReactNode;

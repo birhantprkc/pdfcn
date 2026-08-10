@@ -1,18 +1,29 @@
 import { Document, Page } from "@formepdf/react";
-import { KeyValue } from "@/registry/bases/forme/components/key-value";
 
+import { KeyValue } from "@/registry/bases/forme/components";
 
-const Demo =() => {
+const DemoBody = () => (
+  <KeyValue
+    direction="horizontal"
+    divided
+    items={[
+      { key: "Invoice #", value: "INV-2026-0042" },
+      { key: "Issue Date", value: "15 February 2026" },
+      { key: "Due Date", value: "17 March 2026" },
+      { key: "Status", value: "Unpaid", valueColor: "destructive" },
+      { key: "Total", value: "$4,200.00", valueColor: "primary" },
+    ]}
+  />
+);
+
+const Demo = () => {
   return (
     <Document>
-      <Page size="A4" margin={48}>
+      <Page size="A4" margin={40}>
         <DemoBody />
       </Page>
     </Document>
   );
-}
-export default Demo;
+};
 
-function DemoBody() {
-  return <KeyValue items={[{ key: "Name", value: "Ada" }]} />;
-}
+export default Demo;

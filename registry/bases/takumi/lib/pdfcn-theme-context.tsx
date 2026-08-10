@@ -1,18 +1,15 @@
-"use client";
-
 /* eslint-disable react-refresh/only-export-components */
-// Exports both a component (PdfcnThemeProvider) and hooks/context intentionally.
+// Exports both a component (PdfcnThemeProvider) and theme helpers intentionally.
 // All PDF components import from a single file — splitting would break the public API.
 
-import * as React from "react";
-import { createContext, useContext } from "react";
+import { isValidElement } from "react";
 import type { DependencyList, ReactNode } from "react";
 
 import { theme as defaultTheme } from "./pdfcn-theme";
 
 export type PdfcnTheme = typeof defaultTheme;
 
-export const PdfcnThemeContext = createContext<PdfcnTheme>(defaultTheme);
+let serializedTheme = defaultTheme;
 
 export interface PdfcnThemeProviderProps {
   theme?: PdfcnTheme;
@@ -20,63 +17,30 @@ export interface PdfcnThemeProviderProps {
 }
 
 /**
- * Detect whether React currently has an active dispatcher.
- * When components are invoked as plain functions in tests, dispatcher is null.
+ * Takumi converts function components directly instead of mounting a React
+ * tree. Resolve the provider's child so the converter receives PDF markup.
  */
-const hasActiveDispatcher = (): boolean => {
-  const maybeInternals = React as unknown as {
-    __CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?: {
-      H?: unknown;
-    };
-  };
+const renderForSerializer = (
+  children: ReactNode,
+  theme: PdfcnTheme
+): ReactNode => {
+  serializedTheme = theme;
 
-  const dispatcher =
-    maybeInternals
-      .__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE?.H;
-  return dispatcher != null;
+  if (!isValidElement(children) || typeof children.type !== "function") {
+    return children;
+  }
+
+  return (children.type as (props: unknown) => ReactNode)(children.props);
 };
 
 export const PdfcnThemeProvider = ({
   theme,
   children,
-}: PdfcnThemeProviderProps) => (
-  <PdfcnThemeContext.Provider value={theme ?? defaultTheme}>
-    {children}
-  </PdfcnThemeContext.Provider>
-);
+}: PdfcnThemeProviderProps) =>
+  renderForSerializer(children, theme ?? defaultTheme);
 
-/**
- * Regex patterns that indicate a hook was called outside a valid React render tree.
- * These errors are caught and suppressed so components fall back to safe defaults.
- */
-const HOOK_ERROR_PATTERNS =
-  /invalid hook call|minified react error #321|useContext|useMemo|cannot read properties of null|dispatcher|renderWithHooks|resolveDispatcher|hooks can only be called|rendered fewer hooks/i;
-
-/**
- * Calls a React hook with a graceful fallback for non-render environments (e.g. unit tests).
- * Uses hasActiveDispatcher() as the primary guard; the try/catch is a safety net for edge
- * cases where the dispatcher check passes but the hook still cannot execute.
- */
-const callHook = <T,>(hook: () => T, fallback: T): T => {
-  if (!hasActiveDispatcher()) {
-    return fallback;
-  }
-  try {
-    return hook();
-  } catch (error) {
-    if (error instanceof Error && HOOK_ERROR_PATTERNS.test(error.message)) {
-      return fallback;
-    }
-    throw error;
-  }
-};
-
-/**
- * Returns the active PdfcnTheme from context, or the default theme when called
- * outside a React render tree (e.g. unit tests).
- */
-export const usePdfcnTheme = (): PdfcnTheme =>
-  callHook(() => useContext(PdfcnThemeContext), defaultTheme);
+/** Returns the theme selected by the nearest serialized provider. */
+export const usePdfcnTheme = (): PdfcnTheme => serializedTheme;
 
 /**
  * Calls factory() and returns the result.
