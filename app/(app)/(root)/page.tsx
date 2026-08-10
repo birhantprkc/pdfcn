@@ -1,5 +1,6 @@
 import { CommandBox } from "@/components/command-box";
 import { HomeCtas } from "@/components/home-ctas";
+import { HomePdfShowcase } from "@/components/home-pdf-showcase";
 import { PageHero } from "@/components/page-hero";
 import { PageTransition } from "@/components/page-transition";
 import { ROUTES } from "@/constants/routes";
@@ -32,6 +33,8 @@ const IndexPage = () => (
         </div>
       </section>
     </PageTransition>
+
+    <HomePdfShowcase />
   </>
 );
 export default IndexPage;
