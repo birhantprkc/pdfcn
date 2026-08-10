@@ -1,5 +1,3 @@
-import { createHash } from "node:crypto";
-
 import { LRUCache } from "lru-cache";
 import type { ShikiTransformer } from "shiki";
 import { codeToHtml } from "shiki";
@@ -8,6 +6,14 @@ const highlightCache = new LRUCache<string, string>({
   max: 500,
   ttl: 1000 * 60 * 60,
 });
+
+const hash = (input: string) => {
+  let h = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    h = Math.trunc(Math.imul(31, h) + input.codePointAt(i));
+  }
+  return h.toString(36);
+};
 
 export const transformers = [
   {
@@ -48,9 +54,7 @@ export const transformers = [
 ] as ShikiTransformer[];
 
 export const highlightCode = async (code: string, language = "tsx") => {
-  const cacheKey = createHash("sha256")
-    .update(`${language}:${code}`)
-    .digest("hex");
+  const cacheKey = hash(`${language}:${code}`);
 
   const cached = highlightCache.get(cacheKey);
   if (cached) {
