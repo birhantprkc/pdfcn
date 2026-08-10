@@ -90,14 +90,14 @@ import { PdfForm } from "@/components/pdf/form";
 
 ### PdfForm
 
-| Prop            | Type                | Default       |
-| --------------- | ------------------- | ------------- |
-| `title`         | `string`            | -             |
-| `subtitle`      | `string`            | -             |
-| `groups`        | `PdfFormGroup[]`    | -             |
-| `variant`       | `PdfFormVariant`    | `'underline'` |
-| `labelPosition` | `'above' \| 'left'` | `'above'`     |
-| `noWrap`        | `boolean`           | `false`       |
-| `style`         | `Style`             | -             |
+| Prop            | Type                                            | Default       |
+| --------------- | ----------------------------------------------- | ------------- |
+| `title`         | `string`                                        | -             |
+| `subtitle`      | `string`                                        | -             |
+| `groups`        | `PdfFormGroup[]`                                | -             |
+| `variant`       | `'underline' \| 'box' \| 'outlined' \| 'ghost'` | `'underline'` |
+| `labelPosition` | `'above' \| 'left'`                             | `'above'`     |
+| `noWrap`        | `boolean`                                       | `false`       |
+| `style`         | `Style`                                         | -             |
 
-`PdfFormVariant` is `'underline' | 'box' | 'outlined' | 'ghost'`. Groups support `single`, `two-column`, and `three-column` layouts.
+Groups support `single`, `two-column`, and `three-column` layouts.

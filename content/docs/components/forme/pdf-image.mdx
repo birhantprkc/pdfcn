@@ -80,16 +80,16 @@ import { PdfImage } from "@/components/pdf/pdf-image";
 
 ### PdfImage
 
-| Prop           | Type               | Default     |
-| -------------- | ------------------ | ----------- |
-| `src`          | `PdfImageSrc`      | -           |
-| `variant`      | `PdfImageVariant`  | `'default'` |
-| `width`        | `number \| string` | -           |
-| `height`       | `number \| string` | -           |
-| `fit`          | `PdfImageFit`      | -           |
-| `position`     | `string`           | `'50% 50%'` |
-| `caption`      | `string`           | -           |
-| `aspectRatio`  | `number`           | -           |
-| `borderRadius` | `number`           | -           |
-| `noWrap`       | `boolean`          | `true`      |
-| `style`        | `Style`            | -           |
+| Prop           | Type                                                                                                    | Default     |
+| -------------- | ------------------------------------------------------------------------------------------------------- | ----------- |
+| `src`          | `string \| &#123; uri: string; method?: string; headers?: Record<string, string>; body?: string &#125;` | -           |
+| `variant`      | `'default' \| 'full-width' \| 'thumbnail' \| 'avatar' \| 'cover' \| 'bordered' \| 'rounded'`            | `'default'` |
+| `width`        | `number \| string`                                                                                      | -           |
+| `height`       | `number \| string`                                                                                      | -           |
+| `fit`          | `'cover' \| 'contain' \| 'fill' \| 'none'`                                                              | -           |
+| `position`     | `string`                                                                                                | `'50% 50%'` |
+| `caption`      | `string`                                                                                                | -           |
+| `aspectRatio`  | `number`                                                                                                | -           |
+| `borderRadius` | `number`                                                                                                | -           |
+| `noWrap`       | `boolean`                                                                                               | `true`      |
+| `style`        | `Style`                                                                                                 | -           |

@@ -91,18 +91,20 @@ Use any `TableVariant` for the table treatment and `size="compact"` for denser r
 
 ### DataTable
 
-| Prop      | Type                                         | Default     |
-| --------- | -------------------------------------------- | ----------- |
-| `columns` | `DataTableColumn<T>[]`                       | -           |
-| `data`    | `T[]`                                        | -           |
-| `variant` | `TableVariant`                               | `'grid'`    |
-| `footer`  | `Partial<Record<keyof T, string \| number>>` | -           |
-| `stripe`  | `boolean`                                    | `false`     |
-| `size`    | `'default' \| 'compact'`                     | `'default'` |
-| `noWrap`  | `boolean`                                    | `false`     |
-| `style`   | `Style`                                      | -           |
+| Prop      | Type                                                                                        | Default     |
+| --------- | ------------------------------------------------------------------------------------------- | ----------- |
+| `columns` | `DataTableColumn<T>[]`                                                                      | -           |
+| `data`    | `T[]`                                                                                       | -           |
+| `variant` | `'line' \| 'grid' \| 'minimal' \| 'striped' \| 'compact' \| 'bordered' \| 'primary-header'` | `'grid'`    |
+| `footer`  | `Partial<Record<keyof T, string \| number>>`                                                | -           |
+| `stripe`  | `boolean`                                                                                   | `false`     |
+| `size`    | `'default' \| 'compact'`                                                                    | `'default'` |
+| `noWrap`  | `boolean`                                                                                   | `false`     |
+| `style`   | `Style`                                                                                     | -           |
 
 ### DataTableColumn
+
+`key` is the row-field accessor—for example, `key: "name"` reads `row.name`. It is not React's reserved `key` prop.
 
 | Prop           | Type                            | Default  |
 | -------------- | ------------------------------- | -------- |
