@@ -5,6 +5,7 @@ export const ROUTES = {
   API_STATUS: "/api/status",
   DOCS: "/docs",
   DOCS_BLOCKS: "/docs/blocks",
+  DOCS_CHANGELOG: "/docs/changelog",
   DOCS_COMPONENTS: "/docs/components",
   DOCS_INSTALLATION: "/docs/installation",
   DOCS_MCP: "/docs/mcp",

@@ -27,7 +27,8 @@ export const revalidate = false;
 export const dynamic = "force-static";
 export const dynamicParams = false;
 
-export const generateStaticParams = () => source.generateParams();
+export const generateStaticParams = () =>
+  source.generateParams().filter((param) => param.slug?.[0] !== "changelog");
 
 export const generateMetadata = async (props: {
   params: Promise<{ slug?: string[] }>;

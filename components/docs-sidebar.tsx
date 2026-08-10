@@ -19,6 +19,7 @@ import {
   getDocsSidebarPanel,
   isBlocksFolder,
   isComponentsFolder,
+  PAGES_NEW,
 } from "@/lib/docs";
 import {
   findBaseFolder,
@@ -46,6 +47,9 @@ const SidebarMenuItemLink = ({
       <Link href={href}>
         <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
         {children}
+        {PAGES_NEW.includes(href) && (
+          <span className="flex size-2 rounded-full bg-blue-500" title="New" />
+        )}
       </Link>
     </SidebarMenuButton>
   </SidebarMenuItem>
