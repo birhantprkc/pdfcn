@@ -10,7 +10,7 @@ const highlightCache = new LRUCache<string, string>({
 const hash = (input: string) => {
   let h = 0;
   for (let i = 0; i < input.length; i += 1) {
-    h = Math.trunc(Math.imul(31, h) + input.codePointAt(i));
+    h = Math.trunc(Math.imul(31, h) + (input.codePointAt(i) ?? 0));
   }
   return h.toString(36);
 };
