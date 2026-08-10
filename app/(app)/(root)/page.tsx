@@ -16,17 +16,13 @@ const IndexPage = () => (
           <PageHero
             description={
               <>
-                Beautiful PDFs made simple with Takumi and Forme.
+                Ready to use, customizable pdf components for React.
                 <br className="hidden sm:block" />
-                Install with{" "}
-                <code className="rounded bg-muted px-1.5 py-0.5 text-sm">
-                  npx shadcn add
-                </code>
-                .
+                Built on Takumi and Forme. Distributed via shadcn.
               </>
             }
             descriptionClassName="max-w-2xl text-lg sm:text-xl"
-            title="Beautiful PDFs made simple"
+            title="Beautiful PDFs, made simple"
             titleClassName="max-w-7xl"
           />
 
