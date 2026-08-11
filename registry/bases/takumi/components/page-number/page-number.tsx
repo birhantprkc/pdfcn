@@ -1,13 +1,13 @@
 import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+} from "@/registry/bases/takumi/lib/theme-provider";
 import {
   View,
   Text as PDFText,
   StyleSheet,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type PageNumberAlign = "left" | "center" | "right";

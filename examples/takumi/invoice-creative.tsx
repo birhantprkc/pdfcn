@@ -3,5 +3,4 @@ import { InvoiceCreativeDocument } from "@/registry/bases/takumi/blocks/invoice-
 const Demo = () => {
   return <InvoiceCreativeDocument />;
 };
-
 export default Demo;

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { View } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { View } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { Style } from "@/registry/themes";
 
 export interface KeepTogetherProps {

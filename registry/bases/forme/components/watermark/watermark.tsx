@@ -1,7 +1,7 @@
 import { Watermark as FormeWatermark } from "@formepdf/react";
 
-import { mergeFormeStyles } from "@/registry/bases/forme/lib/forme-primitives";
-import { usePdfcnTheme } from "@/registry/bases/forme/lib/pdfcn-theme-context";
+import { mergeFormeStyles } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import { usePdfcnTheme } from "@/registry/bases/forme/lib/theme-provider";
 import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import type { PDFComponentProps } from "@/registry/themes";
 

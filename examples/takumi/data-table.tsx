@@ -3,8 +3,8 @@ import {
   Heading,
   Section,
 } from "@/registry/bases/takumi/components";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+import { Document, Page } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 
 const DemoBody = () => (
   <Section spacing="none">

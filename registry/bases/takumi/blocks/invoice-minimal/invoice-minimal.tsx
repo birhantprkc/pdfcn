@@ -17,7 +17,7 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import type { InvoiceMinimalData } from "./invoice-minimal.types";
@@ -31,8 +31,8 @@ const sampleData: InvoiceMinimalData = {
     phone: "+1 (555) 246-8135",
   },
   companyAddress: "Nagpur, IN",
-  companyEmail: "hello@pdfx.io",
-  companyName: "PDFx Inc.",
+  companyEmail: "hello@pdfcn.app",
+  companyName: "pdfcn",
   dueDate: "March 22, 2026",
   invoiceDate: "February 20, 2026",
   invoiceNumber: "INV-2026-003",

@@ -3,12 +3,12 @@ import {
   Text as PDFText,
   StyleSheet,
   View,
-} from "@/registry/bases/forme/lib/forme-primitives";
-import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+} from "@/registry/bases/forme/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+} from "@/registry/bases/forme/lib/theme-provider";
 import type { PdfcnTheme } from "@/registry/themes";
 
 /** HTTP method used when fetching the image from a URL. */

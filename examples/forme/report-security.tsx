@@ -3,5 +3,4 @@ import { SecurityReportDocument } from "@/registry/bases/forme/blocks/report-sec
 const Demo = () => {
   return <SecurityReportDocument />;
 };
-
 export default Demo;

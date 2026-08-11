@@ -17,7 +17,7 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import type { InvoiceModernData } from "./invoice-modern.types";
@@ -31,8 +31,8 @@ const sampleData: InvoiceModernData = {
     phone: "+1 (555) 987-6543",
   },
   companyAddress: "Nagpur, IN",
-  companyEmail: "hello@pdfx.io",
-  companyName: "PDFx Inc.",
+  companyEmail: "hello@pdfcn.app",
+  companyName: "pdfcn",
   dueDate: "March 20, 2026",
   invoiceDate: "February 18, 2026",
   invoiceNumber: "INV-2026-002",

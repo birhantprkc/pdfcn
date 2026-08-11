@@ -8,12 +8,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/registry/bases/forme/components/table";
-import { Text as PDFText } from "@/registry/bases/forme/lib/forme-primitives";
-import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+import { Text as PDFText } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+} from "@/registry/bases/forme/lib/theme-provider";
 
 import { createCompactStyles, formatValue } from "./data-table.styles";
 import type { DataTableProps } from "./data-table.types";

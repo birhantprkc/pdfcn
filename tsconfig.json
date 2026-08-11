@@ -34,5 +34,5 @@
     "next.config.mjs",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".pdfx-ref", ".registry-build"]
+  "exclude": ["node_modules"]
 }

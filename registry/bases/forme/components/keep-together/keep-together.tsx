@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-import { View } from "@/registry/bases/forme/lib/forme-primitives";
+import { View } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import type { Style } from "@/registry/themes";
 
 export interface KeepTogetherProps {

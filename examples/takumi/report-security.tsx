@@ -3,5 +3,4 @@ import { SecurityReportDocument } from "@/registry/bases/takumi/blocks/report-se
 const Demo = () => {
   return <SecurityReportDocument />;
 };
-
 export default Demo;

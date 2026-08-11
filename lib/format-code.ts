@@ -50,33 +50,38 @@ export const formatCode = async (code: string) => {
   );
 
   formattedCode = formattedCode.replaceAll(
+    "@/registry/bases/forme/lib/",
+    "@/components/pdf/"
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/bases/forme/components/",
+    "@/components/pdf/"
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/bases/takumi/lib/",
+    "@/components/pdf/"
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/bases/takumi/components/",
+    "@/components/pdf/"
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/bases/takumi/blocks/",
+    "@/components/pdf/blocks/"
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/bases/forme/blocks/",
+    "@/components/pdf/blocks/"
+  );
+
+  formattedCode = formattedCode.replaceAll(
     "@/registry/themes",
-    "@/components/pdf/lib/themes"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    '"../../lib/',
-    '"@/components/pdf/lib/'
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    '"../../components"',
-    '"@/components/pdf/components"'
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    '"../table"',
-    '"@/components/pdf/components/table"'
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    '"../table/',
-    '"@/components/pdf/components/table/'
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    '"../lib/',
-    '"@/components/pdf/lib/'
+    "@/components/pdf/themes"
   );
 
   formattedCode = formattedCode.replaceAll("export default", "export");

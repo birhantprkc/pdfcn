@@ -17,7 +17,7 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import type { InvoiceCorporateData } from "./invoice-corporate.types";
@@ -30,8 +30,8 @@ const sampleData: InvoiceCorporateData = {
     phone: "+1 (555) 888-9999",
   },
   companyAddress: "Nagpur, IN",
-  companyEmail: "hello@pdfx.io",
-  companyName: "PDFx Inc.",
+  companyEmail: "hello@pdfcn.app",
+  companyName: "pdfcn",
   dueDate: "March 24, 2026",
   invoiceDate: "February 22, 2026",
   invoiceNumber: "INV-2026-004",
@@ -51,7 +51,7 @@ const sampleData: InvoiceCorporateData = {
   ],
   logo: "/favicon.png",
   notes:
-    "Corporate billing – Net 30 terms apply. For inquiries, contact accounts@pdfx.io",
+    "Corporate billing – Net 30 terms apply. For inquiries, contact accounts@pdfcn.app",
   paymentTerms: {
     dueDate: "March 24, 2026",
     gst: "GSTIN 987654321",

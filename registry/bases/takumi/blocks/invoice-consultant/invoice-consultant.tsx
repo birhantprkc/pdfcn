@@ -16,7 +16,7 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import type { InvoiceConsultantData } from "./invoice-consultant.types";
@@ -28,10 +28,10 @@ const sampleData: InvoiceConsultantData = {
     email: "sarah.johnson@acmetech.com",
     name: "Sarah Johnson",
   },
-  companyAddress: "Nagpur, IN · hello@pdfx.io",
-  companyName: "PDFx Inc.",
+  companyAddress: "Nagpur, IN · hello@pdfcn.app",
+  companyName: "pdfcn",
   consultant: {
-    email: "john.smith@pdfx.io",
+    email: "john.smith@pdfcn.app",
     name: "John Smith",
     title: "Senior Technical Consultant",
   },

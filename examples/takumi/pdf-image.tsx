@@ -1,7 +1,7 @@
 import { PREVIEW_IMAGE_DATA_URI } from "@/examples/preview-assets";
 import { PdfImage } from "@/registry/bases/takumi/components";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
-import { Document, Page } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+import { Document, Page } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 
 const DemoBody = () => (
   <PdfImage

@@ -4,12 +4,12 @@ import type { ReactElement, ReactNode } from "react";
 import {
   Text as PDFText,
   View,
-} from "@/registry/bases/forme/lib/forme-primitives";
-import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+} from "@/registry/bases/forme/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+} from "@/registry/bases/forme/lib/theme-provider";
 
 import { createTableStyles } from "./table.styles";
 import type {

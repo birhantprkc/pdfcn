@@ -1,4 +1,4 @@
-import { View } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { View } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PDFComponentProps } from "@/registry/themes";
 
 export interface PageBreakProps extends Omit<PDFComponentProps, "children"> {

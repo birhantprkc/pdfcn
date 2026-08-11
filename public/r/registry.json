@@ -12,24 +12,9 @@
           "target": "components/pdf/lib/pdfcn-theme.ts"
         },
         {
-          "path": "registry/bases/takumi/lib/pdfcn-theme-context.tsx",
-          "type": "registry:lib",
-          "target": "components/pdf/lib/pdfcn-theme-context.tsx"
-        },
-        {
           "path": "registry/bases/takumi/lib/resolve-color.ts",
           "type": "registry:lib",
           "target": "components/pdf/lib/resolve-color.ts"
-        },
-        {
-          "path": "registry/bases/takumi/lib/takumi-primitives.tsx",
-          "type": "registry:lib",
-          "target": "components/pdf/lib/takumi-primitives.tsx"
-        },
-        {
-          "path": "registry/bases/takumi/lib/takumi-svg.tsx",
-          "type": "registry:lib",
-          "target": "components/pdf/lib/takumi-svg.tsx"
         }
       ],
       "name": "takumi/utils",
@@ -1062,24 +1047,9 @@
           "target": "components/pdf/lib/pdfcn-theme.ts"
         },
         {
-          "path": "registry/bases/forme/lib/pdfcn-theme-context.tsx",
-          "type": "registry:lib",
-          "target": "components/pdf/lib/pdfcn-theme-context.tsx"
-        },
-        {
           "path": "registry/bases/forme/lib/resolve-color.ts",
           "type": "registry:lib",
           "target": "components/pdf/lib/resolve-color.ts"
-        },
-        {
-          "path": "registry/bases/forme/lib/forme-primitives.tsx",
-          "type": "registry:lib",
-          "target": "components/pdf/lib/forme-primitives.tsx"
-        },
-        {
-          "path": "registry/bases/forme/lib/forme-svg.tsx",
-          "type": "registry:lib",
-          "target": "components/pdf/lib/forme-svg.tsx"
         },
         {
           "path": "registry/bases/forme/lib/maybe-fixed.tsx",

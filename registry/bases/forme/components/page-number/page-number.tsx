@@ -2,12 +2,12 @@ import {
   Text as PDFText,
   StyleSheet,
   View,
-} from "@/registry/bases/forme/lib/forme-primitives";
-import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+} from "@/registry/bases/forme/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+} from "@/registry/bases/forme/lib/theme-provider";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type PageNumberAlign = "left" | "center" | "right";

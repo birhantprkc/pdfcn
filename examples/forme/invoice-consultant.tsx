@@ -3,5 +3,4 @@ import { InvoiceConsultantDocument } from "@/registry/bases/forme/blocks/invoice
 const Demo = () => {
   return <InvoiceConsultantDocument />;
 };
-
 export default Demo;

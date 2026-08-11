@@ -16,7 +16,7 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import type { BaseReportData } from "./report.types";
@@ -230,7 +230,7 @@ export const ReportLayout = ({
         <PageFooter
           variant="three-column"
           leftText="Confidential — Internal Use"
-          centerText="Generated with PDFx"
+          centerText="Generated with pdfcn"
           rightText="Page 1 of 1"
           sticky
           pagePadding={theme.spacing.page.marginLeft}
@@ -322,7 +322,7 @@ export const ReportLayout = ({
         <PageFooter
           variant="three-column"
           leftText="Confidential — Internal Use"
-          centerText="Generated with PDFx"
+          centerText="Generated with pdfcn"
           rightText="Page 1 of 1"
           sticky
           pagePadding={theme.spacing.page.marginLeft}
@@ -374,7 +374,7 @@ export const ReportLayout = ({
         <PageFooter
           variant="three-column"
           leftText="Confidential — Internal Use"
-          centerText="Generated with PDFx"
+          centerText="Generated with pdfcn"
           rightText="Page 1 of 1"
           sticky
           pagePadding={theme.spacing.page.marginLeft}

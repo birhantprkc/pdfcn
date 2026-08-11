@@ -3,12 +3,12 @@ import {
   PdfPageNumber,
   Text,
 } from "@/registry/bases/takumi/components";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
 import {
   Document,
   Page,
   View,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 
 const DemoBody = () => (
   <View style={{ minHeight: 680, position: "relative" }}>

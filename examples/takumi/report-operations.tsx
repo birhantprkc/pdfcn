@@ -3,5 +3,4 @@ import { OperationsReportDocument } from "@/registry/bases/takumi/blocks/report-
 const Demo = () => {
   return <OperationsReportDocument />;
 };
-
 export default Demo;

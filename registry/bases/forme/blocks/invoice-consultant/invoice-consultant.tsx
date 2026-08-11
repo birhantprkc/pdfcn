@@ -24,10 +24,10 @@ const sampleData: InvoiceConsultantData = {
     email: "sarah.johnson@acmetech.com",
     name: "Sarah Johnson",
   },
-  companyAddress: "Nagpur, IN · hello@pdfx.io",
-  companyName: "PDFx Inc.",
+  companyAddress: "Nagpur, IN · hello@pdfcn.app",
+  companyName: "pdfcn",
   consultant: {
-    email: "john.smith@pdfx.io",
+    email: "john.smith@pdfcn.app",
     name: "John Smith",
     title: "Senior Technical Consultant",
   },

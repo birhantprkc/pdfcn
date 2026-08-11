@@ -3,5 +3,4 @@ import { InvoiceCreativeDocument } from "@/registry/bases/forme/blocks/invoice-c
 const Demo = () => {
   return <InvoiceCreativeDocument />;
 };
-
 export default Demo;

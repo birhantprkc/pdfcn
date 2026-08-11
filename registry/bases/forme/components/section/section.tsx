@@ -1,10 +1,10 @@
-import { StyleSheet, View } from "@/registry/bases/forme/lib/forme-primitives";
-import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+import { StyleSheet, View } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import {
   mergePdfStyles,
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+} from "@/registry/bases/forme/lib/theme-provider";
 import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 

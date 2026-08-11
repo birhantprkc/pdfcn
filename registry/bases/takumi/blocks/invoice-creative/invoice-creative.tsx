@@ -17,7 +17,7 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import type { InvoiceCreativeData } from "./invoice-creative.types";
@@ -29,8 +29,8 @@ const sampleData: InvoiceCreativeData = {
     name: "Creative Agency Co.",
     phone: "+1 (555) 321-7654",
   },
-  companyAddress: "Nagpur, IN · hello@pdfx.io",
-  companyName: "PDFx Inc.",
+  companyAddress: "Nagpur, IN · hello@pdfcn.app",
+  companyName: "pdfcn",
   dueDate: "March 26, 2026",
   invoiceDate: "February 24, 2026",
   invoiceNumber: "INV-2026-005",

@@ -179,7 +179,7 @@ export const ReportLayout = ({
         <PageFooter
           variant="three-column"
           leftText="Confidential — Internal Use"
-          centerText="Generated with PDFx"
+          centerText="Generated with pdfcn"
           rightText="Page 1 of 1"
           sticky
           pagePadding={theme.spacing.page.marginLeft}
@@ -255,7 +255,7 @@ export const ReportLayout = ({
         <PageFooter
           variant="three-column"
           leftText="Confidential — Internal Use"
-          centerText="Generated with PDFx"
+          centerText="Generated with pdfcn"
           rightText="Page 1 of 1"
           sticky
           pagePadding={theme.spacing.page.marginLeft}
@@ -355,7 +355,7 @@ export const ReportLayout = ({
         <PageFooter
           variant="three-column"
           leftText="Confidential — Internal Use"
-          centerText="Generated with PDFx"
+          centerText="Generated with pdfcn"
           rightText="Page 1 of 1"
           sticky
           pagePadding={theme.spacing.page.marginLeft}
