@@ -49,6 +49,36 @@ export const formatCode = async (code: string) => {
     "@/components/"
   );
 
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/themes",
+    "@/components/pdf/lib/themes"
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    '"../../lib/',
+    '"@/components/pdf/lib/'
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    '"../../components"',
+    '"@/components/pdf/components"'
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    '"../table"',
+    '"@/components/pdf/components/table"'
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    '"../table/',
+    '"@/components/pdf/components/table/'
+  );
+
+  formattedCode = formattedCode.replaceAll(
+    '"../lib/',
+    '"@/components/pdf/lib/'
+  );
+
   formattedCode = formattedCode.replaceAll("export default", "export");
 
   try {
