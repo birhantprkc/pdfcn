@@ -3,4 +3,5 @@ import { FinancialReportDocument } from "@/registry/bases/takumi/blocks/report-f
 const Demo = () => {
   return <FinancialReportDocument />;
 };
+
 export default Demo;

@@ -3,4 +3,5 @@ import { OperationsReportDocument } from "@/registry/bases/forme/blocks/report-o
 const Demo = () => {
   return <OperationsReportDocument />;
 };
+
 export default Demo;

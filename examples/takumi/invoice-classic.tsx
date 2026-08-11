@@ -3,4 +3,5 @@ import { InvoiceClassicDocument } from "@/registry/bases/takumi/blocks/invoice-c
 const Demo = () => {
   return <InvoiceClassicDocument />;
 };
+
 export default Demo;

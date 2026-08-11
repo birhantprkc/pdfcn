@@ -3,4 +3,5 @@ import { FinancialReportDocument } from "@/registry/bases/forme/blocks/report-fi
 const Demo = () => {
   return <FinancialReportDocument />;
 };
+
 export default Demo;

@@ -3,4 +3,5 @@ import { InvoiceMinimalDocument } from "@/registry/bases/takumi/blocks/invoice-m
 const Demo = () => {
   return <InvoiceMinimalDocument />;
 };
+
 export default Demo;
