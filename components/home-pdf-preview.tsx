@@ -109,7 +109,6 @@ export const homePdfComponentCatalog = {
 } as const;
 
 export type ComponentPartId = keyof typeof homePdfComponentCatalog;
-export type CodeOutput = "react" | "metadata";
 export type HomePdfBase = "takumi" | "forme";
 
 export const homePdfBases: {
@@ -118,11 +117,6 @@ export const homePdfBases: {
 }[] = [
   { id: "takumi", label: "Takumi" },
   { id: "forme", label: "Forme" },
-];
-
-export const homePdfCodeOutputs: { id: CodeOutput; label: string }[] = [
-  { id: "react", label: "React" },
-  { id: "metadata", label: "Metadata" },
 ];
 
 export interface PdfRecipe {

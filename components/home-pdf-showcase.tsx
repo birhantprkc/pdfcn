@@ -3,19 +3,17 @@
 import { ArrowUpRightIcon, CodeXmlIcon, EyeIcon, FileIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
-import { createElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { CodeBlockCommand } from "@/components/code-block-command";
 import { CopyButton } from "@/components/copy-button";
 import {
   getHomePdfSource,
   homePdfBases,
-  homePdfCodeOutputs,
   homePdfComponentCatalog,
   homePdfPreviews,
 } from "@/components/home-pdf-preview";
 import type {
-  CodeOutput,
   ComponentPartId,
   HomePdfBase,
   PdfRecipe,
@@ -33,7 +31,6 @@ import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toggle } from "@/components/ui/toggle";
 import { cn } from "@/lib/utils";
-import type { BaseName } from "@/registry/bases";
 
 const PdfPreview = dynamic(
   async () => {
@@ -50,19 +47,7 @@ interface HomePdfCodeOutput {
   highlightedCode: string;
 }
 
-interface PdfMetadata {
-  title?: string;
-  author?: string;
-  subject?: string;
-  creator?: string;
-  producer?: string;
-  creationDate?: string;
-  modDate?: string;
-  keywords?: string;
-}
-
 const codeCache = new Map<string, HomePdfCodeOutput>();
-const metadataCache = new Map<string, PdfMetadata>();
 const homePdfBaseIcons: Record<HomePdfBase, typeof TakumiIcon> = {
   forme: FormeIcon,
   takumi: TakumiIcon,
@@ -79,129 +64,6 @@ const PdfBaseIcon = ({
   return <Icon className={className} aria-hidden="true" />;
 };
 
-const MetadataViewer = ({ metadata }: { metadata: PdfMetadata | null }) => {
-  if (!metadata) {
-    return (
-      <div className="flex h-full min-h-72 items-center justify-center text-sm text-muted-foreground">
-        No metadata available
-      </div>
-    );
-  }
-
-  const entries = Object.entries(metadata).filter(
-    ([, value]) => value !== undefined && value !== ""
-  );
-
-  if (entries.length === 0) {
-    return (
-      <div className="flex h-full min-h-72 items-center justify-center text-sm text-muted-foreground">
-        No metadata found in this document
-      </div>
-    );
-  }
-
-  return (
-    <div className="h-full overflow-auto p-4">
-      <div className="mx-auto max-w-lg space-y-3">
-        {entries.map(([key, value]) => (
-          <div key={key} className="rounded-lg border bg-card p-3">
-            <dt className="text-[10px] font-semibold tracking-wide text-muted-foreground uppercase">
-              {key.replaceAll(/([A-Z])/g, " $1").trim()}
-            </dt>
-            <dd className="mt-1 text-sm">{value}</dd>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const CodeViewer = ({
-  availableOutputs,
-  error,
-  isLoading,
-  output,
-  selectedOutput,
-  metadata,
-  onOutputChange,
-}: {
-  availableOutputs: { id: CodeOutput; label: string }[];
-  error: string | null;
-  isLoading: boolean;
-  output: CodeOutput;
-  selectedOutput: HomePdfCodeOutput | null;
-  metadata: PdfMetadata | null;
-  onOutputChange: (output: CodeOutput) => void;
-}) => (
-  <div className="flex h-full min-h-[560px] flex-col bg-code text-code-foreground lg:min-h-0">
-    <div className="flex h-12 shrink-0 items-center px-4">
-      <Tabs
-        value={output}
-        onValueChange={(value) => onOutputChange(value as CodeOutput)}
-        className="gap-0"
-      >
-        <TabsList className="bg-background/8 p-0.5">
-          {availableOutputs.map((item) => (
-            <TabsTrigger
-              key={item.id}
-              value={item.id}
-              sound="toggleOn"
-              className="h-8 px-3"
-            >
-              {item.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-      {output === "react" ? (
-        <CopyButton
-          className="static ml-auto bg-transparent"
-          value={selectedOutput?.code ?? ""}
-          event="copy_block_code"
-        />
-      ) : null}
-    </div>
-    <Separator className="bg-border/50" />
-
-    {output === "metadata" ? (
-      <MetadataViewer metadata={metadata} />
-    ) : (
-      <div className="no-scrollbar min-h-0 flex-1 overflow-auto">
-        {isLoading ? (
-          <div
-            className="flex h-full min-h-72 items-center justify-center text-sm text-code-foreground/60"
-            role="status"
-          >
-            Rendering source…
-          </div>
-        ) : null}
-        {error ? (
-          <div
-            className="flex h-full min-h-72 items-center justify-center px-6 text-center text-sm text-red-400"
-            role="alert"
-          >
-            {error}
-          </div>
-        ) : null}
-        {selectedOutput && !isLoading ? (
-          <figure
-            data-rehype-pretty-code-figure=""
-            className="!m-0 min-h-full !rounded-none text-sm [&>div]:min-h-full [&_pre]:min-h-full"
-          >
-            <div
-              // Shiki returns trusted HTML generated from the provided source code.
-              // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{
-                __html: selectedOutput.highlightedCode,
-              }}
-            />
-          </figure>
-        ) : null}
-      </div>
-    )}
-  </div>
-);
-
 const findPdf = (id: PdfRecipeId): PdfRecipe =>
   homePdfPreviews.find((pdf) => pdf.id === id) ?? homePdfPreviews[0];
 
@@ -211,74 +73,50 @@ const recipeToDemoName: Record<PdfRecipeId, string> = {
   "minimal-invoice": "invoice-minimal",
 };
 
-const extractMetadata = async (base: BaseName, name: string) => {
-  const cacheKey = `${base}:${name}`;
-  const cached = metadataCache.get(cacheKey);
-  if (cached) {
-    return cached;
-  }
+const CodeViewer = ({
+  code,
+  error,
+  highlightedCode,
+  isLoading,
+}: {
+  code?: string;
+  error?: string | null;
+  highlightedCode?: string;
+  isLoading?: boolean;
+}) => (
+  <div className="relative h-full min-h-[560px] bg-code text-code-foreground lg:min-h-0">
+    <div className="absolute right-2 top-2 z-10">
+      <CopyButton className="bg-transparent" value={code ?? ""} />
+    </div>
 
-  let pdfBytes: Uint8Array;
-
-  if (base === "takumi") {
-    const [{ demos }, { default: initialize, render }, { fromJsx }] =
-      await Promise.all([
-        import("@/examples/__takumi__"),
-        import("takumi-pdf"),
-        import("@takumi-rs/helpers/jsx"),
-      ]);
-    const Demo = demos[name];
-    if (!Demo) {
-      throw new Error(`Unknown Takumi demo: ${name}`);
-    }
-
-    await initialize({ module_or_path: "/takumi_pdf_wasm_bg.wasm" });
-    const { node, stylesheets } = await fromJsx(createElement(Demo));
-    const buffer = await render(node, {
-      margin: { bottom: 0, left: 0, right: 0, top: 0 },
-      size: "a4",
-      stylesheets,
-    });
-    pdfBytes = new Uint8Array(buffer);
-  } else {
-    const [{ demos }, { renderSerializedDoc }, { serialize }] =
-      await Promise.all([
-        import("@/examples/__forme__"),
-        import("@formepdf/core/browser"),
-        import("@formepdf/react"),
-      ]);
-    const Demo = demos[name];
-    if (!Demo) {
-      throw new Error(`Unknown Forme demo: ${name}`);
-    }
-
-    const document = serialize(createElement(Demo));
-    const buffer = await renderSerializedDoc(
-      document as unknown as Record<string, unknown>
-    );
-    pdfBytes = new Uint8Array(buffer);
-  }
-
-  const { getDocument } = await import("pdfjs-dist");
-  const loadingTask = getDocument({ data: pdfBytes });
-  const pdfDoc = await loadingTask.promise;
-  const metadataResult = await pdfDoc.getMetadata();
-
-  const info = metadataResult.info as Record<string, string>;
-  const metadata: PdfMetadata = {
-    author: info.Author || undefined,
-    creationDate: info.CreationDate || undefined,
-    creator: info.Creator || undefined,
-    keywords: info.Keywords || undefined,
-    modDate: info.ModDate || undefined,
-    producer: info.Producer || undefined,
-    subject: info.Subject || undefined,
-    title: info.Title || undefined,
-  };
-
-  metadataCache.set(cacheKey, metadata);
-  return metadata;
-};
+    <div className="no-scrollbar min-h-0 flex-1 overflow-auto">
+      {isLoading ? (
+        <div
+          className="flex h-full min-h-72 items-center justify-center text-sm text-code-foreground/60"
+          role="status"
+        >
+          Rendering code…
+        </div>
+      ) : null}
+      {error ? (
+        <div
+          className="flex h-full min-h-72 items-center justify-center px-6 text-center text-sm text-red-400"
+          role="alert"
+        >
+          {error}
+        </div>
+      ) : null}
+      {highlightedCode && !isLoading ? (
+        <figure
+          data-rehype-pretty-code-figure=""
+          className="!m-0 min-h-full !rounded-none text-sm [&>div]:min-h-full [&_pre]:min-h-full"
+        >
+          <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
+        </figure>
+      ) : null}
+    </div>
+  </div>
+);
 
 export const HomePdfShowcase = () => {
   const [selectedPdfId, setSelectedPdfId] =
@@ -286,7 +124,6 @@ export const HomePdfShowcase = () => {
   const [selectedComponentId, setSelectedComponentId] =
     useState<ComponentPartId>("page-header");
   const [workspaceTab, setWorkspaceTab] = useState<WorkspaceTab>("preview");
-  const [codeOutput, setCodeOutput] = useState<CodeOutput>("react");
   const [pdfBase, setPdfBase] = useState<HomePdfBase>("forme");
   const [codeRequest, setCodeRequest] = useState<{
     data: HomePdfCodeOutput | null;
@@ -299,8 +136,6 @@ export const HomePdfShowcase = () => {
     isLoading: false,
     key: "",
   });
-  const [pdfMetadata, setPdfMetadata] = useState<PdfMetadata | null>(null);
-  const [_metadataLoading, setMetadataLoading] = useState(false);
 
   const selectedPdf = findPdf(selectedPdfId);
   const selectedComponent = homePdfComponentCatalog[selectedComponentId];
@@ -310,7 +145,7 @@ export const HomePdfShowcase = () => {
     codeRequest.key === codeRequestKey ? codeRequest.data : null;
 
   useEffect(() => {
-    if (workspaceTab !== "code" || codeOutput !== "react") {
+    if (workspaceTab !== "code") {
       return;
     }
 
@@ -373,61 +208,16 @@ export const HomePdfShowcase = () => {
     return () => {
       cancelled = true;
     };
-  }, [codeOutput, codeRequestKey, pdfBase, selectedPdf, workspaceTab]);
-
-  useEffect(() => {
-    if (workspaceTab !== "code" || codeOutput !== "metadata") {
-      return;
-    }
-
-    const metadataKey = `${pdfBase}:${selectedPdf.id}`;
-    const cached = metadataCache.get(metadataKey);
-    if (cached) {
-      setPdfMetadata(cached);
-      return;
-    }
-
-    const demoName = recipeToDemoName[selectedPdf.id];
-    if (!demoName) {
-      setPdfMetadata(null);
-      return;
-    }
-
-    let cancelled = false;
-    const loadMetadata = async () => {
-      setMetadataLoading(true);
-      try {
-        const metadata = await extractMetadata(pdfBase, demoName);
-        if (!cancelled) {
-          setPdfMetadata(metadata);
-        }
-      } catch {
-        if (!cancelled) {
-          setPdfMetadata(null);
-        }
-      } finally {
-        if (!cancelled) {
-          setMetadataLoading(false);
-        }
-      }
-    };
-
-    void loadMetadata();
-    return () => {
-      cancelled = true;
-    };
-  }, [codeOutput, pdfBase, selectedPdf, workspaceTab]);
+  }, [codeRequestKey, pdfBase, selectedPdf, workspaceTab]);
 
   const handlePdfBaseChange = (base: HomePdfBase) => {
     setPdfBase(base);
-    setPdfMetadata(null);
   };
 
   const handlePdfChange = (pdfId: PdfRecipeId) => {
     const nextPdf = findPdf(pdfId);
     setSelectedPdfId(pdfId);
     setSelectedComponentId(nextPdf.defaultComponentId);
-    setPdfMetadata(null);
   };
 
   const handleComponentChange = (componentId: ComponentPartId) => {
@@ -547,7 +337,7 @@ export const HomePdfShowcase = () => {
             <Tabs
               value={workspaceTab}
               onValueChange={(value) => setWorkspaceTab(value as WorkspaceTab)}
-              className="min-w-0 gap-0 bg-muted/55 lg:h-full"
+              className="min-w-0 gap-0 lg:h-full"
             >
               <div className="flex h-12 shrink-0 items-center justify-between gap-3 bg-card px-3 lg:hidden">
                 <label
@@ -599,20 +389,18 @@ export const HomePdfShowcase = () => {
               <Separator />
 
               <TabsContent value="preview" className="min-h-0">
-                <div className="h-[520px] overflow-auto p-2 sm:h-[620px] sm:p-4 lg:h-[672px] lg:p-5">
-                  <div className="mx-auto w-full max-w-[600px]">
-                    <PdfPreview
-                      base={pdfBase}
-                      name={selectedPdf.id}
-                      className="w-full"
-                    />
-                  </div>
-                </div>
+                <PdfPreview
+                  base={pdfBase}
+                  name={recipeToDemoName[selectedPdf.id] ?? selectedPdf.id}
+                  className="rounded-none bg-none border-none"
+                  height={672}
+                />
               </TabsContent>
 
               <TabsContent value="code" className="min-h-0">
                 <CodeViewer
-                  availableOutputs={homePdfCodeOutputs}
+                  code={selectedCodeOutput?.code}
+                  highlightedCode={selectedCodeOutput?.highlightedCode}
                   error={
                     codeRequest.key === codeRequestKey
                       ? codeRequest.error
@@ -621,10 +409,6 @@ export const HomePdfShowcase = () => {
                   isLoading={
                     codeRequest.key === codeRequestKey && codeRequest.isLoading
                   }
-                  output={codeOutput}
-                  selectedOutput={selectedCodeOutput}
-                  metadata={pdfMetadata}
-                  onOutputChange={setCodeOutput}
                 />
               </TabsContent>
             </Tabs>

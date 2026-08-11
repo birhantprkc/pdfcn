@@ -16,7 +16,7 @@ interface PdfPreviewProps {
   base: BaseName;
   name: string;
   className?: string;
-  height?: number;
+  height?: React.CSSProperties["height"];
 }
 
 const startTakumi = async (
