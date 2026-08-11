@@ -214,9 +214,7 @@ export const getHomePdfSource = (recipe: PdfRecipe, base: HomePdfBase) => {
   const shell =
     base === "takumi"
       ? {
-          close: "Page",
           import: 'import { Page } from "takumi-pdf";',
-          open: "Page",
         }
       : {
           close: "Document",
@@ -224,16 +222,19 @@ export const getHomePdfSource = (recipe: PdfRecipe, base: HomePdfBase) => {
           open: "Document",
         };
 
+  const openTag = base === "takumi" ? "" : `<${shell.open}>`;
+  const closeTag = base === "takumi" ? "" : `</${shell.close}>`;
+
   return `${shell.import}
 ${imports}
 
 export function ${functionName}Document() {
   return (
-    <${shell.open}>
+    ${openTag}
       <Page>
 ${components}
       </Page>
-    </${shell.close}>
+    ${closeTag}
   );
 }`;
 };

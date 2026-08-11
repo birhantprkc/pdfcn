@@ -1,6 +1,5 @@
 import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
-import { CopyButton } from "@/components/copy-button";
-import { getIconForLanguageExtension } from "@/components/icons";
+import { ComponentCode } from "@/components/component-code";
 import { formatCode } from "@/lib/format-code";
 import { highlightCode } from "@/lib/highlight-code";
 import {
@@ -10,33 +9,6 @@ import {
 } from "@/lib/registry";
 import { cn } from "@/lib/utils";
 import type { BaseName } from "@/registry/bases";
-
-const ComponentCode = ({
-  code,
-  highlightedCode,
-  language,
-  title,
-}: {
-  code: string;
-  highlightedCode: string;
-  language: string;
-  title: string | undefined;
-}) => (
-  <figure data-rehype-pretty-code-figure="" className="[&>pre]:max-h-96">
-    {title ? (
-      <figcaption
-        className="text-code-foreground flex items-center gap-2 [&_svg]:size-4 [&_svg]:opacity-70"
-        data-language={language}
-        data-rehype-pretty-code-title=""
-      >
-        {getIconForLanguageExtension(language)}
-        {title}
-      </figcaption>
-    ) : null}
-    <CopyButton event="copy_primitive_code" value={code} />
-    <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
-  </figure>
-);
 
 export const ComponentSource = async ({
   base = "takumi",

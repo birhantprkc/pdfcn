@@ -57,24 +57,12 @@ const nextConfig = {
     "@formepdf/core",
     "@takumi-rs/helpers",
   ],
-  webpack(config, { dev, isServer }) {
-    config.module.rules.push({
-      generator: {
-        filename: "static/wasm/[name].[contenthash][ext]",
+  turbopack: {
+    rules: {
+      "*.wasm": {
+        type: "wasm",
       },
-      test: /takumi_pdf_wasm_bg\.wasm$/,
-      type: "asset/resource",
-    });
-    config.output.webassemblyModuleFilename =
-      isServer && !dev
-        ? "../static/wasm/[modulehash].wasm"
-        : "static/wasm/[modulehash].wasm";
-    config.experiments = {
-      ...config.experiments,
-      asyncWebAssembly: true,
-    };
-
-    return config;
+    },
   },
 };
 

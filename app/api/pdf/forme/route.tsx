@@ -1,19 +1,21 @@
 import { renderPdf } from "@formepdf/core";
 import { serialize } from "@formepdf/react";
 
-import { demos } from "@/examples/__forme__";
+import { demos } from "@/examples/__index__";
 import { replacePreviewImageSources } from "@/examples/preview-assets";
+
+const formeDemos = demos.forme;
 
 export const GET = async (request: Request) => {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
 
-  if (!name || !(name in demos)) {
+  if (!name || !(name in formeDemos)) {
     return new Response(`Unknown demo: ${name}`, { status: 404 });
   }
 
   try {
-    const Demo = demos[name as keyof typeof demos];
+    const Demo = formeDemos[name];
     if (searchParams.get("format") === "document") {
       return Response.json({ document: serialize(<Demo />) });
     }

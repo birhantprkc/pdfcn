@@ -146,5 +146,3 @@ export const demos: Record<BaseName, DemoMap> = {
     watermark: forme_watermark,
   },
 };
-
-export type DemoName = string;
