@@ -1,13 +1,10 @@
+import { View, StyleSheet } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import { resolveColor } from "@/registry/bases/takumi/lib/resolve-color";
 import {
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/takumi/lib/theme-provider";
-import { resolveColor } from "@/registry/bases/takumi/lib/resolve-color";
-import {
-  View,
-  StyleSheet,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type SectionSpacing = "none" | "sm" | "md" | "lg" | "xl";

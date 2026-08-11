@@ -4,11 +4,11 @@ import {
   View,
 } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import {
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/forme/lib/theme-provider";
-import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type KeyValueDirection = "horizontal" | "vertical";

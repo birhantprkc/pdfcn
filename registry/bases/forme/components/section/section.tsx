@@ -1,11 +1,11 @@
 import { StyleSheet, View } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import {
   mergePdfStyles,
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/forme/lib/theme-provider";
-import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type SectionSpacing = "none" | "sm" | "md" | "lg" | "xl";

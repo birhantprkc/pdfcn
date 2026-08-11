@@ -2,14 +2,14 @@ import { Children, cloneElement, isValidElement } from "react";
 import type { ReactElement, ReactNode } from "react";
 
 import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import {
   View,
   Text as PDFText,
 } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/theme-provider";
 
 import { createTableStyles } from "./table.styles";
 import type {

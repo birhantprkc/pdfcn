@@ -3,12 +3,12 @@ import {
   StyleSheet,
 } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import {
   mergePdfStyles,
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/forme/lib/theme-provider";
-import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type TextVariant = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";

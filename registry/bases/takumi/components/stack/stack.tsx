@@ -1,12 +1,9 @@
+import { View, StyleSheet } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import {
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/takumi/lib/theme-provider";
-import {
-  View,
-  StyleSheet,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type StackGap = "none" | "sm" | "md" | "lg" | "xl";

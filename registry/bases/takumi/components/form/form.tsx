@@ -1,12 +1,12 @@
 import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import {
   View,
   Text as PDFText,
 } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/theme-provider";
 
 import { createFormStyles } from "./form.styles";
 import type {

@@ -1,10 +1,6 @@
 import type React from "react";
 
 import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import {
   View,
   Text as PDFText,
 } from "@/registry/bases/takumi/lib/pdfcn-primitives";
@@ -18,6 +14,10 @@ import {
   Svg,
   SvgText,
 } from "@/registry/bases/takumi/lib/pdfcn-svg";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/theme-provider";
 import type { PdfcnTheme } from "@/registry/themes";
 
 import { createGraphStyles } from "./graph.styles";

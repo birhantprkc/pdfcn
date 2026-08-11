@@ -1,8 +1,8 @@
 import { Watermark as FormeWatermark } from "@formepdf/react";
 
 import { mergeFormeStyles } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import { usePdfcnTheme } from "@/registry/bases/forme/lib/theme-provider";
 import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
+import { usePdfcnTheme } from "@/registry/bases/forme/lib/theme-provider";
 import type { PDFComponentProps } from "@/registry/themes";
 
 export type WatermarkPosition =

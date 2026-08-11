@@ -1,15 +1,15 @@
 import type { ReactNode } from "react";
 
 import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import {
   View,
   Text as PDFText,
   StyleSheet,
 } from "@/registry/bases/takumi/lib/pdfcn-primitives";
 import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/theme-provider";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 export type CardVariant = "default" | "bordered" | "muted";
