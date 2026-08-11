@@ -1,10 +1,9 @@
 import { Watermark as FormeWatermark } from "@formepdf/react";
 
+import { mergeFormeStyles } from "@/registry/bases/forme/lib/forme-primitives";
+import { usePdfcnTheme } from "@/registry/bases/forme/lib/pdfcn-theme-context";
+import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
 import type { PDFComponentProps } from "@/registry/themes";
-
-import { mergeFormeStyles } from "../../lib/forme-primitives";
-import { usePdfcnTheme } from "../../lib/pdfcn-theme-context";
-import { resolveColor } from "../../lib/resolve-color";
 
 export type WatermarkPosition =
   | "center"

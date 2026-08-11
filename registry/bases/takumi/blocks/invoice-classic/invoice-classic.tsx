@@ -1,5 +1,3 @@
-import type { PdfcnTheme } from "@/registry/themes";
-
 import {
   KeyValue,
   PageFooter,
@@ -14,8 +12,15 @@ import {
   TableRow,
   Text,
   usePdfcnTheme,
-} from "../../components";
-import { View, StyleSheet, Document, Page } from "../../lib/takumi-primitives";
+} from "@/registry/bases/takumi/components";
+import {
+  View,
+  StyleSheet,
+  Document,
+  Page,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { PdfcnTheme } from "@/registry/themes";
+
 import type { InvoiceClassicData } from "./invoice-classic.types";
 
 // Sample data — replace with your own props or data source

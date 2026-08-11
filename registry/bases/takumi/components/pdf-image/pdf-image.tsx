@@ -1,13 +1,15 @@
-import type { PdfcnTheme } from "@/registry/themes";
-
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
 import {
   View,
   Text as PDFText,
   StyleSheet,
   Image,
-} from "../../lib/takumi-primitives";
-import type { Style } from "../../lib/takumi-primitives";
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { PdfcnTheme } from "@/registry/themes";
 
 /** HTTP method used when fetching the image from a URL. */
 export type PdfImageHTTPMethod =

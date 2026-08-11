@@ -1,11 +1,25 @@
 import type React from "react";
 
+import {
+  Text as PDFText,
+  View,
+} from "@/registry/bases/forme/lib/forme-primitives";
+import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+import {
+  Circle,
+  G,
+  Line,
+  Path,
+  Rect,
+  Svg,
+  SvgText,
+} from "@/registry/bases/forme/lib/forme-svg";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/forme/lib/pdfcn-theme-context";
 import type { PdfcnTheme } from "@/registry/themes";
 
-import { Text as PDFText, View } from "../../lib/forme-primitives";
-import type { Style } from "../../lib/forme-primitives";
-import { Circle, G, Line, Path, Rect, Svg, SvgText } from "../../lib/forme-svg";
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import { createGraphStyles } from "./graph.styles";
 import type { ChartLayout, GraphProps, GraphSeries } from "./graph.types";
 import {

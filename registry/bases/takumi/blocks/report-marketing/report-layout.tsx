@@ -1,5 +1,3 @@
-import type { PdfcnTheme } from "@/registry/themes";
-
 import {
   Badge,
   DataTable,
@@ -12,8 +10,15 @@ import {
   Section,
   Text,
   usePdfcnTheme,
-} from "../../components";
-import { View, StyleSheet, Document, Page } from "../../lib/takumi-primitives";
+} from "@/registry/bases/takumi/components";
+import {
+  View,
+  StyleSheet,
+  Document,
+  Page,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { PdfcnTheme } from "@/registry/themes";
+
 import type { BaseReportData } from "./report.types";
 
 export interface ReportTemplateProps {

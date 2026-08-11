@@ -1,9 +1,14 @@
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+import { resolveColor } from "@/registry/bases/takumi/lib/resolve-color";
+import {
+  Text as PDFText,
+  StyleSheet,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
-
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
-import { resolveColor } from "../../lib/resolve-color";
-import { Text as PDFText, StyleSheet } from "../../lib/takumi-primitives";
-import type { Style } from "../../lib/takumi-primitives";
 
 export type TextVariant = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
 export type TextWeight = "normal" | "medium" | "semibold" | "bold";

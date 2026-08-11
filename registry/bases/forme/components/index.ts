@@ -147,5 +147,5 @@ export {
   PdfcnThemeProvider,
   usePdfcnTheme,
   useSafeMemo,
-} from "../lib/pdfcn-theme-context";
+} from "@/registry/bases/forme/lib/pdfcn-theme-context";
 export type { PdfcnTheme } from "@/registry/themes";

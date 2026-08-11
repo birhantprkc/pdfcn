@@ -1,4 +1,4 @@
-import type { Style } from "../../lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
 
 /** List visual style variant. */
 export type ListVariant =

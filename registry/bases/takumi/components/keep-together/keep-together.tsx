@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 
+import { View } from "@/registry/bases/takumi/lib/takumi-primitives";
 import type { Style } from "@/registry/themes";
-
-import { View } from "../../lib/takumi-primitives";
 
 export interface KeepTogetherProps {
   children?: ReactNode;

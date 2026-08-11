@@ -1,8 +1,5 @@
 import { Fragment } from "react";
 
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
-import { Text as PDFText } from "../../lib/takumi-primitives";
-import type { Style } from "../../lib/takumi-primitives";
 import {
   Table,
   TableBody,
@@ -10,7 +7,14 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from "../table";
+} from "@/registry/bases/takumi/components/table";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+import { Text as PDFText } from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
+
 import { createCompactStyles, formatValue } from "./data-table.styles";
 import type { DataTableProps } from "./data-table.types";
 

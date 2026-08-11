@@ -1,10 +1,16 @@
 import type { ReactNode } from "react";
 
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+import {
+  View,
+  Text as PDFText,
+  StyleSheet,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
-
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
-import { View, Text as PDFText, StyleSheet } from "../../lib/takumi-primitives";
-import type { Style } from "../../lib/takumi-primitives";
 
 export type CardVariant = "default" | "bordered" | "muted";
 

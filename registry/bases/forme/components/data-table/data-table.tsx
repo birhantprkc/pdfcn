@@ -1,8 +1,5 @@
 import { Fragment } from "react";
 
-import { Text as PDFText } from "../../lib/forme-primitives";
-import type { Style } from "../../lib/forme-primitives";
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
 import {
   Table,
   TableBody,
@@ -10,7 +7,14 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from "../table";
+} from "@/registry/bases/forme/components/table";
+import { Text as PDFText } from "@/registry/bases/forme/lib/forme-primitives";
+import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+
 import { createCompactStyles, formatValue } from "./data-table.styles";
 import type { DataTableProps } from "./data-table.types";
 

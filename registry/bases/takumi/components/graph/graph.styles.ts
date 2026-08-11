@@ -1,6 +1,5 @@
+import { StyleSheet } from "@/registry/bases/takumi/lib/takumi-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
-
-import { StyleSheet } from "../../lib/takumi-primitives";
 
 export const createGraphStyles = (t: PdfcnTheme) =>
   StyleSheet.create({

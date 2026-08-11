@@ -1,4 +1,7 @@
-export type { PDFComponentProps, Style } from "../../../themes/component-types";
+export type {
+  PDFComponentProps,
+  Style,
+} from "@/registry/themes/component-types";
 export type {
   PdfcnTheme,
   PrimitiveTokens,
@@ -12,7 +15,7 @@ export type {
   LineHeights,
   BorderRadiusScale,
   LetterSpacingScale,
-} from "../../../themes/theme-types";
+} from "@/registry/themes/theme-types";
 
 export {
   defaultPrimitives,
@@ -27,4 +30,4 @@ export {
   blueprintTheme,
   themePresets,
   type ThemePresetName,
-} from "../../../themes/themes-barrel";
+} from "@/registry/themes/themes-barrel";

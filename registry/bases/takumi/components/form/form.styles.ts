@@ -1,6 +1,6 @@
+import { StyleSheet } from "@/registry/bases/takumi/lib/takumi-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
 
-import { StyleSheet } from "../../lib/takumi-primitives";
 import type { PdfFormVariant } from "./form.types";
 
 /** Style factory for fillable form layouts, derived from the active theme. */

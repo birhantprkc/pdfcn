@@ -1,10 +1,14 @@
 import type React from "react";
 
-import type { PdfcnTheme } from "@/registry/themes";
-
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
-import { View, Text as PDFText } from "../../lib/takumi-primitives";
-import type { Style } from "../../lib/takumi-primitives";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+import {
+  View,
+  Text as PDFText,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
 import {
   Circle,
   G,
@@ -13,7 +17,9 @@ import {
   Rect,
   Svg,
   SvgText,
-} from "../../lib/takumi-svg";
+} from "@/registry/bases/takumi/lib/takumi-svg";
+import type { PdfcnTheme } from "@/registry/themes";
+
 import { createGraphStyles } from "./graph.styles";
 import type { ChartLayout, GraphProps, GraphSeries } from "./graph.types";
 import {

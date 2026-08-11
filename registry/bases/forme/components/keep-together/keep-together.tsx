@@ -1,8 +1,7 @@
 import type { ReactNode } from "react";
 
+import { View } from "@/registry/bases/forme/lib/forme-primitives";
 import type { Style } from "@/registry/themes";
-
-import { View } from "../../lib/forme-primitives";
 
 export interface KeepTogetherProps {
   children?: ReactNode;

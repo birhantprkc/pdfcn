@@ -1,12 +1,18 @@
 import QRCode from "qrcode";
 
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/lib/pdfcn-theme-context";
+import { resolveColor } from "@/registry/bases/takumi/lib/resolve-color";
+import {
+  View,
+  Text as PDFText,
+  StyleSheet,
+} from "@/registry/bases/takumi/lib/takumi-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/takumi-primitives";
+import { Rect, Svg } from "@/registry/bases/takumi/lib/takumi-svg";
 import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
-
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
-import { resolveColor } from "../../lib/resolve-color";
-import { View, Text as PDFText, StyleSheet } from "../../lib/takumi-primitives";
-import type { Style } from "../../lib/takumi-primitives";
-import { Rect, Svg } from "../../lib/takumi-svg";
 
 export type QRCodeErrorLevel = "L" | "M" | "Q" | "H";
 

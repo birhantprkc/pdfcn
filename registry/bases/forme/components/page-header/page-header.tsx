@@ -1,17 +1,19 @@
 import type React from "react";
 import type { ReactNode } from "react";
 
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
-
 import {
   Fixed,
   Text as PDFText,
   StyleSheet,
   View,
-} from "../../lib/forme-primitives";
-import type { Style } from "../../lib/forme-primitives";
-import { usePdfcnTheme, useSafeMemo } from "../../lib/pdfcn-theme-context";
-import { resolveColor } from "../../lib/resolve-color";
+} from "@/registry/bases/forme/lib/forme-primitives";
+import type { Style } from "@/registry/bases/forme/lib/forme-primitives";
+import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/forme/lib/pdfcn-theme-context";
+import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
+import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
 
 const wrapFixed = (fixed: boolean | undefined, node: React.ReactElement) => {
   if (!fixed) {

@@ -1,7 +1,5 @@
 import { Document, Page, StyleSheet, View } from "@formepdf/react";
 
-import type { PdfcnTheme } from "@/registry/themes";
-
 import {
   KeyValue,
   PageFooter,
@@ -16,7 +14,9 @@ import {
   TableRow,
   Text,
   usePdfcnTheme,
-} from "../../components";
+} from "@/registry/bases/forme/components";
+import type { PdfcnTheme } from "@/registry/themes";
+
 import type { InvoiceClassicData } from "./invoice-classic.types";
 
 // Sample data — replace with your own props or data source

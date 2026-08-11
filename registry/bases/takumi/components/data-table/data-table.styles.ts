@@ -1,6 +1,5 @@
+import { StyleSheet } from "@/registry/bases/takumi/lib/takumi-primitives";
 import type { PdfcnTheme } from "@/registry/themes";
-
-import { StyleSheet } from "../../lib/takumi-primitives";
 
 /**
  * Creates compact-mode cell and text styles for the DataTable component.

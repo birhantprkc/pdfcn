@@ -1,7 +1,5 @@
 import { Document, Page, StyleSheet, View } from "@formepdf/react";
 
-import type { PdfcnTheme } from "@/registry/themes";
-
 import {
   Badge,
   DataTable,
@@ -14,7 +12,9 @@ import {
   Section,
   Text,
   usePdfcnTheme,
-} from "../../components";
+} from "@/registry/bases/forme/components";
+import type { PdfcnTheme } from "@/registry/themes";
+
 import type { BaseReportData } from "./report.types";
 
 export interface ReportTemplateProps {
