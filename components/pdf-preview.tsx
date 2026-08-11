@@ -90,12 +90,12 @@ export const PdfPreview = ({
             { fromJsx },
             images,
           ] = await Promise.all([
-            import("@/examples/__takumi__"),
+            import("@/examples/__index__"),
             import("takumi-pdf"),
             import("@takumi-rs/helpers/jsx"),
             loadPreviewLogo(),
           ]);
-          const Demo = demos[name];
+          const Demo = demos.takumi[name];
           if (!Demo) {
             throw new Error(`Unknown Takumi demo: ${name}`);
           }
@@ -111,11 +111,11 @@ export const PdfPreview = ({
         } else {
           const [{ demos }, { renderSerializedDoc }, { serialize }] =
             await Promise.all([
-              import("@/examples/__forme__"),
+              import("@/examples/__index__"),
               import("@formepdf/core/browser"),
               import("@formepdf/react"),
             ]);
-          const Demo = demos[name];
+          const Demo = demos.forme[name];
           if (!Demo) {
             throw new Error(`Unknown Forme demo: ${name}`);
           }
