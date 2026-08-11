@@ -9,12 +9,27 @@
         {
           "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
           "type": "registry:lib",
-          "target": "components/pdf/lib/pdfcn-theme.ts"
+          "target": "lib/pdfcn-theme.ts"
         },
         {
           "path": "registry/bases/takumi/lib/resolve-color.ts",
           "type": "registry:lib",
-          "target": "components/pdf/lib/resolve-color.ts"
+          "target": "lib/resolve-color.ts"
+        },
+        {
+          "path": "registry/bases/takumi/lib/theme-provider.tsx",
+          "type": "registry:lib",
+          "target": "components/pdf/theme-provider.tsx"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/pdfcn-primitives.tsx"
+        },
+        {
+          "path": "registry/bases/takumi/lib/pdfcn-svg.tsx",
+          "type": "registry:lib",
+          "target": "lib/pdfcn-svg.tsx"
         }
       ],
       "name": "takumi/utils",
@@ -28,12 +43,12 @@
         {
           "path": "registry/bases/takumi/components/alert/alert.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/alert/alert.tsx"
+          "target": "components/pdf/alert/alert.tsx"
         },
         {
           "path": "registry/bases/takumi/components/alert/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/alert/index.ts"
+          "target": "components/pdf/alert/index.ts"
         }
       ],
       "name": "takumi/alert",
@@ -48,12 +63,12 @@
         {
           "path": "registry/bases/takumi/components/badge/badge.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/badge/badge.tsx"
+          "target": "components/pdf/badge/badge.tsx"
         },
         {
           "path": "registry/bases/takumi/components/badge/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/badge/index.ts"
+          "target": "components/pdf/badge/index.ts"
         }
       ],
       "name": "takumi/badge",
@@ -68,12 +83,12 @@
         {
           "path": "registry/bases/takumi/components/card/card.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/card/card.tsx"
+          "target": "components/pdf/card/card.tsx"
         },
         {
           "path": "registry/bases/takumi/components/card/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/card/index.ts"
+          "target": "components/pdf/card/index.ts"
         }
       ],
       "name": "takumi/card",
@@ -88,22 +103,22 @@
         {
           "path": "registry/bases/takumi/components/data-table/data-table.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/data-table.styles.ts"
+          "target": "components/pdf/data-table/data-table.styles.ts"
         },
         {
           "path": "registry/bases/takumi/components/data-table/data-table.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/data-table.tsx"
+          "target": "components/pdf/data-table/data-table.tsx"
         },
         {
           "path": "registry/bases/takumi/components/data-table/data-table.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/data-table.types.ts"
+          "target": "components/pdf/data-table/data-table.types.ts"
         },
         {
           "path": "registry/bases/takumi/components/data-table/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/index.ts"
+          "target": "components/pdf/data-table/index.ts"
         }
       ],
       "name": "takumi/data-table",
@@ -118,12 +133,12 @@
         {
           "path": "registry/bases/takumi/components/divider/divider.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/divider/divider.tsx"
+          "target": "components/pdf/divider/divider.tsx"
         },
         {
           "path": "registry/bases/takumi/components/divider/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/divider/index.ts"
+          "target": "components/pdf/divider/index.ts"
         }
       ],
       "name": "takumi/divider",
@@ -138,22 +153,22 @@
         {
           "path": "registry/bases/takumi/components/form/form.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/form/form.styles.ts"
+          "target": "components/pdf/form/form.styles.ts"
         },
         {
           "path": "registry/bases/takumi/components/form/form.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/form/form.tsx"
+          "target": "components/pdf/form/form.tsx"
         },
         {
           "path": "registry/bases/takumi/components/form/form.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/form/form.types.ts"
+          "target": "components/pdf/form/form.types.ts"
         },
         {
           "path": "registry/bases/takumi/components/form/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/form/index.ts"
+          "target": "components/pdf/form/index.ts"
         }
       ],
       "name": "takumi/form",
@@ -168,27 +183,27 @@
         {
           "path": "registry/bases/takumi/components/graph/graph.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.styles.ts"
+          "target": "components/pdf/graph/graph.styles.ts"
         },
         {
           "path": "registry/bases/takumi/components/graph/graph.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.tsx"
+          "target": "components/pdf/graph/graph.tsx"
         },
         {
           "path": "registry/bases/takumi/components/graph/graph.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.types.ts"
+          "target": "components/pdf/graph/graph.types.ts"
         },
         {
           "path": "registry/bases/takumi/components/graph/graph.utils.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.utils.ts"
+          "target": "components/pdf/graph/graph.utils.ts"
         },
         {
           "path": "registry/bases/takumi/components/graph/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/index.ts"
+          "target": "components/pdf/graph/index.ts"
         }
       ],
       "name": "takumi/graph",
@@ -203,12 +218,12 @@
         {
           "path": "registry/bases/takumi/components/heading/heading.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/heading/heading.tsx"
+          "target": "components/pdf/heading/heading.tsx"
         },
         {
           "path": "registry/bases/takumi/components/heading/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/heading/index.ts"
+          "target": "components/pdf/heading/index.ts"
         }
       ],
       "name": "takumi/heading",
@@ -223,12 +238,12 @@
         {
           "path": "registry/bases/takumi/components/keep-together/keep-together.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/keep-together/keep-together.tsx"
+          "target": "components/pdf/keep-together/keep-together.tsx"
         },
         {
           "path": "registry/bases/takumi/components/keep-together/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/keep-together/index.ts"
+          "target": "components/pdf/keep-together/index.ts"
         }
       ],
       "name": "takumi/keep-together",
@@ -243,12 +258,12 @@
         {
           "path": "registry/bases/takumi/components/key-value/key-value.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/key-value/key-value.tsx"
+          "target": "components/pdf/key-value/key-value.tsx"
         },
         {
           "path": "registry/bases/takumi/components/key-value/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/key-value/index.ts"
+          "target": "components/pdf/key-value/index.ts"
         }
       ],
       "name": "takumi/key-value",
@@ -263,12 +278,12 @@
         {
           "path": "registry/bases/takumi/components/link/link.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/link/link.tsx"
+          "target": "components/pdf/link/link.tsx"
         },
         {
           "path": "registry/bases/takumi/components/link/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/link/index.ts"
+          "target": "components/pdf/link/index.ts"
         }
       ],
       "name": "takumi/link",
@@ -283,22 +298,22 @@
         {
           "path": "registry/bases/takumi/components/list/list.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/list/list.styles.ts"
+          "target": "components/pdf/list/list.styles.ts"
         },
         {
           "path": "registry/bases/takumi/components/list/list.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/list/list.tsx"
+          "target": "components/pdf/list/list.tsx"
         },
         {
           "path": "registry/bases/takumi/components/list/list.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/list/list.types.ts"
+          "target": "components/pdf/list/list.types.ts"
         },
         {
           "path": "registry/bases/takumi/components/list/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/list/index.ts"
+          "target": "components/pdf/list/index.ts"
         }
       ],
       "name": "takumi/list",
@@ -313,12 +328,12 @@
         {
           "path": "registry/bases/takumi/components/page-break/page-break.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-break/page-break.tsx"
+          "target": "components/pdf/page-break/page-break.tsx"
         },
         {
           "path": "registry/bases/takumi/components/page-break/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-break/index.ts"
+          "target": "components/pdf/page-break/index.ts"
         }
       ],
       "name": "takumi/page-break",
@@ -333,12 +348,12 @@
         {
           "path": "registry/bases/takumi/components/page-footer/page-footer.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-footer/page-footer.tsx"
+          "target": "components/pdf/page-footer/page-footer.tsx"
         },
         {
           "path": "registry/bases/takumi/components/page-footer/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-footer/index.ts"
+          "target": "components/pdf/page-footer/index.ts"
         }
       ],
       "name": "takumi/page-footer",
@@ -353,12 +368,12 @@
         {
           "path": "registry/bases/takumi/components/page-header/page-header.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-header/page-header.tsx"
+          "target": "components/pdf/page-header/page-header.tsx"
         },
         {
           "path": "registry/bases/takumi/components/page-header/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-header/index.ts"
+          "target": "components/pdf/page-header/index.ts"
         }
       ],
       "name": "takumi/page-header",
@@ -373,12 +388,12 @@
         {
           "path": "registry/bases/takumi/components/page-number/page-number.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-number/page-number.tsx"
+          "target": "components/pdf/page-number/page-number.tsx"
         },
         {
           "path": "registry/bases/takumi/components/page-number/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-number/index.ts"
+          "target": "components/pdf/page-number/index.ts"
         }
       ],
       "name": "takumi/page-number",
@@ -393,12 +408,12 @@
         {
           "path": "registry/bases/takumi/components/pdf-image/pdf-image.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/pdf-image/pdf-image.tsx"
+          "target": "components/pdf/pdf-image/pdf-image.tsx"
         },
         {
           "path": "registry/bases/takumi/components/pdf-image/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/pdf-image/index.ts"
+          "target": "components/pdf/pdf-image/index.ts"
         }
       ],
       "name": "takumi/pdf-image",
@@ -413,12 +428,12 @@
         {
           "path": "registry/bases/takumi/components/qrcode/qrcode.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/qrcode/qrcode.tsx"
+          "target": "components/pdf/qrcode/qrcode.tsx"
         },
         {
           "path": "registry/bases/takumi/components/qrcode/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/qrcode/index.ts"
+          "target": "components/pdf/qrcode/index.ts"
         }
       ],
       "name": "takumi/qrcode",
@@ -433,12 +448,12 @@
         {
           "path": "registry/bases/takumi/components/section/section.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/section/section.tsx"
+          "target": "components/pdf/section/section.tsx"
         },
         {
           "path": "registry/bases/takumi/components/section/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/section/index.ts"
+          "target": "components/pdf/section/index.ts"
         }
       ],
       "name": "takumi/section",
@@ -453,12 +468,12 @@
         {
           "path": "registry/bases/takumi/components/signature/signature.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/signature/signature.tsx"
+          "target": "components/pdf/signature/signature.tsx"
         },
         {
           "path": "registry/bases/takumi/components/signature/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/signature/index.ts"
+          "target": "components/pdf/signature/index.ts"
         }
       ],
       "name": "takumi/signature",
@@ -473,12 +488,12 @@
         {
           "path": "registry/bases/takumi/components/stack/stack.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/stack/stack.tsx"
+          "target": "components/pdf/stack/stack.tsx"
         },
         {
           "path": "registry/bases/takumi/components/stack/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/stack/index.ts"
+          "target": "components/pdf/stack/index.ts"
         }
       ],
       "name": "takumi/stack",
@@ -493,22 +508,22 @@
         {
           "path": "registry/bases/takumi/components/table/table.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/table/table.styles.ts"
+          "target": "components/pdf/table/table.styles.ts"
         },
         {
           "path": "registry/bases/takumi/components/table/table.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/table/table.tsx"
+          "target": "components/pdf/table/table.tsx"
         },
         {
           "path": "registry/bases/takumi/components/table/table.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/table/table.types.ts"
+          "target": "components/pdf/table/table.types.ts"
         },
         {
           "path": "registry/bases/takumi/components/table/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/table/index.ts"
+          "target": "components/pdf/table/index.ts"
         }
       ],
       "name": "takumi/table",
@@ -523,12 +538,12 @@
         {
           "path": "registry/bases/takumi/components/text/text.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/text/text.tsx"
+          "target": "components/pdf/text/text.tsx"
         },
         {
           "path": "registry/bases/takumi/components/text/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/text/index.ts"
+          "target": "components/pdf/text/index.ts"
         }
       ],
       "name": "takumi/text",
@@ -543,12 +558,12 @@
         {
           "path": "registry/bases/takumi/components/watermark/watermark.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/watermark/watermark.tsx"
+          "target": "components/pdf/watermark/watermark.tsx"
         },
         {
           "path": "registry/bases/takumi/components/watermark/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/watermark/index.ts"
+          "target": "components/pdf/watermark/index.ts"
         }
       ],
       "name": "takumi/watermark",
@@ -1044,17 +1059,32 @@
         {
           "path": "registry/bases/forme/lib/pdfcn-theme.ts",
           "type": "registry:lib",
-          "target": "components/pdf/lib/pdfcn-theme.ts"
+          "target": "lib/pdfcn-theme.ts"
         },
         {
           "path": "registry/bases/forme/lib/resolve-color.ts",
           "type": "registry:lib",
-          "target": "components/pdf/lib/resolve-color.ts"
+          "target": "lib/resolve-color.ts"
         },
         {
           "path": "registry/bases/forme/lib/maybe-fixed.tsx",
           "type": "registry:lib",
-          "target": "components/pdf/lib/maybe-fixed.tsx"
+          "target": "lib/maybe-fixed.tsx"
+        },
+        {
+          "path": "registry/bases/forme/lib/theme-provider.tsx",
+          "type": "registry:lib",
+          "target": "components/pdf/theme-provider.tsx"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-primitives.tsx",
+          "type": "registry:lib",
+          "target": "lib/pdfcn-primitives.tsx"
+        },
+        {
+          "path": "registry/bases/forme/lib/pdfcn-svg.tsx",
+          "type": "registry:lib",
+          "target": "lib/pdfcn-svg.tsx"
         }
       ],
       "name": "forme/utils",
@@ -1068,12 +1098,12 @@
         {
           "path": "registry/bases/forme/components/alert/alert.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/alert/alert.tsx"
+          "target": "components/pdf/alert/alert.tsx"
         },
         {
           "path": "registry/bases/forme/components/alert/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/alert/index.ts"
+          "target": "components/pdf/alert/index.ts"
         }
       ],
       "name": "forme/alert",
@@ -1088,12 +1118,12 @@
         {
           "path": "registry/bases/forme/components/badge/badge.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/badge/badge.tsx"
+          "target": "components/pdf/badge/badge.tsx"
         },
         {
           "path": "registry/bases/forme/components/badge/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/badge/index.ts"
+          "target": "components/pdf/badge/index.ts"
         }
       ],
       "name": "forme/badge",
@@ -1108,12 +1138,12 @@
         {
           "path": "registry/bases/forme/components/card/card.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/card/card.tsx"
+          "target": "components/pdf/card/card.tsx"
         },
         {
           "path": "registry/bases/forme/components/card/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/card/index.ts"
+          "target": "components/pdf/card/index.ts"
         }
       ],
       "name": "forme/card",
@@ -1128,22 +1158,22 @@
         {
           "path": "registry/bases/forme/components/data-table/data-table.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/data-table.styles.ts"
+          "target": "components/pdf/data-table/data-table.styles.ts"
         },
         {
           "path": "registry/bases/forme/components/data-table/data-table.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/data-table.tsx"
+          "target": "components/pdf/data-table/data-table.tsx"
         },
         {
           "path": "registry/bases/forme/components/data-table/data-table.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/data-table.types.ts"
+          "target": "components/pdf/data-table/data-table.types.ts"
         },
         {
           "path": "registry/bases/forme/components/data-table/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/data-table/index.ts"
+          "target": "components/pdf/data-table/index.ts"
         }
       ],
       "name": "forme/data-table",
@@ -1158,12 +1188,12 @@
         {
           "path": "registry/bases/forme/components/divider/divider.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/divider/divider.tsx"
+          "target": "components/pdf/divider/divider.tsx"
         },
         {
           "path": "registry/bases/forme/components/divider/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/divider/index.ts"
+          "target": "components/pdf/divider/index.ts"
         }
       ],
       "name": "forme/divider",
@@ -1178,22 +1208,22 @@
         {
           "path": "registry/bases/forme/components/form/form.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/form/form.styles.ts"
+          "target": "components/pdf/form/form.styles.ts"
         },
         {
           "path": "registry/bases/forme/components/form/form.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/form/form.tsx"
+          "target": "components/pdf/form/form.tsx"
         },
         {
           "path": "registry/bases/forme/components/form/form.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/form/form.types.ts"
+          "target": "components/pdf/form/form.types.ts"
         },
         {
           "path": "registry/bases/forme/components/form/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/form/index.ts"
+          "target": "components/pdf/form/index.ts"
         }
       ],
       "name": "forme/form",
@@ -1208,27 +1238,27 @@
         {
           "path": "registry/bases/forme/components/graph/graph.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.styles.ts"
+          "target": "components/pdf/graph/graph.styles.ts"
         },
         {
           "path": "registry/bases/forme/components/graph/graph.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.tsx"
+          "target": "components/pdf/graph/graph.tsx"
         },
         {
           "path": "registry/bases/forme/components/graph/graph.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.types.ts"
+          "target": "components/pdf/graph/graph.types.ts"
         },
         {
           "path": "registry/bases/forme/components/graph/graph.utils.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/graph.utils.ts"
+          "target": "components/pdf/graph/graph.utils.ts"
         },
         {
           "path": "registry/bases/forme/components/graph/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/graph/index.ts"
+          "target": "components/pdf/graph/index.ts"
         }
       ],
       "name": "forme/graph",
@@ -1243,12 +1273,12 @@
         {
           "path": "registry/bases/forme/components/heading/heading.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/heading/heading.tsx"
+          "target": "components/pdf/heading/heading.tsx"
         },
         {
           "path": "registry/bases/forme/components/heading/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/heading/index.ts"
+          "target": "components/pdf/heading/index.ts"
         }
       ],
       "name": "forme/heading",
@@ -1263,12 +1293,12 @@
         {
           "path": "registry/bases/forme/components/keep-together/keep-together.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/keep-together/keep-together.tsx"
+          "target": "components/pdf/keep-together/keep-together.tsx"
         },
         {
           "path": "registry/bases/forme/components/keep-together/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/keep-together/index.ts"
+          "target": "components/pdf/keep-together/index.ts"
         }
       ],
       "name": "forme/keep-together",
@@ -1283,12 +1313,12 @@
         {
           "path": "registry/bases/forme/components/key-value/key-value.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/key-value/key-value.tsx"
+          "target": "components/pdf/key-value/key-value.tsx"
         },
         {
           "path": "registry/bases/forme/components/key-value/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/key-value/index.ts"
+          "target": "components/pdf/key-value/index.ts"
         }
       ],
       "name": "forme/key-value",
@@ -1303,12 +1333,12 @@
         {
           "path": "registry/bases/forme/components/link/link.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/link/link.tsx"
+          "target": "components/pdf/link/link.tsx"
         },
         {
           "path": "registry/bases/forme/components/link/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/link/index.ts"
+          "target": "components/pdf/link/index.ts"
         }
       ],
       "name": "forme/link",
@@ -1323,22 +1353,22 @@
         {
           "path": "registry/bases/forme/components/list/list.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/list/list.styles.ts"
+          "target": "components/pdf/list/list.styles.ts"
         },
         {
           "path": "registry/bases/forme/components/list/list.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/list/list.tsx"
+          "target": "components/pdf/list/list.tsx"
         },
         {
           "path": "registry/bases/forme/components/list/list.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/list/list.types.ts"
+          "target": "components/pdf/list/list.types.ts"
         },
         {
           "path": "registry/bases/forme/components/list/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/list/index.ts"
+          "target": "components/pdf/list/index.ts"
         }
       ],
       "name": "forme/list",
@@ -1353,12 +1383,12 @@
         {
           "path": "registry/bases/forme/components/page-break/page-break.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-break/page-break.tsx"
+          "target": "components/pdf/page-break/page-break.tsx"
         },
         {
           "path": "registry/bases/forme/components/page-break/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-break/index.ts"
+          "target": "components/pdf/page-break/index.ts"
         }
       ],
       "name": "forme/page-break",
@@ -1373,12 +1403,12 @@
         {
           "path": "registry/bases/forme/components/page-footer/page-footer.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-footer/page-footer.tsx"
+          "target": "components/pdf/page-footer/page-footer.tsx"
         },
         {
           "path": "registry/bases/forme/components/page-footer/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-footer/index.ts"
+          "target": "components/pdf/page-footer/index.ts"
         }
       ],
       "name": "forme/page-footer",
@@ -1393,12 +1423,12 @@
         {
           "path": "registry/bases/forme/components/page-header/page-header.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-header/page-header.tsx"
+          "target": "components/pdf/page-header/page-header.tsx"
         },
         {
           "path": "registry/bases/forme/components/page-header/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-header/index.ts"
+          "target": "components/pdf/page-header/index.ts"
         }
       ],
       "name": "forme/page-header",
@@ -1413,12 +1443,12 @@
         {
           "path": "registry/bases/forme/components/page-number/page-number.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/page-number/page-number.tsx"
+          "target": "components/pdf/page-number/page-number.tsx"
         },
         {
           "path": "registry/bases/forme/components/page-number/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/page-number/index.ts"
+          "target": "components/pdf/page-number/index.ts"
         }
       ],
       "name": "forme/page-number",
@@ -1433,12 +1463,12 @@
         {
           "path": "registry/bases/forme/components/pdf-image/pdf-image.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/pdf-image/pdf-image.tsx"
+          "target": "components/pdf/pdf-image/pdf-image.tsx"
         },
         {
           "path": "registry/bases/forme/components/pdf-image/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/pdf-image/index.ts"
+          "target": "components/pdf/pdf-image/index.ts"
         }
       ],
       "name": "forme/pdf-image",
@@ -1453,12 +1483,12 @@
         {
           "path": "registry/bases/forme/components/qrcode/qrcode.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/qrcode/qrcode.tsx"
+          "target": "components/pdf/qrcode/qrcode.tsx"
         },
         {
           "path": "registry/bases/forme/components/qrcode/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/qrcode/index.ts"
+          "target": "components/pdf/qrcode/index.ts"
         }
       ],
       "name": "forme/qrcode",
@@ -1473,12 +1503,12 @@
         {
           "path": "registry/bases/forme/components/section/section.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/section/section.tsx"
+          "target": "components/pdf/section/section.tsx"
         },
         {
           "path": "registry/bases/forme/components/section/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/section/index.ts"
+          "target": "components/pdf/section/index.ts"
         }
       ],
       "name": "forme/section",
@@ -1493,12 +1523,12 @@
         {
           "path": "registry/bases/forme/components/signature/signature.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/signature/signature.tsx"
+          "target": "components/pdf/signature/signature.tsx"
         },
         {
           "path": "registry/bases/forme/components/signature/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/signature/index.ts"
+          "target": "components/pdf/signature/index.ts"
         }
       ],
       "name": "forme/signature",
@@ -1513,12 +1543,12 @@
         {
           "path": "registry/bases/forme/components/stack/stack.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/stack/stack.tsx"
+          "target": "components/pdf/stack/stack.tsx"
         },
         {
           "path": "registry/bases/forme/components/stack/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/stack/index.ts"
+          "target": "components/pdf/stack/index.ts"
         }
       ],
       "name": "forme/stack",
@@ -1533,22 +1563,22 @@
         {
           "path": "registry/bases/forme/components/table/table.styles.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/table/table.styles.ts"
+          "target": "components/pdf/table/table.styles.ts"
         },
         {
           "path": "registry/bases/forme/components/table/table.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/table/table.tsx"
+          "target": "components/pdf/table/table.tsx"
         },
         {
           "path": "registry/bases/forme/components/table/table.types.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/table/table.types.ts"
+          "target": "components/pdf/table/table.types.ts"
         },
         {
           "path": "registry/bases/forme/components/table/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/table/index.ts"
+          "target": "components/pdf/table/index.ts"
         }
       ],
       "name": "forme/table",
@@ -1563,12 +1593,12 @@
         {
           "path": "registry/bases/forme/components/text/text.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/text/text.tsx"
+          "target": "components/pdf/text/text.tsx"
         },
         {
           "path": "registry/bases/forme/components/text/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/text/index.ts"
+          "target": "components/pdf/text/index.ts"
         }
       ],
       "name": "forme/text",
@@ -1583,12 +1613,12 @@
         {
           "path": "registry/bases/forme/components/watermark/watermark.tsx",
           "type": "registry:component",
-          "target": "components/pdf/components/watermark/watermark.tsx"
+          "target": "components/pdf/watermark/watermark.tsx"
         },
         {
           "path": "registry/bases/forme/components/watermark/index.ts",
           "type": "registry:component",
-          "target": "components/pdf/components/watermark/index.ts"
+          "target": "components/pdf/watermark/index.ts"
         }
       ],
       "name": "forme/watermark",

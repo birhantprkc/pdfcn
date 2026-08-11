@@ -15,13 +15,13 @@
       "path": "registry/bases/takumi/components/page-break/page-break.tsx",
       "content": "import { View } from \"@/registry/bases/takumi/lib/pdfcn-primitives\";\nimport type { PDFComponentProps } from \"@/registry/themes\";\n\nexport interface PageBreakProps extends Omit<PDFComponentProps, \"children\"> {\n  children?: never;\n}\n\nexport const PageBreak = ({ style }: PageBreakProps) => (\n  <View style={[{ breakBefore: \"page\" }, style].filter(Boolean) as never} />\n);\n",
       "type": "registry:component",
-      "target": "components/pdf/components/page-break/page-break.tsx"
+      "target": "components/pdf/page-break/page-break.tsx"
     },
     {
       "path": "registry/bases/takumi/components/page-break/index.ts",
       "content": "export { PageBreak } from \"./page-break\";\nexport type { PageBreakProps } from \"./page-break\";\n",
       "type": "registry:component",
-      "target": "components/pdf/components/page-break/index.ts"
+      "target": "components/pdf/page-break/index.ts"
     }
   ],
   "type": "registry:ui"

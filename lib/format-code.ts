@@ -2,6 +2,8 @@ import { transformIcons, transformMenu, transformRender } from "shadcn/utils";
 import { Project, ScriptKind } from "ts-morph";
 import type { SourceFile } from "ts-morph";
 
+import { BASES } from "@/registry/bases";
+
 const buildDisplayConfig = () => ({
   $schema: "https://ui.shadcn.com/schema.json",
   aliases: {
@@ -44,40 +46,20 @@ type DisplayTransformer = (opts: {
 export const formatCode = async (code: string) => {
   let formattedCode = code;
 
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/new-york/",
-    "@/components/"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/bases/forme/lib/",
-    "@/components/pdf/"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/bases/forme/components/",
-    "@/components/pdf/"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/bases/takumi/lib/",
-    "@/components/pdf/"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/bases/takumi/components/",
-    "@/components/pdf/"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/bases/takumi/blocks/",
-    "@/components/pdf/blocks/"
-  );
-
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/bases/forme/blocks/",
-    "@/components/pdf/blocks/"
-  );
+  for (const base of BASES) {
+    formattedCode = formattedCode.replaceAll(
+      `@/registry/bases/${base.name}/lib/`,
+      "@/lib/"
+    );
+    formattedCode = formattedCode.replaceAll(
+      `@/registry/bases/${base.name}/components/`,
+      "@/components/pdf/"
+    );
+    formattedCode = formattedCode.replaceAll(
+      `@/registry/bases/${base.name}/blocks/`,
+      "@/components/pdf/"
+    );
+  }
 
   formattedCode = formattedCode.replaceAll(
     "@/registry/themes",
