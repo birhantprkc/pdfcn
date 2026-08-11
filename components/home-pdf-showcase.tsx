@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ArrowUpRightIcon,
-  CodeXmlIcon,
-  EyeIcon,
-  FileIcon,
-  MonitorIcon,
-  SmartphoneIcon,
-} from "lucide-react";
+import { ArrowUpRightIcon, CodeXmlIcon, EyeIcon, FileIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { createElement, useEffect, useState } from "react";
@@ -50,7 +43,6 @@ const PdfPreview = dynamic(
   { ssr: false }
 );
 
-type PreviewViewport = "desktop" | "mobile";
 type WorkspaceTab = "preview" | "code";
 
 interface HomePdfCodeOutput {
@@ -213,6 +205,12 @@ const CodeViewer = ({
 const findPdf = (id: PdfRecipeId): PdfRecipe =>
   homePdfPreviews.find((pdf) => pdf.id === id) ?? homePdfPreviews[0];
 
+const recipeToDemoName: Record<PdfRecipeId, string> = {
+  "corporate-invoice": "invoice-corporate",
+  "financial-report": "report-financial",
+  "minimal-invoice": "invoice-minimal",
+};
+
 const extractMetadata = async (base: BaseName, name: string) => {
   const cacheKey = `${base}:${name}`;
   const cached = metadataCache.get(cacheKey);
@@ -288,7 +286,6 @@ export const HomePdfShowcase = () => {
   const [selectedComponentId, setSelectedComponentId] =
     useState<ComponentPartId>("page-header");
   const [workspaceTab, setWorkspaceTab] = useState<WorkspaceTab>("preview");
-  const [viewport, setViewport] = useState<PreviewViewport>("desktop");
   const [codeOutput, setCodeOutput] = useState<CodeOutput>("react");
   const [pdfBase, setPdfBase] = useState<HomePdfBase>("forme");
   const [codeRequest, setCodeRequest] = useState<{
@@ -390,11 +387,17 @@ export const HomePdfShowcase = () => {
       return;
     }
 
+    const demoName = recipeToDemoName[selectedPdf.id];
+    if (!demoName) {
+      setPdfMetadata(null);
+      return;
+    }
+
     let cancelled = false;
     const loadMetadata = async () => {
       setMetadataLoading(true);
       try {
-        const metadata = await extractMetadata(pdfBase, selectedPdf.id);
+        const metadata = await extractMetadata(pdfBase, demoName);
         if (!cancelled) {
           setPdfMetadata(metadata);
         }
@@ -591,49 +594,13 @@ export const HomePdfShowcase = () => {
                     Code
                   </TabsTrigger>
                 </TabsList>
-
-                {workspaceTab === "preview" ? (
-                  <div
-                    className="hidden rounded-lg bg-muted p-0.5 lg:flex"
-                    role="radiogroup"
-                    aria-label="PDF preview viewport"
-                  >
-                    <Toggle
-                      size="sm"
-                      pressed={viewport === "desktop"}
-                      onPressedChange={() => setViewport("desktop")}
-                      aria-label="Desktop preview"
-                      className="h-7 gap-1.5 px-2.5 text-xs"
-                    >
-                      <MonitorIcon className="size-3.5" aria-hidden="true" />
-                      <span className="hidden xl:inline">Desktop</span>
-                    </Toggle>
-                    <Toggle
-                      size="sm"
-                      pressed={viewport === "mobile"}
-                      onPressedChange={() => setViewport("mobile")}
-                      aria-label="Mobile preview"
-                      className="h-7 gap-1.5 px-2.5 text-xs"
-                    >
-                      <SmartphoneIcon className="size-3.5" aria-hidden="true" />
-                      <span className="hidden xl:inline">Mobile</span>
-                    </Toggle>
-                  </div>
-                ) : null}
               </div>
 
               <Separator />
 
               <TabsContent value="preview" className="min-h-0">
                 <div className="h-[520px] overflow-auto p-2 sm:h-[620px] sm:p-4 lg:h-[672px] lg:p-5">
-                  <div
-                    className={cn(
-                      "mx-auto w-full max-w-[375px] transition-[width] duration-200",
-                      viewport === "desktop"
-                        ? "lg:w-[600px] lg:max-w-full"
-                        : "lg:w-[375px]"
-                    )}
-                  >
+                  <div className="mx-auto w-full max-w-[600px]">
                     <PdfPreview
                       base={pdfBase}
                       name={selectedPdf.id}
