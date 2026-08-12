@@ -14,24 +14,21 @@ interface Bookmark {
   depth: number;
 }
 
-function bytesToChars(bytes: Uint8Array): string {
+const bytesToChars = (bytes: Uint8Array): string => {
   let text = "";
   for (let offset = 0; offset < bytes.length; offset += 0x80_00) {
     text += String.fromCodePoint(...bytes.subarray(offset, offset + 0x80_00));
   }
   return text;
-}
+};
 
-function utf8(value: string | undefined): string | undefined {
-  return (
-    value &&
-    new TextDecoder().decode(
-      Uint8Array.from(value, (char) => char.codePointAt(0) ?? 0)
-    )
+const utf8 = (value: string | undefined): string | undefined =>
+  value &&
+  new TextDecoder().decode(
+    Uint8Array.from(value, (char) => char.codePointAt(0) ?? 0)
   );
-}
 
-function pdfString(raw: string): string {
+const pdfString = (raw: string): string => {
   if (raw.startsWith("<")) {
     const hex = raw.slice(1, -1).replaceAll(/\s/g, "");
     const text = (hex.match(/.{4}/g) ?? [])
@@ -40,16 +37,16 @@ function pdfString(raw: string): string {
     return text.replace(/^﻿/, "");
   }
   return raw.slice(1, -1).replaceAll(/\\([()\\])/g, "$1");
-}
+};
 
-function entry(object: string, key: string): string | undefined {
+const entry = (object: string, key: string): string | undefined => {
   const match = object.match(
     new RegExp(`/${key}\\s*(\\([^)]*\\)|<[0-9A-Fa-f\\s]*>)`)
   );
   return match?.[1] && pdfString(match[1]);
-}
+};
 
-function readBookmarks(objects: string[]): Bookmark[] {
+const readBookmarks = (objects: string[]): Bookmark[] => {
   const byNumber = new Map<string, string>();
   for (const object of objects) {
     const number = object.match(/(\d+)\s+0\s+obj/)?.[1];
@@ -80,9 +77,9 @@ function readBookmarks(objects: string[]): Bookmark[] {
     0
   );
   return bookmarks.filter((bookmark) => bookmark.title);
-}
+};
 
-export function inspectPdf(bytes: Uint8Array): PdfInspection {
+export const inspectPdf = (bytes: Uint8Array): PdfInspection => {
   const text = bytesToChars(bytes);
   const objects = text.split("endobj");
   const xmp = text.match(/<x:xmpmeta[\s\S]*?<\/x:xmpmeta>/)?.[0] ?? "";
@@ -90,11 +87,11 @@ export function inspectPdf(bytes: Uint8Array): PdfInspection {
     xmp.match(new RegExp(`<${tag}>([^<]*)<`))?.[1];
   const archival = xmpValue("pdfaid:part");
   const accessible = xmpValue("pdfuaid:part");
-  const standards = [
+  const standards: string[] = [
     archival &&
       `PDF/A-${archival}${(xmpValue("pdfaid:conformance") ?? "").toLowerCase()}`,
     accessible && `PDF/UA-${accessible}`,
-  ].filter((standard): standard is string => Boolean(standard));
+  ].filter(Boolean) as string[];
   const authors = [...xmp.matchAll(/<dc:creator>[\s\S]*?<\/dc:creator>/g)]
     .flatMap((match) => [...match[0].matchAll(/<rdf:li>([^<]*)</g)])
     .map((match) => utf8(match[1]));
@@ -102,8 +99,8 @@ export function inspectPdf(bytes: Uint8Array): PdfInspection {
     attachments: objects
       .filter((object) => object.includes("/Filespec"))
       .map((object) => ({
-        name: entry(object, "F") ?? "",
         description: entry(object, "Desc"),
+        name: entry(object, "F") ?? "",
       }))
       .filter((attachment) => attachment.name),
     authors: authors.length > 0 ? (authors as string[]) : undefined,
@@ -114,4 +111,4 @@ export function inspectPdf(bytes: Uint8Array): PdfInspection {
     tagged: text.includes("/StructTreeRoot"),
     title: utf8(xmp.match(/<dc:title>[\s\S]*?<rdf:li[^>]*>([^<]*)</)?.[1]),
   };
-}
+};

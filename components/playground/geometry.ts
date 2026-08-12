@@ -14,7 +14,7 @@ export interface OutputGeometry {
   label: string;
 }
 
-function marginPadding(margin: PdfOptions["margin"]): string {
+const marginPadding = (margin: PdfOptions["margin"]): string => {
   if (margin === undefined) {
     return `${DEFAULT_PAGE_MARGIN}px`;
   }
@@ -23,9 +23,9 @@ function marginPadding(margin: PdfOptions["margin"]): string {
   }
   const { top = 0, right = 0, bottom = 0, left = 0 } = margin;
   return `${top}px ${right}px ${bottom}px ${left}px`;
-}
+};
 
-function pdfGeometry(pdf: PdfOptions): OutputGeometry {
+const pdfGeometry = (pdf: PdfOptions): OutputGeometry => {
   const size =
     typeof pdf.size === "object" ? pdf.size : PAGE_SIZES[pdf.size ?? "a4"];
   const preset = typeof pdf.size === "object" ? undefined : (pdf.size ?? "a4");
@@ -37,12 +37,12 @@ function pdfGeometry(pdf: PdfOptions): OutputGeometry {
     padding: marginPadding(pdf.margin),
     width,
   };
-}
+};
 
-export function outputGeometry(options: PlaygroundOptions): OutputGeometry {
+export const outputGeometry = (options: PlaygroundOptions): OutputGeometry => {
   if (options.pdf) {
     return pdfGeometry(options.pdf);
   }
   const { width = 1200, height = 630 } = options;
   return { height, label: `${width} × ${height}`, width };
-}
+};

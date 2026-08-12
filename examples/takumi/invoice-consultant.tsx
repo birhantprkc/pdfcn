@@ -1,6 +1,4 @@
 import { InvoiceConsultantDocument } from "@/registry/bases/takumi/blocks/invoice-consultant/invoice-consultant";
 
-const Demo = () => {
-  return <InvoiceConsultantDocument />;
-};
+const Demo = () => <InvoiceConsultantDocument />;
 export default Demo;

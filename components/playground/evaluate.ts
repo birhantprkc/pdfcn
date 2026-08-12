@@ -9,20 +9,20 @@ const exportsSchema = z.object({
   options: optionsSchema,
 });
 
-function transformCode(code: string) {
-  return transform(code, {
+const transformCode = (code: string) =>
+  transform(code, {
     production: true,
     transforms: ["jsx", "typescript", "imports"],
   }).code;
-}
 
-export function evaluateCodeExports(code: string, react: typeof React) {
+export const evaluateCodeExports = (code: string, react: typeof React) => {
   const exports: Record<string, unknown> = {};
+  // eslint-disable-next-line eslint(no-new-func) -- Required for sandboxed code evaluation
   new Function("exports", "React", transformCode(code))(exports, react);
   return exportsSchema.parse(exports);
-}
+};
 
-function mirrorTw<P>(props: P): P {
+const mirrorTw = <P>(props: P): P => {
   if (!props || typeof props !== "object" || !("tw" in props)) {
     return props;
   }
@@ -31,7 +31,7 @@ function mirrorTw<P>(props: P): P {
     ...props,
     className: [className ?? klass, tw].filter(Boolean).join(" "),
   };
-}
+};
 
 export const renderReact: typeof React = {
   ...React,

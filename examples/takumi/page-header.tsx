@@ -38,16 +38,14 @@ const DemoBody = () => (
   </View>
 );
 
-const Demo = () => {
-  return (
-    <Document>
-      <Page size={{ width: 595, height: 240 }}>
-        <PdfcnThemeProvider>
-          <DemoBody />
-        </PdfcnThemeProvider>
-      </Page>
-    </Document>
-  );
-};
+const Demo = () => (
+  <Document>
+    <Page size={{ height: 240, width: 595 }}>
+      <PdfcnThemeProvider>
+        <DemoBody />
+      </PdfcnThemeProvider>
+    </Page>
+  </Document>
+);
 
 export default Demo;

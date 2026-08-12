@@ -14,14 +14,12 @@ const DemoBody = () => (
   </Section>
 );
 
-const Demo = () => {
-  return (
-    <Document>
-      <Page size="A4" margin={30}>
-        <DemoBody />
-      </Page>
-    </Document>
-  );
-};
+const Demo = () => (
+  <Document>
+    <Page size="A4" margin={30}>
+      <DemoBody />
+    </Page>
+  </Document>
+);
 
 export default Demo;

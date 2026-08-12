@@ -1,6 +1,4 @@
 import { MarketingReportDocument } from "@/registry/bases/takumi/blocks/report-marketing/report-marketing";
 
-const Demo = () => {
-  return <MarketingReportDocument />;
-};
+const Demo = () => <MarketingReportDocument />;
 export default Demo;

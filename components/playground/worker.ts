@@ -9,9 +9,8 @@ import { inspectPdf } from "./inspect-pdf";
 import { messageSchema } from "./schema";
 import type { RenderMessageInput } from "./schema";
 
-function postMessage(message: RenderMessageInput, transfer?: Transferable[]) {
-  return self.postMessage(message, { transfer });
-}
+const postMessage = (message: RenderMessageInput, transfer?: Transferable[]) =>
+  self.postMessage(message, { transfer });
 
 const TAKUMI_WASM_URL = new URL(
   "/takumi_pdf_wasm_bg.wasm",
@@ -26,7 +25,7 @@ let imagesReady:
   | undefined;
 let wasmReady: Promise<unknown> | undefined;
 
-async function loadImages() {
+const loadImages = async () => {
   const response = await fetch(PREVIEW_LOGO_PATH);
   if (!response.ok) {
     throw new Error(`Unable to load preview logo (${response.status})`);
@@ -39,19 +38,19 @@ async function loadImages() {
       },
     ],
   };
-}
+};
 
-function getImages() {
+const getImages = () => {
   imagesReady ??= loadImages();
   return imagesReady;
-}
+};
 
-async function initWasm() {
+const initWasm = async () => {
   wasmReady ??= initPdf({ module_or_path: TAKUMI_WASM_URL });
   await wasmReady;
-}
+};
 
-async function renderRequest(id: number, code: string) {
+const renderRequest = async (id: number, code: string) => {
   await initWasm();
 
   const { default: component, options } = evaluateCodeExports(
@@ -77,7 +76,7 @@ async function renderRequest(id: number, code: string) {
   const pdfOptions = options.pdf ?? ({} as Record<string, unknown>);
   const pdfBytes = await render(element, {
     images: await getImages(),
-    margin: pdfOptions.margin ?? { top: 48, right: 48, bottom: 48, left: 48 },
+    margin: pdfOptions.margin ?? { bottom: 48, left: 48, right: 48, top: 48 },
     size: (pdfOptions.size as PageSize | undefined) ?? "a4",
     ...pdfOptions,
   });
@@ -100,8 +99,9 @@ async function renderRequest(id: number, code: string) {
     },
     [pdfBytes.buffer]
   );
-}
+};
 
+// eslint-disable-next-line eslint-plugin-unicorn(prefer-add-event-listener) -- Worker global onmessage
 self.onmessage = async (event: MessageEvent) => {
   const payload = messageSchema.parse(event.data);
 

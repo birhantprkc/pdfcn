@@ -98,24 +98,20 @@ export const ThemePreview = ({
 
         if (base === "takumi") {
           const [
-            { demos },
+            { InvoiceClassicDocument },
             { default: initialize, render },
             { fromJsx },
             images,
           ] = await Promise.all([
-            import("@/examples/__index__"),
+            import("@/registry/bases/takumi/blocks/invoice-classic/invoice-classic"),
             import("takumi-pdf"),
             import("@takumi-rs/helpers/jsx"),
             loadPreviewLogo(),
           ]);
-          const Demo = demos.takumi[name];
-          if (!Demo) {
-            throw new Error(`Unknown Takumi demo: ${name}`);
-          }
 
           await initializeTakumi(initialize);
           const { node, stylesheets } = await fromJsx(
-            createElement(Demo, { theme })
+            createElement(InvoiceClassicDocument, { theme })
           );
           const buffer = await render(node, {
             ...getTakumiPreviewOptions(name),
@@ -136,19 +132,18 @@ export const ThemePreview = ({
             new Blob([pdfBytes as BlobPart], { type: "application/pdf" })
           );
         } else {
-          const [{ demos }, { renderSerializedDoc }, { serialize }] =
-            await Promise.all([
-              import("@/examples/__index__"),
-              import("@formepdf/core/browser"),
-              import("@formepdf/react"),
-            ]);
-          const Demo = demos.forme[name];
-          if (!Demo) {
-            throw new Error(`Unknown Forme demo: ${name}`);
-          }
+          const [
+            { InvoiceClassicDocument },
+            { renderSerializedDoc },
+            { serialize },
+          ] = await Promise.all([
+            import("@/registry/bases/forme/blocks/invoice-classic/invoice-classic"),
+            import("@formepdf/core/browser"),
+            import("@formepdf/react"),
+          ]);
 
           const document = replacePreviewImageSources(
-            serialize(createElement(Demo, { theme }))
+            serialize(createElement(InvoiceClassicDocument, { theme }))
           );
           const buffer = await renderSerializedDoc(
             document as unknown as Record<string, unknown>

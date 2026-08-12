@@ -34,14 +34,12 @@ const DemoBody = () => (
   </View>
 );
 
-const Demo = () => {
-  return (
-    <Document>
-      <Page size={{ width: 595, height: 300 }} margin={30}>
-        <DemoBody />
-      </Page>
-    </Document>
-  );
-};
+const Demo = () => (
+  <Document>
+    <Page size={{ height: 300, width: 595 }} margin={30}>
+      <DemoBody />
+    </Page>
+  </Document>
+);
 
 export default Demo;

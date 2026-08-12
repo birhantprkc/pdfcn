@@ -9,42 +9,40 @@ const DemoBody = () => (
     variant="underline"
     groups={[
       {
-        title: "Personal Information",
         fields: [
-          { label: "Full Name", hint: "First and last name" },
-          { label: "Date of Birth", hint: "DD / MM / YYYY" },
+          { hint: "First and last name", label: "Full Name" },
+          { hint: "DD / MM / YYYY", label: "Date of Birth" },
           { label: "Email Address" },
-          { label: "Phone Number", hint: "+1 (555) 000-0000" },
+          { hint: "+1 (555) 000-0000", label: "Phone Number" },
         ],
+        title: "Personal Information",
       },
       {
-        title: "Address",
-        layout: "two-column",
         fields: [
           { label: "Street Address", width: "100%" },
           { label: "City" },
           { label: "State / Province" },
           { label: "Postal Code" },
         ],
+        layout: "two-column",
+        title: "Address",
       },
       {
+        fields: [{ height: 60, label: "Cover Letter" }],
         title: "Additional Information",
-        fields: [{ label: "Cover Letter", height: 60 }],
       },
     ]}
   />
 );
 
-const Demo = () => {
-  return (
-    <Document>
-      <Page size="A4">
-        <PdfcnThemeProvider>
-          <DemoBody />
-        </PdfcnThemeProvider>
-      </Page>
-    </Document>
-  );
-};
+const Demo = () => (
+  <Document>
+    <Page size="A4">
+      <PdfcnThemeProvider>
+        <DemoBody />
+      </PdfcnThemeProvider>
+    </Page>
+  </Document>
+);
 
 export default Demo;

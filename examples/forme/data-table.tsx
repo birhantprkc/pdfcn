@@ -9,33 +9,31 @@ const DemoBody = () => (
       size="compact"
       variant="striped"
       columns={[
-        { key: "id", header: "ID", align: "center" },
-        { key: "name", header: "Name" },
-        { key: "dept", header: "Department" },
-        { key: "status", header: "Status", align: "center" },
+        { align: "center", header: "ID", key: "id" },
+        { header: "Name", key: "name" },
+        { header: "Department", key: "dept" },
+        { align: "center", header: "Status", key: "status" },
       ]}
       data={[
-        { id: 1, name: "Alice Johnson", dept: "Engineering", status: "Active" },
-        { id: 2, name: "Bob Smith", dept: "Marketing", status: "Active" },
-        { id: 3, name: "Carol Lee", dept: "Design", status: "Inactive" },
-        { id: 4, name: "Dan Wilson", dept: "Engineering", status: "Active" },
-        { id: 5, name: "Eve Brown", dept: "Sales", status: "Active" },
-        { id: 6, name: "Frank Chen", dept: "Support", status: "Active" },
-        { id: 7, name: "Grace Kim", dept: "Product", status: "Active" },
-        { id: 8, name: "Hank Davis", dept: "Marketing", status: "Inactive" },
+        { dept: "Engineering", id: 1, name: "Alice Johnson", status: "Active" },
+        { dept: "Marketing", id: 2, name: "Bob Smith", status: "Active" },
+        { dept: "Design", id: 3, name: "Carol Lee", status: "Inactive" },
+        { dept: "Engineering", id: 4, name: "Dan Wilson", status: "Active" },
+        { dept: "Sales", id: 5, name: "Eve Brown", status: "Active" },
+        { dept: "Support", id: 6, name: "Frank Chen", status: "Active" },
+        { dept: "Product", id: 7, name: "Grace Kim", status: "Active" },
+        { dept: "Marketing", id: 8, name: "Hank Davis", status: "Inactive" },
       ]}
     />
   </Section>
 );
 
-const Demo = () => {
-  return (
-    <Document>
-      <Page size="A4" margin={40}>
-        <DemoBody />
-      </Page>
-    </Document>
-  );
-};
+const Demo = () => (
+  <Document>
+    <Page size="A4" margin={40}>
+      <DemoBody />
+    </Page>
+  </Document>
+);
 
 export default Demo;

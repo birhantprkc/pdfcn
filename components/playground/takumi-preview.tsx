@@ -14,11 +14,11 @@ interface TakumiPreviewProps {
   height?: number;
 }
 
-export function TakumiPreview({
+export const TakumiPreview = ({
   code,
   className,
   height = 640,
-}: TakumiPreviewProps) {
+}: TakumiPreviewProps) => {
   const [pdfView, setPdfView] = useState<PdfView>("preview");
   const { isReady, lastSuccess, renderError } = useRenderWorker(code);
 
@@ -68,4 +68,4 @@ export function TakumiPreview({
       </div>
     </div>
   );
-}
+};

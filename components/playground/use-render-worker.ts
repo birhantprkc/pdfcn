@@ -12,17 +12,15 @@ export type RenderSuccess = Extract<RenderResult, { status: "success" }> & {
 };
 export type RenderError = Extract<RenderResult, { status: "error" }>;
 
-function isBlobUrl(url: string | undefined): url is string {
-  return typeof url === "string" && url.startsWith("blob:");
-}
+const isBlobUrl = (url: string | undefined): url is string =>
+  typeof url === "string" && url.startsWith("blob:");
 
-function mimeType(result: RenderResult & { status: "success" }) {
-  return result.outputKind === "pdf"
+const mimeType = (result: RenderResult & { status: "success" }) =>
+  result.outputKind === "pdf"
     ? "application/pdf"
     : `image/${result.outputFormat}`;
-}
 
-export function useRenderWorker(ranCode: string | undefined) {
+export const useRenderWorker = (ranCode: string | undefined) => {
   const [isReady, setIsReady] = useState(false);
   const [lastSuccess, setLastSuccess] = useState<RenderSuccess>();
   const [renderError, setRenderError] = useState<RenderError>();
@@ -34,6 +32,7 @@ export function useRenderWorker(ranCode: string | undefined) {
       type: "module",
     });
 
+    // eslint-disable-next-line eslint-plugin-unicorn(prefer-add-event-listener) -- Worker message handler
     worker.onmessage = (event: MessageEvent) => {
       const message = messageSchema.parse(event.data);
 
@@ -107,4 +106,4 @@ export function useRenderWorker(ranCode: string | undefined) {
   }, [lastSuccess]);
 
   return { isReady, lastSuccess, renderError };
-}
+};

@@ -20,16 +20,14 @@ const DemoBody = () => (
   </Stack>
 );
 
-const Demo = () => {
-  return (
-    <Document>
-      <Page size="A4">
-        <PdfcnThemeProvider>
-          <DemoBody />
-        </PdfcnThemeProvider>
-      </Page>
-    </Document>
-  );
-};
+const Demo = () => (
+  <Document>
+    <Page size="A4">
+      <PdfcnThemeProvider>
+        <DemoBody />
+      </PdfcnThemeProvider>
+    </Page>
+  </Document>
+);
 
 export default Demo;
