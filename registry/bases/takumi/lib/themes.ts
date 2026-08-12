@@ -1,7 +1,7 @@
 export type {
   PDFComponentProps,
   Style,
-} from "@/registry/themes/component-types";
+} from "@/registry/themes";
 export type {
   PdfcnTheme,
   PrimitiveTokens,
@@ -30,4 +30,4 @@ export {
   blueprintTheme,
   themePresets,
   type ThemePresetName,
-} from "@/registry/themes/themes-barrel";
+} from "@/registry/themes";

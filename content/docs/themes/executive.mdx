@@ -1,0 +1,60 @@
+---
+title: "Executive"
+description: "Deep navy palette, Merriweather serif headings, premium boardroom aesthetic."
+---
+
+<ComponentPreview
+  base="forme"
+  name="invoice-corporate"
+  theme="executive"
+  hideCode
+/>
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add @pdfcn/theme-executive
+```
+
+</TabsContent>
+<TabsContent value="manual">
+
+<Steps>
+
+<Step>Copy and paste the following code into your project.</Step>
+
+<ComponentSource
+  src="registry/themes/executive.ts"
+  title="lib/themes/executive.ts"
+/>
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { PdfcnThemeProvider } from "@/registry/bases/forme/components";
+import { executiveTheme } from "@/registry/themes";
+
+export function Invoice() {
+  return (
+    <PdfcnThemeProvider theme={executiveTheme}>
+      {/* Your PDF content */}
+    </PdfcnThemeProvider>
+  );
+}
+```
