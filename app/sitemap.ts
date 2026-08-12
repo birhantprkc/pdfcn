@@ -23,7 +23,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
   const docPages: MetadataRoute.Sitemap = source.getPages().map((page) => ({
     changeFrequency: "weekly" as const,
     lastModified: new Date(),
-    priority: page.url === "/docs" ? 0.9 : 0.8,
+    priority: page.url === ROUTES.DOCS ? 0.9 : 0.8,
     url: `${SITE.URL}${page.url}`,
   }));
 

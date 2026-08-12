@@ -30,6 +30,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toggle } from "@/components/ui/toggle";
+import { ROUTES } from "@/constants/routes";
 import { cn } from "@/lib/utils";
 
 const PdfPreview = dynamic(
@@ -473,7 +474,7 @@ export const HomePdfShowcase = () => {
               <CardContent className="p-4" aria-live="polite">
                 <h3 className="text-lg font-semibold tracking-tight">
                   <Link
-                    href={`/docs/components/${selectedComponent.docsPath}`}
+                    href={`${ROUTES.DOCS_COMPONENTS}/${pdfBase}/${selectedComponent.docsPath}`}
                     className="group inline-flex items-center gap-1.5 rounded-sm underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                     transitionTypes={["nav-forward"]}
                   >

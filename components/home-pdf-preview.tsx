@@ -5,105 +5,105 @@ export const homePdfComponentCatalog = {
     codeName: "Alert",
     description:
       "A callout block for warnings, notes, and important information.",
-    docsPath: "components/alert",
+    docsPath: "/alert",
     label: "Alert",
   },
   badge: {
     codeName: "Badge",
     description:
       "A styled label for status indicators, tags, and inline annotations.",
-    docsPath: "components/badge",
+    docsPath: "/badge",
     label: "Badge",
   },
   card: {
     codeName: "Card",
     description:
       "A contained layout for grouping related content with border and padding.",
-    docsPath: "components/card",
+    docsPath: "/card",
     label: "Card",
   },
   "data-table": {
     codeName: "DataTable",
     description:
       "A full-featured data table with sorting, pagination, and cell formatting.",
-    docsPath: "components/data-table",
+    docsPath: "/data-table",
     label: "Data table",
   },
   divider: {
     codeName: "Divider",
     description:
       "A visual separator with configurable color, thickness, and margin.",
-    docsPath: "components/divider",
+    docsPath: "/divider",
     label: "Divider",
   },
   graph: {
     codeName: "Graph",
     description:
       "A data visualization component for charts and statistical graphics.",
-    docsPath: "components/graph",
+    docsPath: "/graph",
     label: "Graph",
   },
   "key-value": {
     codeName: "KeyValue",
     description:
       "A flexible key-value layout for metadata, summaries, and label pairs.",
-    docsPath: "components/key-value",
+    docsPath: "/key-value",
     label: "Key-value",
   },
   list: {
     codeName: "List",
     description:
       "An ordered or unordered list with custom markers and nested items.",
-    docsPath: "components/list",
+    docsPath: "/list",
     label: "List",
   },
   "page-footer": {
     codeName: "PageFooter",
     description:
       "A compact document footer with page numbers, legal text, and brand marks.",
-    docsPath: "components/page-footer",
+    docsPath: "/page-footer",
     label: "Page footer",
   },
   "page-header": {
     codeName: "PageHeader",
     description:
       "A branded document header with logo, company details, and document title.",
-    docsPath: "components/page-header",
+    docsPath: "/page-header",
     label: "Page header",
   },
   "pdf-image": {
     codeName: "PdfImage",
     description:
       "An image component optimized for PDF rendering with aspect ratio and sizing.",
-    docsPath: "components/pdf-image",
+    docsPath: "/pdf-image",
     label: "Image",
   },
   section: {
     codeName: "Section",
     description:
       "A grouped content section with optional title, padding, and background.",
-    docsPath: "components/section",
+    docsPath: "/section",
     label: "Section",
   },
   signature: {
     codeName: "Signature",
     description:
       "A signature block for authorized signatories and approval lines.",
-    docsPath: "components/signature",
+    docsPath: "/signature",
     label: "Signature",
   },
   table: {
     codeName: "Table",
     description:
       "A structured data table with headers, rows, and responsive column widths.",
-    docsPath: "components/table",
+    docsPath: "/table",
     label: "Table",
   },
   text: {
     codeName: "Text",
     description:
       "A versatile text component for headings, paragraphs, and inline content.",
-    docsPath: "components/text",
+    docsPath: "/text",
     label: "Text",
   },
 } as const;
@@ -140,7 +140,7 @@ export type PdfRecipeId =
 
 export const homePdfPreviews = [
   {
-    actionHref: "https://pdfcn.run/docs/components",
+    actionHref: "https://pdfcn.dev/docs/components",
     actionLabel: "Explore the collection",
     componentIds: [
       "page-header",
@@ -161,7 +161,7 @@ export const homePdfPreviews = [
     previewText: "A new component collection from pdfcn",
   },
   {
-    actionHref: "https://pdfcn.run/docs/installation",
+    actionHref: "https://pdfcn.dev/docs/installation",
     actionLabel: "Build your first PDF",
     componentIds: ["page-header", "text", "graph", "data-table", "page-footer"],
     defaultComponentId: "graph",
@@ -175,7 +175,7 @@ export const homePdfPreviews = [
     previewText: "Start building your first PDF",
   },
   {
-    actionHref: "https://pdfcn.run/docs/components",
+    actionHref: "https://pdfcn.dev/docs/components",
     actionLabel: "Browse components",
     componentIds: [
       "page-header",
