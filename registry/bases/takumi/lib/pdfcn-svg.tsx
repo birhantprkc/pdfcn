@@ -1,7 +1,10 @@
 import { Children, Fragment, cloneElement, isValidElement } from "react";
 import type { CSSProperties, ReactNode, SVGProps } from "react";
 
-import { normalizeTakumiStyle, pointToCssPixel } from "./pdfcn-primitives";
+import {
+  normalizeTakumiStyle,
+  pointToCssPixel,
+} from "@/registry/bases/takumi/lib/pdfcn-primitives";
 
 type SvgChildProps = Record<string, unknown> & {
   children?: ReactNode;

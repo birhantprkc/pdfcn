@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { Fixed, View } from "./pdfcn-primitives";
-import type { Style } from "./pdfcn-primitives";
+import { Fixed, View } from "@/registry/bases/forme/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 
 export const MaybeFixed = ({
   fixed,

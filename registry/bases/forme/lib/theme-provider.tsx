@@ -1,12 +1,8 @@
-/* eslint-disable react-refresh/only-export-components */
-// Exports both a component (PdfcnThemeProvider) and theme helpers intentionally.
-// All PDF components import from a single file — splitting would break the public API.
-
 import type { Style } from "@formepdf/react";
 import { isValidElement } from "react";
 import type { DependencyList, ReactNode } from "react";
 
-import { theme as defaultTheme } from "./pdfcn-theme";
+import { theme as defaultTheme } from "@/registry/bases/forme/lib/pdfcn-theme";
 
 export type PdfcnTheme = typeof defaultTheme;
 
@@ -29,7 +25,6 @@ const mergeStyleInput = (target: Style, input: PdfStyleInput): void => {
   }
 };
 
-/** Flattens React-PDF-style arrays into the object Forme serializes. */
 export const mergePdfStyles = (...inputs: PdfStyleInput[]): Style => {
   const merged: Style = {};
   for (const input of inputs) {
@@ -38,10 +33,6 @@ export const mergePdfStyles = (...inputs: PdfStyleInput[]): Style => {
   return merged;
 };
 
-/**
- * Forme serializes function components directly instead of mounting a React
- * tree. Resolve the provider's child so <Document> remains the top-level node.
- */
 const renderForSerializer = (
   children: ReactNode,
   theme: PdfcnTheme
@@ -64,13 +55,7 @@ export const PdfcnThemeProvider = ({
 }: PdfcnThemeProviderProps) =>
   renderForSerializer(children, theme ?? defaultTheme);
 
-/** Returns the theme selected by the nearest serialized provider. */
 export const usePdfcnTheme = (): PdfcnTheme => serializedTheme;
 
-/**
- * Calls factory() and returns the result.
- * The deps parameter is accepted for API compatibility with existing callers.
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const useSafeMemo = <T,>(factory: () => T, _deps: DependencyList): T =>
   factory();
