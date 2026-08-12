@@ -12,7 +12,10 @@ import {
   TableRow,
 } from "@/registry/bases/forme/components/table/table";
 import { Text } from "@/registry/bases/forme/components/text/text";
-import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/forme/components/theme-provider";
+import {
+  PdfcnThemeProvider,
+  usePdfcnTheme,
+} from "@/registry/bases/forme/components/theme-provider";
 import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type { InvoiceCreativeData } from "./invoice-creative.types";

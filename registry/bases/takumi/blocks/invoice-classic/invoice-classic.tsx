@@ -3,9 +3,18 @@ import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-
 import { PageHeader } from "@/registry/bases/takumi/components/page-header/page-header";
 import { PdfImage } from "@/registry/bases/takumi/components/pdf-image/pdf-image";
 import { Section } from "@/registry/bases/takumi/components/section/section";
-import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/registry/bases/takumi/components/table/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHeader,
+  TableRow,
+} from "@/registry/bases/takumi/components/table/table";
 import { Text } from "@/registry/bases/takumi/components/text/text";
-import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/takumi/components/theme-provider";
+import {
+  PdfcnThemeProvider,
+  usePdfcnTheme,
+} from "@/registry/bases/takumi/components/theme-provider";
 import {
   View,
   StyleSheet,

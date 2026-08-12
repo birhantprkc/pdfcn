@@ -7,7 +7,10 @@ import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-
 import { PageHeader } from "@/registry/bases/takumi/components/page-header/page-header";
 import { Section } from "@/registry/bases/takumi/components/section/section";
 import { Text } from "@/registry/bases/takumi/components/text/text";
-import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/takumi/components/theme-provider";
+import {
+  PdfcnThemeProvider,
+  usePdfcnTheme,
+} from "@/registry/bases/takumi/components/theme-provider";
 import {
   View,
   StyleSheet,

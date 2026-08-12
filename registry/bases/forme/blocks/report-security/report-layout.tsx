@@ -9,7 +9,10 @@ import { PageFooter } from "@/registry/bases/forme/components/page-footer/page-f
 import { PageHeader } from "@/registry/bases/forme/components/page-header/page-header";
 import { Section } from "@/registry/bases/forme/components/section/section";
 import { Text } from "@/registry/bases/forme/components/text/text";
-import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/forme/components/theme-provider";
+import {
+  PdfcnThemeProvider,
+  usePdfcnTheme,
+} from "@/registry/bases/forme/components/theme-provider";
 import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type { BaseReportData } from "./report.types";
