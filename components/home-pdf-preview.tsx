@@ -203,9 +203,6 @@ export const getHomePdfSource = (recipe: PdfRecipe, base: HomePdfBase) => {
       return `import { ${component.codeName} } from "@/registry/bases/${base}/components/${id}";`;
     })
     .join("\n");
-  const components = recipe.componentIds
-    .map((id) => `      <${homePdfComponentCatalog[id].codeName} />`)
-    .join("\n");
   const functionName = recipe.id
     .split("-")
     .map((part) => `${part[0]?.toUpperCase()}${part.slice(1)}`)
@@ -222,19 +219,37 @@ export const getHomePdfSource = (recipe: PdfRecipe, base: HomePdfBase) => {
           open: "Document",
         };
 
-  const openTag = base === "takumi" ? "" : `<${shell.open}>`;
-  const closeTag = base === "takumi" ? "" : `</${shell.close}>`;
+  if (base === "takumi") {
+    const components = recipe.componentIds
+      .map((id) => `      <${homePdfComponentCatalog[id].codeName} />`)
+      .join("\n");
+
+    return `${shell.import}
+${imports}
+
+export function ${functionName}Document() {
+  return (
+    <Page>
+${components}
+    </Page>
+  );
+}`;
+  }
+
+  const components = recipe.componentIds
+    .map((id) => `        <${homePdfComponentCatalog[id].codeName} />`)
+    .join("\n");
 
   return `${shell.import}
 ${imports}
 
 export function ${functionName}Document() {
   return (
-    ${openTag}
+    <${shell.open}>
       <Page>
 ${components}
       </Page>
-    ${closeTag}
+    </${shell.close}>
   );
 }`;
 };
