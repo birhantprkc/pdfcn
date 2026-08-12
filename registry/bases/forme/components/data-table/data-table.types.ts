@@ -1,7 +1,7 @@
 import type React from "react";
 
 import type { TableVariant } from "@/registry/bases/forme/components/table/table.types";
-import type { PDFComponentProps } from "@/registry/themes";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
 
 /** DataTable row density size. */
 export type DataTableSize = "default" | "compact";

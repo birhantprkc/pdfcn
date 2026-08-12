@@ -1,5 +1,5 @@
-import { StyleSheet } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { PdfcnTheme } from "@/registry/themes";
+import { StyleSheet } from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 /**
  * Creates all table styles derived from the active theme.

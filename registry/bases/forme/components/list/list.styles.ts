@@ -1,6 +1,6 @@
 import { StyleSheet } from "@formepdf/react";
 
-import type { PdfcnTheme } from "@/registry/themes";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 /**
  * Creates all list styles derived from the active theme.

@@ -1,17 +1,18 @@
 import type { ReactNode } from "react";
 
 import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/components/theme-provider";
+import {
   View,
   Text as PDFText,
   StyleSheet,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { Circle, Line, Path, Svg } from "@/registry/bases/takumi/lib/pdfcn-svg";
-import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
+import { Circle, Line, Path, Svg } from "@/registry/bases/takumi/lib/pdf-svg";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type AlertVariant = "info" | "success" | "warning" | "error";
 

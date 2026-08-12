@@ -1,10 +1,8 @@
-import {
-  DataTable,
-  Heading,
-  Section,
-} from "@/registry/bases/takumi/components";
-import { Document, Page } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+import { DataTable } from "@/registry/bases/takumi/components/data-table";
+import { Heading } from "@/registry/bases/takumi/components/heading";
+import { Section } from "@/registry/bases/takumi/components/section";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
+import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <Section spacing="none">

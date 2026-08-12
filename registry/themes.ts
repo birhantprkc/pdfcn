@@ -8,7 +8,7 @@ import { modernTheme } from "./themes/modern";
 import { professionalTheme } from "./themes/professional";
 import { vividTheme } from "./themes/vivid";
 
-export type { PDFComponentProps, Style } from "./themes/component-types";
+export type { PDFComponentProps, Style } from "@/registry/types/pdf-components";
 export type {
   PdfcnTheme,
   PrimitiveTokens,
@@ -22,7 +22,7 @@ export type {
   LineHeights,
   BorderRadiusScale,
   LetterSpacingScale,
-} from "./themes/theme-types";
+} from "@/registry/types/pdf-themes";
 
 export { defaultPrimitives } from "./themes/primitives";
 export { professionalTheme } from "./themes/professional";

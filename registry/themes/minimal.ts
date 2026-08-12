@@ -1,5 +1,6 @@
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
+
 import { defaultPrimitives } from "./primitives";
-import type { PdfcnTheme } from "./theme-types";
 
 /**
  * Minimal theme preset.

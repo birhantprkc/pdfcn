@@ -7,7 +7,7 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from "@/registry/bases/forme/components";
+} from "@/registry/bases/forme/components/table";
 
 const DemoBody = () => (
   <Table variant="line" zebraStripe={false}>

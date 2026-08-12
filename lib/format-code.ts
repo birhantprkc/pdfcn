@@ -48,22 +48,26 @@ export const formatCode = async (code: string) => {
 
   for (const base of BASES) {
     formattedCode = formattedCode.replaceAll(
-      `@/registry/bases/${base.name}/lib/`,
-      "@/lib/"
+      `@/registry/bases/${base.name}/lib`,
+      "@/lib"
     );
     formattedCode = formattedCode.replaceAll(
-      `@/registry/bases/${base.name}/components/`,
-      "@/components/pdf/"
+      `@/registry/bases/${base.name}/components`,
+      "@/components/pdf"
     );
     formattedCode = formattedCode.replaceAll(
-      `@/registry/bases/${base.name}/blocks/`,
-      "@/components/pdf/"
+      `@/registry/bases/${base.name}/blocks`,
+      "@/components/pdf"
     );
   }
 
   formattedCode = formattedCode.replaceAll(
-    "@/registry/themes",
-    "@/components/pdf/themes"
+    "@/registry/themes/professional",
+    "@/lib/pdf-themes/professional"
+  );
+  formattedCode = formattedCode.replaceAll(
+    "@/registry/themes/primitives",
+    "@/lib/pdf-themes/primitives"
   );
 
   formattedCode = formattedCode.replaceAll("export default", "export");

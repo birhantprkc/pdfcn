@@ -1,11 +1,9 @@
 import { Document, Page } from "@formepdf/react";
 
-import {
-  Heading,
-  PdfAlert,
-  Section,
-  Text,
-} from "@/registry/bases/forme/components";
+import { PdfAlert } from "@/registry/bases/forme/components/alert";
+import { Heading } from "@/registry/bases/forme/components/heading";
+import { Section } from "@/registry/bases/forme/components/section";
+import { Text } from "@/registry/bases/forme/components/text";
 
 const DemoBody = () => (
   <Section spacing="none">

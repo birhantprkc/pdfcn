@@ -1,4 +1,4 @@
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 /**
  * Options for calculating graph width based on theme page margins and container context.

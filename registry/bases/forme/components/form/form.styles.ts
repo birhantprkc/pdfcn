@@ -1,6 +1,6 @@
 import { StyleSheet } from "@formepdf/react";
 
-import type { PdfcnTheme } from "@/registry/themes";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type { PdfFormVariant } from "./form.types";
 

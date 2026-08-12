@@ -1,18 +1,19 @@
 import QRCode from "qrcode";
 
 import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/forme/components/theme-provider";
+import {
   Text as PDFText,
   StyleSheet,
   View,
-} from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import { Rect, Svg } from "@/registry/bases/forme/lib/pdfcn-svg";
+} from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
+import { Rect, Svg } from "@/registry/bases/forme/lib/pdf-svg";
 import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
-import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type QRCodeErrorLevel = "L" | "M" | "Q" | "H";
 

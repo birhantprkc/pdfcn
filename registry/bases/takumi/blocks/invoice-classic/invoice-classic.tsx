@@ -18,8 +18,8 @@ import {
   StyleSheet,
   Document,
   Page,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type { InvoiceClassicData } from "./invoice-classic.types";
 

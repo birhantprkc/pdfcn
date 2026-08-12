@@ -1,15 +1,15 @@
 import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/forme/components/theme-provider";
+import {
   Image,
   Text as PDFText,
   StyleSheet,
   View,
-} from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
-import type { PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 /** HTTP method used when fetching the image from a URL. */
 export type PdfImageHTTPMethod =

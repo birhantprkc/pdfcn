@@ -1,6 +1,6 @@
 import { Document, Page } from "@formepdf/react";
 
-import { PdfSignatureBlock } from "@/registry/bases/forme/components";
+import { PdfSignatureBlock } from "@/registry/bases/forme/components/signature";
 
 const DemoBody = () => (
   <PdfSignatureBlock

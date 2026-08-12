@@ -1,6 +1,7 @@
 import { Document, Page } from "@formepdf/react";
 
-import { Link, Section } from "@/registry/bases/forme/components";
+import { Link } from "@/registry/bases/forme/components/link";
+import { Section } from "@/registry/bases/forme/components/section";
 
 const DemoBody = () => (
   <Section spacing="none">

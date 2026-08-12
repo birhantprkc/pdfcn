@@ -1,6 +1,6 @@
 import { Document, Page, View } from "@formepdf/react";
 
-import { Badge } from "@/registry/bases/forme/components";
+import { Badge } from "@/registry/bases/forme/components/badge";
 
 const DemoBody = () => (
   <View

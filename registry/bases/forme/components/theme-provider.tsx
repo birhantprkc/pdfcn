@@ -2,11 +2,11 @@ import type { Style } from "@formepdf/react";
 import { isValidElement } from "react";
 import type { DependencyList, ReactNode } from "react";
 
-import { theme as defaultTheme } from "@/registry/bases/forme/lib/pdfcn-theme";
+import { professionalTheme } from "@/registry/themes/professional";
 
-export type PdfcnTheme = typeof defaultTheme;
+export type PdfcnTheme = typeof professionalTheme;
 
-let serializedTheme = defaultTheme;
+let serializedTheme = professionalTheme;
 
 export interface PdfcnThemeProviderProps {
   theme?: PdfcnTheme;
@@ -53,7 +53,7 @@ export const PdfcnThemeProvider = ({
   theme,
   children,
 }: PdfcnThemeProviderProps) =>
-  renderForSerializer(children, theme ?? defaultTheme);
+  renderForSerializer(children, theme ?? professionalTheme);
 
 export const usePdfcnTheme = (): PdfcnTheme => serializedTheme;
 

@@ -234,7 +234,7 @@ export interface PageTokens {
  * @example
  * ```tsx
  * // In a component:
- * import { theme } from '../lib/pdfcn-theme';
+ * import { theme } from '../lib/pdf-theme';
  *
  * function createStyles(t: PdfcnTheme) {
  *   return StyleSheet.create({

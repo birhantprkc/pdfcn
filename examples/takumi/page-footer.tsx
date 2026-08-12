@@ -1,10 +1,11 @@
-import { PageFooter, Text } from "@/registry/bases/takumi/components";
+import { PageFooter } from "@/registry/bases/takumi/components/page-footer";
+import { Text } from "@/registry/bases/takumi/components/text";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
   Document,
   Page,
   View,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <View style={{ display: "flex", flexDirection: "column", minHeight: 220 }}>

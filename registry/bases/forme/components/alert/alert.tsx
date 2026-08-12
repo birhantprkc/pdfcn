@@ -1,18 +1,19 @@
 import type { ReactNode } from "react";
 
 import {
-  Text as PDFText,
-  StyleSheet,
-  View,
-} from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import { Circle, Line, Path, Svg } from "@/registry/bases/forme/lib/pdfcn-svg";
-import {
   mergePdfStyles,
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/forme/components/theme-provider";
+import {
+  Text as PDFText,
+  StyleSheet,
+  View,
+} from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
+import { Circle, Line, Path, Svg } from "@/registry/bases/forme/lib/pdf-svg";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type AlertVariant = "info" | "success" | "warning" | "error";
 

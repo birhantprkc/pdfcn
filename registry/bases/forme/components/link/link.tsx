@@ -1,15 +1,16 @@
 import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/forme/components/theme-provider";
+import {
   Link as PDFLink,
   StyleSheet,
   Text as PDFText,
-} from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
+} from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
 import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
-import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type LinkVariant = "default" | "muted" | "primary";
 export type LinkUnderline = "always" | "none";

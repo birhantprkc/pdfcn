@@ -1,6 +1,6 @@
 import { Document, Page } from "@formepdf/react";
 
-import { PdfGraph } from "@/registry/bases/forme/components";
+import { PdfGraph } from "@/registry/bases/forme/components/graph";
 
 const DemoBody = () => (
   <PdfGraph

@@ -1,6 +1,6 @@
 import { Document, Page } from "@formepdf/react";
 
-import { KeyValue } from "@/registry/bases/forme/components";
+import { KeyValue } from "@/registry/bases/forme/components/key-value";
 
 const DemoBody = () => (
   <KeyValue

@@ -1,14 +1,12 @@
-import {
-  Heading,
-  PdfWatermark,
-  Text,
-} from "@/registry/bases/takumi/components";
+import { Heading } from "@/registry/bases/takumi/components/heading";
+import { Text } from "@/registry/bases/takumi/components/text";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
+import { PdfWatermark } from "@/registry/bases/takumi/components/watermark";
 import {
   Document,
   Page,
   View,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <View style={{ minHeight: 680, position: "relative" }}>

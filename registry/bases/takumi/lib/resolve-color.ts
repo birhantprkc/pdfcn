@@ -1,4 +1,4 @@
-import type { ColorTokens } from "@/registry/themes";
+import type { ColorTokens } from "@/registry/types/pdf-themes";
 
 /** Theme color token keys that can be used for the color prop */
 export const THEME_COLOR_KEYS = [

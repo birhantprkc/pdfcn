@@ -1,6 +1,8 @@
 import { Document, Page, View } from "@formepdf/react";
 
-import { Heading, PageBreak, Text } from "@/registry/bases/forme/components";
+import { Heading } from "@/registry/bases/forme/components/heading";
+import { PageBreak } from "@/registry/bases/forme/components/page-break";
+import { Text } from "@/registry/bases/forme/components/text";
 
 const DemoBody = () => (
   <View>

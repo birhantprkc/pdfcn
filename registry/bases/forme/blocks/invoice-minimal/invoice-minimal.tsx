@@ -14,7 +14,7 @@ import {
   Text,
   usePdfcnTheme,
 } from "@/registry/bases/forme/components";
-import type { PdfcnTheme } from "@/registry/themes";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type { InvoiceMinimalData } from "./invoice-minimal.types";
 

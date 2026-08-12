@@ -1,4 +1,4 @@
-import type { PdfcnTheme } from "@/registry/themes";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type {
   ChartLayout,

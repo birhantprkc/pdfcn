@@ -1,12 +1,10 @@
-import {
-  Heading,
-  PdfQRCode,
-  Section,
-  Stack,
-  Text,
-} from "@/registry/bases/takumi/components";
-import { Document, Page } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+import { Heading } from "@/registry/bases/takumi/components/heading";
+import { PdfQRCode } from "@/registry/bases/takumi/components/qrcode";
+import { Section } from "@/registry/bases/takumi/components/section";
+import { Stack } from "@/registry/bases/takumi/components/stack";
+import { Text } from "@/registry/bases/takumi/components/text";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
+import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <Section spacing="none">

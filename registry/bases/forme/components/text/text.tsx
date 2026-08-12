@@ -1,15 +1,16 @@
 import {
-  Text as PDFText,
-  StyleSheet,
-} from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
-import {
   mergePdfStyles,
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/forme/components/theme-provider";
+import {
+  Text as PDFText,
+  StyleSheet,
+} from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
+import { resolveColor } from "@/registry/bases/forme/lib/resolve-color";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type TextVariant = "xs" | "sm" | "base" | "lg" | "xl" | "2xl" | "3xl";
 export type TextWeight = "normal" | "medium" | "semibold" | "bold";

@@ -19,7 +19,7 @@ import { ThemePreviewGrid } from "@/components/theme-preview-grid";
 <TabsContent value="cli">
 
 ```bash
-npx shadcn@latest add @pdfcn/theme-provider
+npx shadcn@latest add @pdfcn/forme/theme-provider
 ```
 
 </TabsContent>
@@ -30,7 +30,7 @@ npx shadcn@latest add @pdfcn/theme-provider
 <Step>Copy and paste the following code into your project.</Step>
 
 <ComponentSource
-  src="registry/bases/forme/lib/theme-provider.tsx"
+  src="registry/bases/forme/components/theme-provider.tsx"
   title="components/theme-provider.tsx"
 />
 
@@ -45,8 +45,8 @@ npx shadcn@latest add @pdfcn/theme-provider
 ## Usage
 
 ```tsx
-import { PdfcnThemeProvider } from "@/registry/bases/forme/components";
-import { professionalTheme } from "@/registry/themes";
+import { PdfcnThemeProvider } from "@/components/pdf/theme-provider";
+import { professionalTheme } from "@/lib/pdf-themes/professional";
 
 export function Invoice() {
   return (

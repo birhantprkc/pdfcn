@@ -1,6 +1,7 @@
 import { Document, Page, View } from "@formepdf/react";
 
-import { PageHeader, Text } from "@/registry/bases/forme/components";
+import { PageHeader } from "@/registry/bases/forme/components/page-header";
+import { Text } from "@/registry/bases/forme/components/text";
 
 const DemoBody = () => (
   <View>

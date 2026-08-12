@@ -1,4 +1,4 @@
-export type { PDFComponentProps } from "@/registry/themes";
+export type { PDFComponentProps } from "@/registry/types/pdf-components";
 export {
   Heading,
   type HeadingProps,
@@ -147,5 +147,5 @@ export {
   PdfcnThemeProvider,
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-export type { PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/takumi/components/theme-provider";
+export type { PdfcnTheme } from "@/registry/types/pdf-themes";

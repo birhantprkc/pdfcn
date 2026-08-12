@@ -1,17 +1,18 @@
 import type { ReactNode } from "react";
 
 import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/components/theme-provider";
+import {
   Text as PDFText,
   StyleSheet,
   View,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
 import { resolveColor } from "@/registry/bases/takumi/lib/resolve-color";
-import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type PageHeaderVariant =
   | "simple"

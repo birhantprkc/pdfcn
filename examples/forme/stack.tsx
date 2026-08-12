@@ -1,11 +1,9 @@
 import { Document, Page } from "@formepdf/react";
 
-import {
-  Divider,
-  Heading,
-  Stack,
-  Text,
-} from "@/registry/bases/forme/components";
+import { Divider } from "@/registry/bases/forme/components/divider";
+import { Heading } from "@/registry/bases/forme/components/heading";
+import { Stack } from "@/registry/bases/forme/components/stack";
+import { Text } from "@/registry/bases/forme/components/text";
 
 const DemoBody = () => (
   <Stack gap="md">

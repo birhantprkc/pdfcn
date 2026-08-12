@@ -7,34 +7,30 @@
       "description": "Theme context and helpers for the takumi base",
       "files": [
         {
-          "path": "registry/bases/takumi/lib/pdfcn-theme.ts",
-          "type": "registry:lib",
-          "target": "lib/pdfcn-theme.ts"
-        },
-        {
           "path": "registry/bases/takumi/lib/resolve-color.ts",
           "type": "registry:lib",
           "target": "lib/resolve-color.ts"
         },
         {
-          "path": "registry/bases/takumi/lib/theme-provider.tsx",
+          "path": "registry/bases/takumi/components/theme-provider.tsx",
           "type": "registry:lib",
           "target": "components/pdf/theme-provider.tsx"
         },
         {
-          "path": "registry/bases/takumi/lib/pdfcn-primitives.tsx",
+          "path": "registry/bases/takumi/lib/pdf-primitives.tsx",
           "type": "registry:lib",
-          "target": "lib/pdfcn-primitives.tsx"
+          "target": "lib/pdf-primitives.tsx"
         },
         {
-          "path": "registry/bases/takumi/lib/pdfcn-svg.tsx",
+          "path": "registry/bases/takumi/lib/pdf-svg.tsx",
           "type": "registry:lib",
-          "target": "lib/pdfcn-svg.tsx"
+          "target": "lib/pdf-svg.tsx"
         }
       ],
       "name": "takumi/utils",
       "title": "Takumi Utils",
-      "type": "registry:lib"
+      "type": "registry:lib",
+      "registryDependencies": ["takumi/theme-provider"]
     },
     {
       "dependencies": ["takumi-pdf", "@takumi-rs/helpers"],
@@ -796,17 +792,22 @@
       "files": [
         {
           "path": "registry/themes/professional.ts",
-          "target": "components/pdf/theme-professional.ts",
+          "target": "lib/pdf-themes/professional.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -819,17 +820,22 @@
       "files": [
         {
           "path": "registry/themes/modern.ts",
-          "target": "components/pdf/theme-modern.ts",
+          "target": "lib/pdf-themes/modern.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -842,17 +848,22 @@
       "files": [
         {
           "path": "registry/themes/minimal.ts",
-          "target": "components/pdf/theme-minimal.ts",
+          "target": "lib/pdf-themes/minimal.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -865,17 +876,22 @@
       "files": [
         {
           "path": "registry/themes/executive.ts",
-          "target": "components/pdf/theme-executive.ts",
+          "target": "lib/pdf-themes/executive.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -888,17 +904,22 @@
       "files": [
         {
           "path": "registry/themes/corporate.ts",
-          "target": "components/pdf/theme-corporate.ts",
+          "target": "lib/pdf-themes/corporate.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -911,17 +932,22 @@
       "files": [
         {
           "path": "registry/themes/elegant.ts",
-          "target": "components/pdf/theme-elegant.ts",
+          "target": "lib/pdf-themes/elegant.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -934,17 +960,22 @@
       "files": [
         {
           "path": "registry/themes/vivid.ts",
-          "target": "components/pdf/theme-vivid.ts",
+          "target": "lib/pdf-themes/vivid.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -957,17 +988,22 @@
       "files": [
         {
           "path": "registry/themes/forest.ts",
-          "target": "components/pdf/theme-forest.ts",
+          "target": "lib/pdf-themes/forest.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -980,17 +1016,22 @@
       "files": [
         {
           "path": "registry/themes/blueprint.ts",
-          "target": "components/pdf/theme-blueprint.ts",
+          "target": "lib/pdf-themes/blueprint.ts",
           "type": "registry:theme"
         },
         {
           "path": "registry/themes/primitives.ts",
-          "target": "components/pdf/primitives.ts",
+          "target": "lib/pdf-themes/primitives.ts",
           "type": "registry:theme"
         },
         {
-          "path": "registry/themes/theme-types.ts",
-          "target": "components/pdf/theme-types.ts",
+          "path": "registry/types/pdf-themes.ts",
+          "target": "types/pdf-themes.ts",
+          "type": "registry:theme"
+        },
+        {
+          "path": "registry/types/pdf-components.ts",
+          "target": "types/pdf-components.ts",
           "type": "registry:theme"
         }
       ],
@@ -1003,11 +1044,6 @@
       "description": "Theme context and helpers for the forme base",
       "files": [
         {
-          "path": "registry/bases/forme/lib/pdfcn-theme.ts",
-          "type": "registry:lib",
-          "target": "lib/pdfcn-theme.ts"
-        },
-        {
           "path": "registry/bases/forme/lib/resolve-color.ts",
           "type": "registry:lib",
           "target": "lib/resolve-color.ts"
@@ -1018,24 +1054,25 @@
           "target": "lib/maybe-fixed.tsx"
         },
         {
-          "path": "registry/bases/forme/lib/theme-provider.tsx",
+          "path": "registry/bases/forme/components/theme-provider.tsx",
           "type": "registry:lib",
           "target": "components/pdf/theme-provider.tsx"
         },
         {
-          "path": "registry/bases/forme/lib/pdfcn-primitives.tsx",
+          "path": "registry/bases/forme/lib/pdf-primitives.tsx",
           "type": "registry:lib",
-          "target": "lib/pdfcn-primitives.tsx"
+          "target": "lib/pdf-primitives.tsx"
         },
         {
-          "path": "registry/bases/forme/lib/pdfcn-svg.tsx",
+          "path": "registry/bases/forme/lib/pdf-svg.tsx",
           "type": "registry:lib",
-          "target": "lib/pdfcn-svg.tsx"
+          "target": "lib/pdf-svg.tsx"
         }
       ],
       "name": "forme/utils",
       "title": "Forme Utils",
-      "type": "registry:lib"
+      "type": "registry:lib",
+      "registryDependencies": ["forme/theme-provider"]
     },
     {
       "dependencies": ["@formepdf/react", "@formepdf/core"],

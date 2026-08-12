@@ -1,6 +1,6 @@
 import { StyleSheet } from "@formepdf/react";
 
-import type { PdfcnTheme } from "@/registry/themes";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export const createGraphStyles = (t: PdfcnTheme) =>
   StyleSheet.create({

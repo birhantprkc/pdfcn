@@ -1,10 +1,10 @@
-import { Badge } from "@/registry/bases/takumi/components";
+import { Badge } from "@/registry/bases/takumi/components/badge";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
   Document,
   Page,
   View,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <View

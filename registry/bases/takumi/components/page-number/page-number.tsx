@@ -1,14 +1,15 @@
 import {
+  usePdfcnTheme,
+  useSafeMemo,
+} from "@/registry/bases/takumi/components/theme-provider";
+import {
   View,
   Text as PDFText,
   StyleSheet,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import {
-  usePdfcnTheme,
-  useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type PageNumberAlign = "left" | "center" | "right";
 export type PageNumberSize = "xs" | "sm" | "md";

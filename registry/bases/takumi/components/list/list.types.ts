@@ -1,4 +1,4 @@
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 /** List visual style variant. */
 export type ListVariant =

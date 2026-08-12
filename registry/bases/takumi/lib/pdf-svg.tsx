@@ -4,7 +4,7 @@ import type { CSSProperties, ReactNode, SVGProps } from "react";
 import {
   normalizeTakumiStyle,
   pointToCssPixel,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
+} from "@/registry/bases/takumi/lib/pdf-primitives";
 
 type SvgChildProps = Record<string, unknown> & {
   children?: ReactNode;

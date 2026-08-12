@@ -1,4 +1,4 @@
-import type { PDFComponentProps } from "@/registry/themes";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
 
 /** Table visual style variant. */
 export type TableVariant =

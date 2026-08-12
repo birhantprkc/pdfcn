@@ -1,6 +1,6 @@
 import { PageBreak as FormePageBreak } from "@formepdf/react";
 
-import type { PDFComponentProps } from "@/registry/themes";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
 
 export interface PageBreakProps extends Omit<PDFComponentProps, "children"> {
   children?: never;

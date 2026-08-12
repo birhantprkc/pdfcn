@@ -1,14 +1,14 @@
 import type React from "react";
 
 import {
-  View,
-  Text as PDFText,
-} from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/takumi/lib/theme-provider";
+} from "@/registry/bases/takumi/components/theme-provider";
+import {
+  View,
+  Text as PDFText,
+} from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 import { createListStyles } from "./list.styles";
 import type { ListItem, ListVariant, PdfListProps } from "./list.types";

@@ -1,4 +1,4 @@
-import type { Style } from "@/registry/bases/takumi/lib/pdfcn-primitives";
+import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 /** Visual style variant for the fillable form. */
 export type PdfFormVariant = "underline" | "box" | "outlined" | "ghost";

@@ -1,12 +1,12 @@
 import {
-  Text as PDFText,
-  View,
-} from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
+} from "@/registry/bases/forme/components/theme-provider";
+import {
+  Text as PDFText,
+  View,
+} from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
 
 import { createFormStyles } from "./form.styles";
 import type {

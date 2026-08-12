@@ -1,6 +1,6 @@
-import { PdfList } from "@/registry/bases/takumi/components";
-import { Document, Page } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+import { PdfList } from "@/registry/bases/takumi/components/list";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
+import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <PdfList

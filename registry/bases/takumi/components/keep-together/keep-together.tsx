@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-import { View } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import type { Style } from "@/registry/themes";
+import { View } from "@/registry/bases/takumi/lib/pdf-primitives";
+import type { Style } from "@/registry/types/pdf-components";
 
 export interface KeepTogetherProps {
   children?: ReactNode;

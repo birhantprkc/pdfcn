@@ -1,10 +1,11 @@
-import { StyleSheet, View } from "@/registry/bases/forme/lib/pdfcn-primitives";
-import type { Style } from "@/registry/bases/forme/lib/pdfcn-primitives";
 import {
   usePdfcnTheme,
   useSafeMemo,
-} from "@/registry/bases/forme/lib/theme-provider";
-import type { PDFComponentProps, PdfcnTheme } from "@/registry/themes";
+} from "@/registry/bases/forme/components/theme-provider";
+import { StyleSheet, View } from "@/registry/bases/forme/lib/pdf-primitives";
+import type { Style } from "@/registry/bases/forme/lib/pdf-primitives";
+import type { PDFComponentProps } from "@/registry/types/pdf-components";
+import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 export type StackGap = "none" | "sm" | "md" | "lg" | "xl";
 export type StackDirection = "vertical" | "horizontal";

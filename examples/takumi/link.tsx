@@ -1,6 +1,7 @@
-import { Link, Section } from "@/registry/bases/takumi/components";
-import { Document, Page } from "@/registry/bases/takumi/lib/pdfcn-primitives";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/lib/theme-provider";
+import { Link } from "@/registry/bases/takumi/components/link";
+import { Section } from "@/registry/bases/takumi/components/section";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
+import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DemoBody = () => (
   <Section spacing="none">

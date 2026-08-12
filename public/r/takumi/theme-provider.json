@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "takumi/theme-provider",
+  "title": "Theme Provider",
+  "description": "Theme provider for the takumi base",
+  "dependencies": [
+    "takumi-pdf",
+    "@takumi-rs/helpers"
+  ],
+  "files": [
+    {
+      "path": "registry/bases/takumi/components/theme-provider.tsx",
+      "content": "import { isValidElement } from \"react\";\nimport type { DependencyList, ReactNode } from \"react\";\n\nimport { professionalTheme } from \"@/registry/themes/professional\";\n\nexport type PdfcnTheme = typeof professionalTheme;\n\nlet serializedTheme = professionalTheme;\n\nexport interface PdfcnThemeProviderProps {\n  theme?: PdfcnTheme;\n  children: ReactNode;\n}\n\nconst renderForSerializer = (\n  children: ReactNode,\n  theme: PdfcnTheme\n): ReactNode => {\n  serializedTheme = theme;\n\n  if (!isValidElement(children) || typeof children.type !== \"function\") {\n    return children;\n  }\n\n  return (children.type as (props: unknown) => ReactNode)(children.props);\n};\n\nexport const PdfcnThemeProvider = ({\n  theme,\n  children,\n}: PdfcnThemeProviderProps) =>\n  renderForSerializer(children, theme ?? professionalTheme);\n\nexport const usePdfcnTheme = (): PdfcnTheme => serializedTheme;\n\nexport const useSafeMemo = <T,>(factory: () => T, _deps: DependencyList): T =>\n  factory();\n",
+      "type": "registry:lib",
+      "target": "components/pdf/theme-provider.tsx"
+    }
+  ],
+  "type": "registry:lib"
+}
