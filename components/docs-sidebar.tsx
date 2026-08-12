@@ -15,20 +15,8 @@ import {
 } from "@/components/ui/sidebar";
 import { TOP_LEVEL_SECTIONS } from "@/constants/nav";
 import { ROUTES } from "@/constants/routes";
-import {
-  PAGES_NEW,
-  getDocsSidebarPanel,
-  isBlocksFolder,
-  isComponentsFolder,
-  isThemesFolder,
-} from "@/lib/docs";
-import {
-  findBaseFolder,
-  getAllPagesFromFolder,
-  getCurrentBase,
-  getTreeGroups,
-} from "@/lib/page-tree";
-import type { PageTreeFolder } from "@/lib/page-tree";
+import { PAGES_NEW } from "@/lib/docs";
+import { getCurrentBase, getTreeGroups } from "@/lib/page-tree";
 import type { source } from "@/lib/source";
 
 const MENU_BUTTON_CLS =
@@ -91,100 +79,13 @@ const SidebarPageGroup = ({
   );
 };
 
-interface SidebarPanelProps {
-  currentBase: string;
-  pathname: string;
-  tree: typeof source.pageTree;
-}
-
-const findTopLevelFolder = (
-  tree: typeof source.pageTree,
-  predicate: (folder: PageTreeFolder) => boolean
-) =>
-  tree.children.find(
-    (item): item is PageTreeFolder => item.type === "folder" && predicate(item)
-  );
-
-const ComponentsSidebarPanel = ({
-  currentBase,
-  pathname,
-  tree,
-}: SidebarPanelProps) => {
-  const folder = findTopLevelFolder(tree, isComponentsFolder);
-  if (!folder) {
-    return null;
-  }
-
-  // Get pages from the base folder
-  const baseFolder = findBaseFolder(folder, currentBase);
-  const pages = (
-    baseFolder
-      ? getAllPagesFromFolder(baseFolder)
-      : getAllPagesFromFolder(folder)
-  )
-    .filter(
-      (page) =>
-        !page.url.endsWith("/components") && !page.url.endsWith("/components/")
-    )
-    .map((page) => ({ name: page.name, url: page.url }));
-
-  return (
-    <SidebarPageGroup label="Components" pages={pages} pathname={pathname} />
-  );
-};
-
-const BlocksSidebarPanel = ({ pathname, tree }: SidebarPanelProps) => {
-  const folder = findTopLevelFolder(tree, isBlocksFolder);
-  if (!folder) {
-    return null;
-  }
-
-  const pages = getAllPagesFromFolder(folder)
-    .filter(
-      (page) => !page.url.endsWith("/blocks") && !page.url.endsWith("/blocks/")
-    )
-    .map((page) => ({ name: page.name, url: page.url }));
-
-  return <SidebarPageGroup label="Blocks" pages={pages} pathname={pathname} />;
-};
-
-const ThemesSidebarPanel = ({ pathname, tree }: SidebarPanelProps) => {
-  const folder = findTopLevelFolder(tree, isThemesFolder);
-  if (!folder) {
-    return null;
-  }
-
-  const pages = getAllPagesFromFolder(folder)
-    .filter(
-      (page) => !page.url.endsWith("/themes") && !page.url.endsWith("/themes/")
-    )
-    .map((page) => ({ name: page.name, url: page.url }));
-
-  return <SidebarPageGroup label="Themes" pages={pages} pathname={pathname} />;
-};
-
 export const DocsSidebar = ({
   tree,
   ...props
 }: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) => {
   const pathname = usePathname();
   const currentBase = getCurrentBase(pathname);
-  const panel = getDocsSidebarPanel(pathname);
   const treeGroups = getTreeGroups(tree, currentBase);
-
-  const renderCatalogPanel = () => {
-    const panelProps = { currentBase, pathname, tree };
-    if (panel === "components") {
-      return <ComponentsSidebarPanel {...panelProps} />;
-    }
-    if (panel === "blocks") {
-      return <BlocksSidebarPanel {...panelProps} />;
-    }
-    if (panel === "themes") {
-      return <ThemesSidebarPanel {...panelProps} />;
-    }
-    return null;
-  };
 
   return (
     <Sidebar
@@ -218,16 +119,14 @@ export const DocsSidebar = ({
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        {panel
-          ? renderCatalogPanel()
-          : treeGroups.map((group) => (
-              <SidebarPageGroup
-                key={group.label}
-                label={group.label}
-                pages={group.pages}
-                pathname={pathname}
-              />
-            ))}
+        {treeGroups.map((group) => (
+          <SidebarPageGroup
+            key={group.label}
+            label={group.label}
+            pages={group.pages}
+            pathname={pathname}
+          />
+        ))}
         <div className="from-background via-background/80 to-background/50 sticky -bottom-1 z-10 h-16 shrink-0 bg-linear-to-t blur-xs" />
       </SidebarContent>
     </Sidebar>

@@ -15,17 +15,7 @@ import {
 import { TOP_LEVEL_SECTIONS } from "@/constants/nav";
 import { ROUTES } from "@/constants/routes";
 import { useFeedback } from "@/hooks/use-feedback";
-import {
-  getDocsSidebarPanel,
-  isBlocksFolder,
-  isComponentsFolder,
-} from "@/lib/docs";
-import {
-  getAllPagesFromFolder,
-  getCurrentBase,
-  getTreeGroups,
-} from "@/lib/page-tree";
-import type { PageTreeFolder } from "@/lib/page-tree";
+import { getCurrentBase, getTreeGroups } from "@/lib/page-tree";
 import { cn } from "@/lib/utils";
 
 const MobileLink = ({
@@ -86,46 +76,6 @@ const MobileNavGroup = ({
   );
 };
 
-interface MobilePanelProps {
-  currentBase: string;
-  setOpen: (open: boolean) => void;
-  tree: PageTreeRoot;
-}
-
-const findTopLevelFolder = (
-  tree: PageTreeRoot,
-  predicate: (folder: PageTreeFolder) => boolean
-) =>
-  tree.children.find(
-    (item): item is PageTreeFolder => item.type === "folder" && predicate(item)
-  );
-
-const ComponentsMobilePanel = ({ setOpen, tree }: MobilePanelProps) => {
-  const folder = findTopLevelFolder(tree, isComponentsFolder);
-  if (!folder) {
-    return null;
-  }
-
-  const pages = getAllPagesFromFolder(folder)
-    .filter((page) => page.url !== ROUTES.DOCS_COMPONENTS)
-    .map((page) => ({ name: page.name, url: page.url }));
-
-  return <MobileNavGroup label="Components" pages={pages} setOpen={setOpen} />;
-};
-
-const BlocksMobilePanel = ({ setOpen, tree }: MobilePanelProps) => {
-  const folder = findTopLevelFolder(tree, isBlocksFolder);
-  if (!folder) {
-    return null;
-  }
-
-  const pages = getAllPagesFromFolder(folder)
-    .filter((page) => page.url !== ROUTES.DOCS_BLOCKS)
-    .map((page) => ({ name: page.name, url: page.url }));
-
-  return <MobileNavGroup label="Blocks" pages={pages} setOpen={setOpen} />;
-};
-
 export const MobileNav = ({
   items,
   tree,
@@ -138,22 +88,10 @@ export const MobileNav = ({
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const currentBase = getCurrentBase(pathname);
-  const panel = getDocsSidebarPanel(pathname);
   const treeGroups = useMemo(
     () => getTreeGroups(tree, currentBase),
     [tree, currentBase]
   );
-
-  const renderCatalogPanel = () => {
-    const panelProps = { currentBase, setOpen, tree };
-    if (panel === "components") {
-      return <ComponentsMobilePanel {...panelProps} />;
-    }
-    if (panel === "blocks") {
-      return <BlocksMobilePanel {...panelProps} />;
-    }
-    return null;
-  };
 
   return (
     <Popover sounds open={open} onOpenChange={setOpen}>
@@ -218,19 +156,17 @@ export const MobileNav = ({
               ))}
             </div>
           </div>
-          {panel
-            ? renderCatalogPanel()
-            : treeGroups.map((group) => (
-                <MobileNavGroup
-                  key={group.label}
-                  label={group.label}
-                  pages={group.pages.map((p) => ({
-                    name: p.name,
-                    url: p.url,
-                  }))}
-                  setOpen={setOpen}
-                />
-              ))}
+          {treeGroups.map((group) => (
+            <MobileNavGroup
+              key={group.label}
+              label={group.label}
+              pages={group.pages.map((p) => ({
+                name: p.name,
+                url: p.url,
+              }))}
+              setOpen={setOpen}
+            />
+          ))}
         </div>
       </PopoverContent>
     </Popover>

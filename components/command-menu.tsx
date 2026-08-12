@@ -83,7 +83,29 @@ const buildDocPageKeywords = (
   ...searchKeywordsFromUrl(url),
 ];
 
+const THEME_PRIMARY_BY_SLUG: Record<string, string> = {
+  blueprint: "#0f172a",
+  corporate: "#0f4c81",
+  elegant: "#78350f",
+  executive: "#1e3a5f",
+  forest: "#15803d",
+  minimal: "#18181b",
+  modern: "#334155",
+  professional: "#18181b",
+  vivid: "#6d28d9",
+};
+
 const DocPageLeadingIcon = ({ parsed }: { parsed: DocUrlKind }) => {
+  if (parsed.kind === "theme") {
+    const color = THEME_PRIMARY_BY_SLUG[parsed.slug];
+    return (
+      <span
+        className="border-border/60 size-4 shrink-0 rounded-sm border"
+        style={color ? { backgroundColor: color } : undefined}
+        aria-hidden
+      />
+    );
+  }
   if (parsed.kind === "component") {
     return <CircleDashedIcon />;
   }

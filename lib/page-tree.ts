@@ -116,7 +116,18 @@ export const getTreeGroups = (
       continue;
     }
 
-    if (isComponentsFolder(item)) {
+    if (isThemesFolder(item)) {
+      const pages = getAllPagesFromFolder(item).filter(
+        (page) =>
+          !page.url.endsWith("/themes") && !page.url.endsWith("/themes/")
+      );
+      if (pages.length > 0) {
+        groups.push({
+          label: "Themes",
+          pages,
+        });
+      }
+    } else if (isComponentsFolder(item)) {
       // Check if there are base folders (takumi, forme)
       const baseFolder = findBaseFolder(item, currentBase);
       if (baseFolder) {
@@ -153,17 +164,6 @@ export const getTreeGroups = (
       if (pages.length > 0) {
         groups.push({
           label: typeof item.name === "string" ? item.name : String(item.name),
-          pages,
-        });
-      }
-    } else if (isThemesFolder(item)) {
-      const pages = getAllPagesFromFolder(item).filter(
-        (page) =>
-          !page.url.endsWith("/themes") && !page.url.endsWith("/themes/")
-      );
-      if (pages.length > 0) {
-        groups.push({
-          label: "Themes",
           pages,
         });
       }

@@ -46,7 +46,7 @@ export const ThemePreview = ({
   const theme = THEMES.find((t) => t.name === selectedTheme)?.theme;
 
   return (
-    <div className={cn("not-prose", className)}>
+    <div className={cn("not-prose mt-4", className)}>
       <div className="flex items-center justify-between rounded-t-lg border border-b-0 bg-muted/50 px-4 py-2">
         <div className="flex gap-1.5" aria-hidden="true">
           <span className="size-2.5 rounded-full bg-red-400" />
