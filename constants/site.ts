@@ -1,4 +1,4 @@
-export const FALLBACK_SITE_ORIGIN = "https://pdfcn.vercel.app" as const;
+export const FALLBACK_SITE_ORIGIN = "https://pdfcn.dev" as const;
 
 const getBaseUrl = () => {
   if (process.env.NODE_ENV !== "production") {
@@ -34,7 +34,7 @@ export const SITE = {
   ] as const,
   NAME: "pdfcn",
   OG_IMAGE: `${baseUrl}/og`,
-  REGISTRY: baseUrl,
+  REGISTRY: "@pdfcn",
   URL: baseUrl,
 };
 
