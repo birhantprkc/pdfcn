@@ -62,13 +62,11 @@ export const formatCode = async (code: string) => {
   }
 
   formattedCode = formattedCode.replaceAll(
-    "@/registry/themes/professional",
-    "@/lib/pdf-themes/professional"
+    "@/registry/themes/",
+    "@/lib/pdf-themes/"
   );
-  formattedCode = formattedCode.replaceAll(
-    "@/registry/themes/primitives",
-    "@/lib/pdf-themes/primitives"
-  );
+
+  formattedCode = formattedCode.replaceAll("@/registry/types/", "@/types/");
 
   formattedCode = formattedCode.replaceAll("export default", "export");
 
