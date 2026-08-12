@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { CodeBlockCommand } from "@/components/code-block-command";
-import { CopyButton } from "@/components/copy-button";
+import { ComponentCode } from "@/components/component-code";
 import {
   getHomePdfSource,
   homePdfBases,
@@ -85,11 +85,7 @@ const CodeViewer = ({
   highlightedCode?: string;
   isLoading?: boolean;
 }) => (
-  <div className="relative h-full min-h-[560px] bg-code text-code-foreground lg:min-h-0">
-    <div className="absolute right-2 top-2 z-10">
-      <CopyButton className="bg-transparent" value={code ?? ""} />
-    </div>
-
+  <div className="relative h-full min-h-140 bg-code text-code-foreground lg:min-h-0">
     <div className="no-scrollbar min-h-0 flex-1 overflow-auto">
       {isLoading ? (
         <div
@@ -108,12 +104,14 @@ const CodeViewer = ({
         </div>
       ) : null}
       {highlightedCode && !isLoading ? (
-        <figure
-          data-rehype-pretty-code-figure=""
-          className="!m-0 min-h-full !rounded-none text-sm [&>div]:min-h-full [&_pre]:min-h-full"
-        >
-          <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
-        </figure>
+        <ComponentCode
+          code={code ?? ""}
+          highlightedCode={highlightedCode}
+          language="tsx"
+          title={undefined}
+          className="mt-0"
+          copyButtonClassName="right-4"
+        />
       ) : null}
     </div>
   </div>
@@ -298,7 +296,7 @@ export const HomePdfShowcase = () => {
 
           <Separator />
 
-          <CardContent className="p-0 lg:grid lg:h-[720px] lg:grid-cols-[14rem_minmax(0,1fr)_20rem]">
+          <CardContent className="p-0 lg:grid lg:h-180 lg:grid-cols-[14rem_minmax(0,1fr)_20rem]">
             <aside
               aria-label="PDF examples"
               className="hidden flex-col bg-card lg:flex lg:border-r"
