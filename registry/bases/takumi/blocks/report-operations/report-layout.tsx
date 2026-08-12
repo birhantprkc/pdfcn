@@ -1,16 +1,13 @@
-import {
-  Badge,
-  DataTable,
-  KeyValue,
-  PageFooter,
-  PageHeader,
-  PdfGraph,
-  PdfList,
-  PdfcnThemeProvider,
-  Section,
-  Text,
-  usePdfcnTheme,
-} from "@/registry/bases/takumi/components";
+import { Badge } from "@/registry/bases/takumi/components/badge/badge";
+import { DataTable } from "@/registry/bases/takumi/components/data-table/data-table";
+import { PdfGraph } from "@/registry/bases/takumi/components/graph/graph";
+import { KeyValue } from "@/registry/bases/takumi/components/key-value/key-value";
+import { PdfList } from "@/registry/bases/takumi/components/list/list";
+import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-footer";
+import { PageHeader } from "@/registry/bases/takumi/components/page-header/page-header";
+import { Section } from "@/registry/bases/takumi/components/section/section";
+import { Text } from "@/registry/bases/takumi/components/text/text";
+import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/takumi/components/theme-provider";
 import {
   View,
   StyleSheet,

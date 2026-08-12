@@ -1,20 +1,19 @@
 import { Document, Page, StyleSheet, View } from "@formepdf/react";
 
+import { KeyValue } from "@/registry/bases/forme/components/key-value/key-value";
+import { PageFooter } from "@/registry/bases/forme/components/page-footer/page-footer";
+import { PageHeader } from "@/registry/bases/forme/components/page-header/page-header";
+import { PdfImage } from "@/registry/bases/forme/components/pdf-image/pdf-image";
+import { Section } from "@/registry/bases/forme/components/section/section";
 import {
-  KeyValue,
-  PageFooter,
-  PageHeader,
-  PdfImage,
-  PdfcnThemeProvider,
-  Section,
   Table,
   TableBody,
   TableCell,
   TableHeader,
   TableRow,
-  Text,
-  usePdfcnTheme,
-} from "@/registry/bases/forme/components";
+} from "@/registry/bases/forme/components/table/table";
+import { Text } from "@/registry/bases/forme/components/text/text";
+import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/forme/components/theme-provider";
 import type { PdfcnTheme } from "@/registry/types/pdf-themes";
 
 import type { InvoiceClassicData } from "./invoice-classic.types";

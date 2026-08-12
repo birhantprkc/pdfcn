@@ -1,4 +1,4 @@
-import { PdfGraph } from "@/registry/bases/takumi/components/graph";
+import { PdfGraph } from "@/registry/bases/takumi/components/graph/graph";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

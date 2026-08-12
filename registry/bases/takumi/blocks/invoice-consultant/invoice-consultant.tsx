@@ -1,16 +1,9 @@
-import {
-  KeyValue,
-  PageFooter,
-  PdfcnThemeProvider,
-  Section,
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-  Text,
-  usePdfcnTheme,
-} from "@/registry/bases/takumi/components";
+import { KeyValue } from "@/registry/bases/takumi/components/key-value/key-value";
+import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-footer";
+import { Section } from "@/registry/bases/takumi/components/section/section";
+import { Table, TableBody, TableCell, TableHeader, TableRow } from "@/registry/bases/takumi/components/table/table";
+import { Text } from "@/registry/bases/takumi/components/text/text";
+import { PdfcnThemeProvider, usePdfcnTheme } from "@/registry/bases/takumi/components/theme-provider";
 import {
   View,
   StyleSheet,

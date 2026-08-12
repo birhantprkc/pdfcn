@@ -200,7 +200,7 @@ export const getHomePdfSource = (recipe: PdfRecipe, base: HomePdfBase) => {
   const imports = recipe.componentIds
     .map((id) => {
       const component = homePdfComponentCatalog[id];
-      return `import { ${component.codeName} } from "@/registry/bases/${base}/components/${id}";`;
+      return `import { ${component.codeName} } from "@/components/pdf/${id}";`;
     })
     .join("\n");
   const functionName = recipe.id

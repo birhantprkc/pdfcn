@@ -7,7 +7,7 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from "@/registry/bases/takumi/components/table";
+} from "@/registry/bases/takumi/components/table/table";
 import {
   usePdfcnTheme,
   useSafeMemo,

@@ -1,6 +1,6 @@
 import { Document, Page } from "@formepdf/react";
 
-import { PdfForm } from "@/registry/bases/forme/components/form";
+import { PdfForm } from "@/registry/bases/forme/components/form/form";
 
 const DemoBody = () => (
   <PdfForm

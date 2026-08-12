@@ -1,10 +1,10 @@
 import { Document, Page } from "@formepdf/react";
 
-import { Heading } from "@/registry/bases/forme/components/heading";
-import { PdfQRCode } from "@/registry/bases/forme/components/qrcode";
-import { Section } from "@/registry/bases/forme/components/section";
-import { Stack } from "@/registry/bases/forme/components/stack";
-import { Text } from "@/registry/bases/forme/components/text";
+import { Heading } from "@/registry/bases/forme/components/heading/heading";
+import { PdfQRCode } from "@/registry/bases/forme/components/qrcode/qrcode";
+import { Section } from "@/registry/bases/forme/components/section/section";
+import { Stack } from "@/registry/bases/forme/components/stack/stack";
+import { Text } from "@/registry/bases/forme/components/text/text";
 
 const DemoBody = () => (
   <Section spacing="none">

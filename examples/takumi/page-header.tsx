@@ -1,5 +1,5 @@
-import { PageHeader } from "@/registry/bases/takumi/components/page-header";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { PageHeader } from "@/registry/bases/takumi/components/page-header/page-header";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
   Document,

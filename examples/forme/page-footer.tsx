@@ -1,7 +1,7 @@
 import { Document, Page, View } from "@formepdf/react";
 
-import { PageFooter } from "@/registry/bases/forme/components/page-footer";
-import { Text } from "@/registry/bases/forme/components/text";
+import { PageFooter } from "@/registry/bases/forme/components/page-footer/page-footer";
+import { Text } from "@/registry/bases/forme/components/text/text";
 
 const DemoBody = () => (
   <View style={{ display: "flex", flexDirection: "column", minHeight: 220 }}>

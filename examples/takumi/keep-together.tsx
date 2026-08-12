@@ -1,7 +1,7 @@
-import { Heading } from "@/registry/bases/takumi/components/heading";
-import { KeepTogether } from "@/registry/bases/takumi/components/keep-together";
-import { Section } from "@/registry/bases/takumi/components/section";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { Heading } from "@/registry/bases/takumi/components/heading/heading";
+import { KeepTogether } from "@/registry/bases/takumi/components/keep-together/keep-together";
+import { Section } from "@/registry/bases/takumi/components/section/section";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

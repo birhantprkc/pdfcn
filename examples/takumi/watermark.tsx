@@ -1,7 +1,7 @@
-import { Heading } from "@/registry/bases/takumi/components/heading";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { Heading } from "@/registry/bases/takumi/components/heading/heading";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
-import { PdfWatermark } from "@/registry/bases/takumi/components/watermark";
+import { PdfWatermark } from "@/registry/bases/takumi/components/watermark/watermark";
 import {
   Document,
   Page,

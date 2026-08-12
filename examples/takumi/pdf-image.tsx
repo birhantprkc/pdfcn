@@ -1,5 +1,5 @@
 import { PREVIEW_IMAGE_DATA_URI } from "@/examples/preview-assets";
-import { PdfImage } from "@/registry/bases/takumi/components/pdf-image";
+import { PdfImage } from "@/registry/bases/takumi/components/pdf-image/pdf-image";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

@@ -1,8 +1,8 @@
 import { Document, Page, View } from "@formepdf/react";
 
-import { Heading } from "@/registry/bases/forme/components/heading";
-import { PdfPageNumber } from "@/registry/bases/forme/components/page-number";
-import { Text } from "@/registry/bases/forme/components/text";
+import { Heading } from "@/registry/bases/forme/components/heading/heading";
+import { PdfPageNumber } from "@/registry/bases/forme/components/page-number/page-number";
+import { Text } from "@/registry/bases/forme/components/text/text";
 
 const DemoBody = () => (
   <View style={{ minHeight: 680, position: "relative" }}>

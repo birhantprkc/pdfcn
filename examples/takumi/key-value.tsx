@@ -1,4 +1,4 @@
-import { KeyValue } from "@/registry/bases/takumi/components/key-value";
+import { KeyValue } from "@/registry/bases/takumi/components/key-value/key-value";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

@@ -5,7 +5,7 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from "@/registry/bases/takumi/components/table";
+} from "@/registry/bases/takumi/components/table/table";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

@@ -1,5 +1,5 @@
-import { Link } from "@/registry/bases/takumi/components/link";
-import { Section } from "@/registry/bases/takumi/components/section";
+import { Link } from "@/registry/bases/takumi/components/link/link";
+import { Section } from "@/registry/bases/takumi/components/section/section";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

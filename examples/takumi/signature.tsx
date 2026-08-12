@@ -1,4 +1,4 @@
-import { PdfSignatureBlock } from "@/registry/bases/takumi/components/signature";
+import { PdfSignatureBlock } from "@/registry/bases/takumi/components/signature/signature";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

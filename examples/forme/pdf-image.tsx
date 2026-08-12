@@ -1,7 +1,7 @@
 import { Document, Page } from "@formepdf/react";
 
 import { PREVIEW_IMAGE_DATA_URI } from "@/examples/preview-assets";
-import { PdfImage } from "@/registry/bases/forme/components/pdf-image";
+import { PdfImage } from "@/registry/bases/forme/components/pdf-image/pdf-image";
 
 const DemoBody = () => (
   <PdfImage

@@ -1,5 +1,5 @@
-import { PageFooter } from "@/registry/bases/takumi/components/page-footer";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-footer";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
   Document,

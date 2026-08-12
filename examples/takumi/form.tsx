@@ -1,4 +1,4 @@
-import { PdfForm } from "@/registry/bases/takumi/components/form";
+import { PdfForm } from "@/registry/bases/takumi/components/form/form";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

@@ -1,7 +1,7 @@
-import { Divider } from "@/registry/bases/takumi/components/divider";
-import { Heading } from "@/registry/bases/takumi/components/heading";
-import { Stack } from "@/registry/bases/takumi/components/stack";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { Divider } from "@/registry/bases/takumi/components/divider/divider";
+import { Heading } from "@/registry/bases/takumi/components/heading/heading";
+import { Stack } from "@/registry/bases/takumi/components/stack/stack";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

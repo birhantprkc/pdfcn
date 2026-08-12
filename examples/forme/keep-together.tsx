@@ -1,9 +1,9 @@
 import { Document, Page } from "@formepdf/react";
 
-import { Heading } from "@/registry/bases/forme/components/heading";
-import { KeepTogether } from "@/registry/bases/forme/components/keep-together";
-import { Section } from "@/registry/bases/forme/components/section";
-import { Text } from "@/registry/bases/forme/components/text";
+import { Heading } from "@/registry/bases/forme/components/heading/heading";
+import { KeepTogether } from "@/registry/bases/forme/components/keep-together/keep-together";
+import { Section } from "@/registry/bases/forme/components/section/section";
+import { Text } from "@/registry/bases/forme/components/text/text";
 
 const DemoBody = () => (
   <Section spacing="none">

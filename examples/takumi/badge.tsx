@@ -1,4 +1,4 @@
-import { Badge } from "@/registry/bases/takumi/components/badge";
+import { Badge } from "@/registry/bases/takumi/components/badge/badge";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
   Document,

@@ -1,8 +1,8 @@
 import { Document, Page } from "@formepdf/react";
 
-import { DataTable } from "@/registry/bases/forme/components/data-table";
-import { Heading } from "@/registry/bases/forme/components/heading";
-import { Section } from "@/registry/bases/forme/components/section";
+import { DataTable } from "@/registry/bases/forme/components/data-table/data-table";
+import { Heading } from "@/registry/bases/forme/components/heading/heading";
+import { Section } from "@/registry/bases/forme/components/section/section";
 
 const DemoBody = () => (
   <Section spacing="none">

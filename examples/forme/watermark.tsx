@@ -1,8 +1,8 @@
 import { Document, Page, View } from "@formepdf/react";
 
-import { Heading } from "@/registry/bases/forme/components/heading";
-import { Text } from "@/registry/bases/forme/components/text";
-import { PdfWatermark } from "@/registry/bases/forme/components/watermark";
+import { Heading } from "@/registry/bases/forme/components/heading/heading";
+import { Text } from "@/registry/bases/forme/components/text/text";
+import { PdfWatermark } from "@/registry/bases/forme/components/watermark/watermark";
 
 const DemoBody = () => (
   <View style={{ minHeight: 680, position: "relative" }}>

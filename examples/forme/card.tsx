@@ -1,7 +1,7 @@
 import { Document, Page } from "@formepdf/react";
 
-import { PdfCard } from "@/registry/bases/forme/components/card";
-import { Text } from "@/registry/bases/forme/components/text";
+import { PdfCard } from "@/registry/bases/forme/components/card/card";
+import { Text } from "@/registry/bases/forme/components/text/text";
 
 const DemoBody = () => (
   <PdfCard title="Project Summary" variant="default" padding="md">

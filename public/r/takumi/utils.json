@@ -7,19 +7,16 @@
     "takumi-pdf",
     "@takumi-rs/helpers"
   ],
-  "registryDependencies": [
-    "takumi/theme-provider"
-  ],
   "files": [
     {
       "path": "registry/bases/takumi/lib/resolve-color.ts",
-      "content": "import type { ColorTokens } from \"@/types/pdf-themes\";\n\n/** Theme color token keys that can be used for the color prop */\nexport const THEME_COLOR_KEYS = [\n  \"foreground\",\n  \"background\",\n  \"muted\",\n  \"mutedForeground\",\n  \"primary\",\n  \"primaryForeground\",\n  \"border\",\n  \"accent\",\n  \"destructive\",\n  \"success\",\n  \"warning\",\n  \"info\",\n] as const satisfies (keyof ColorTokens)[];\n\n/** Resolves a color value: theme token key → hex, or raw CSS color as-is. */\nexport const resolveColor = (value: string, colors: ColorTokens): string => {\n  const key = value as (typeof THEME_COLOR_KEYS)[number];\n  return THEME_COLOR_KEYS.includes(key) ? colors[key] : value;\n};\n",
+      "content": "import type { ColorTokens } from \"@/registry/types/pdf-themes\";\n\n/** Theme color token keys that can be used for the color prop */\nexport const THEME_COLOR_KEYS = [\n  \"foreground\",\n  \"background\",\n  \"muted\",\n  \"mutedForeground\",\n  \"primary\",\n  \"primaryForeground\",\n  \"border\",\n  \"accent\",\n  \"destructive\",\n  \"success\",\n  \"warning\",\n  \"info\",\n] as const satisfies (keyof ColorTokens)[];\n\n/** Resolves a color value: theme token key → hex, or raw CSS color as-is. */\nexport const resolveColor = (value: string, colors: ColorTokens): string => {\n  const key = value as (typeof THEME_COLOR_KEYS)[number];\n  return THEME_COLOR_KEYS.includes(key) ? colors[key] : value;\n};\n",
       "type": "registry:lib",
       "target": "lib/resolve-color.ts"
     },
     {
       "path": "registry/bases/takumi/components/theme-provider.tsx",
-      "content": "import { isValidElement } from \"react\";\nimport type { DependencyList, ReactNode } from \"react\";\n\nimport { professionalTheme } from \"@/lib/pdf-themes/professional\";\n\nexport type PdfcnTheme = typeof professionalTheme;\n\nlet serializedTheme = professionalTheme;\n\nexport interface PdfcnThemeProviderProps {\n  theme?: PdfcnTheme;\n  children: ReactNode;\n}\n\nconst renderForSerializer = (\n  children: ReactNode,\n  theme: PdfcnTheme\n): ReactNode => {\n  serializedTheme = theme;\n\n  if (!isValidElement(children) || typeof children.type !== \"function\") {\n    return children;\n  }\n\n  return (children.type as (props: unknown) => ReactNode)(children.props);\n};\n\nexport const PdfcnThemeProvider = ({\n  theme,\n  children,\n}: PdfcnThemeProviderProps) =>\n  renderForSerializer(children, theme ?? professionalTheme);\n\nexport const usePdfcnTheme = (): PdfcnTheme => serializedTheme;\n\nexport const useSafeMemo = <T,>(factory: () => T, _deps: DependencyList): T =>\n  factory();\n",
+      "content": "import { isValidElement } from \"react\";\nimport type { DependencyList, ReactNode } from \"react\";\n\nimport { professionalTheme } from \"@/registry/themes/professional\";\n\nexport type PdfcnTheme = typeof professionalTheme;\n\nlet serializedTheme = professionalTheme;\n\nexport interface PdfcnThemeProviderProps {\n  theme?: PdfcnTheme;\n  children: ReactNode;\n}\n\nconst renderForSerializer = (\n  children: ReactNode,\n  theme: PdfcnTheme\n): ReactNode => {\n  serializedTheme = theme;\n\n  if (!isValidElement(children) || typeof children.type !== \"function\") {\n    return children;\n  }\n\n  return (children.type as (props: unknown) => ReactNode)(children.props);\n};\n\nexport const PdfcnThemeProvider = ({\n  theme,\n  children,\n}: PdfcnThemeProviderProps) =>\n  renderForSerializer(children, theme ?? professionalTheme);\n\nexport const usePdfcnTheme = (): PdfcnTheme => serializedTheme;\n\nexport const useSafeMemo = <T,>(factory: () => T, _deps: DependencyList): T =>\n  factory();\n",
       "type": "registry:lib",
       "target": "components/pdf/theme-provider.tsx"
     },

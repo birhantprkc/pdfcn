@@ -8,20 +8,14 @@
     "@formepdf/core"
   ],
   "registryDependencies": [
-    "forme/utils"
+    "@pdfcn/forme/utils"
   ],
   "files": [
     {
       "path": "registry/bases/forme/components/watermark/watermark.tsx",
-      "content": "import { Watermark as FormeWatermark } from \"@formepdf/react\";\n\nimport { usePdfcnTheme } from \"@/components/pdf/theme-provider\";\nimport { mergeFormeStyles } from \"@/registry/bases/forme/lib/pdf-primitives\";\nimport { resolveColor } from \"@/registry/bases/forme/lib/resolve-color\";\nimport type { PDFComponentProps } from \"@/types/pdf-components\";\n\nexport type WatermarkPosition =\n  | \"center\"\n  | \"top-left\"\n  | \"top-right\"\n  | \"bottom-left\"\n  | \"bottom-right\";\n\n/**\n * Diagonal watermark overlaid across the full page using absolute positioning.\n * Props - `text` | `opacity` | `fontSize` | `color` | `angle` | `position` | `fixed` | `style`\n * @see {@link PdfWatermarkProps}\n */\nexport interface PdfWatermarkProps extends Omit<PDFComponentProps, \"children\"> {\n  text: string;\n  opacity?: number;\n  fontSize?: number;\n  color?: string;\n  angle?: number;\n  position?: WatermarkPosition;\n  /**\n   * @default true\n   */\n  fixed?: boolean;\n  children?: never;\n}\n\nconst withOpacity = (color: string, opacity: number): string => {\n  const match = color.match(/^#([\\da-f]{2})([\\da-f]{2})([\\da-f]{2})$/i);\n  if (!match) {\n    return color;\n  }\n\n  const [, red, green, blue] = match;\n  return `rgba(${Number.parseInt(red, 16)}, ${Number.parseInt(green, 16)}, ${Number.parseInt(blue, 16)}, ${opacity})`;\n};\n\nexport const PdfWatermark = ({\n  text,\n  opacity = 0.15,\n  fontSize = 60,\n  color = \"mutedForeground\",\n  angle = -45,\n  style,\n}: PdfWatermarkProps) => {\n  const theme = usePdfcnTheme();\n  const resolvedColor = resolveColor(color, theme.colors);\n\n  return (\n    <FormeWatermark\n      text={text}\n      angle={angle}\n      color={withOpacity(resolvedColor, opacity)}\n      fontSize={fontSize}\n      style={mergeFormeStyles(style)}\n    />\n  );\n};\n",
+      "content": "import { Watermark as FormeWatermark } from \"@formepdf/react\";\n\nimport { usePdfcnTheme } from \"@/registry/bases/forme/components/theme-provider\";\nimport { mergeFormeStyles } from \"@/registry/bases/forme/lib/pdf-primitives\";\nimport { resolveColor } from \"@/registry/bases/forme/lib/resolve-color\";\nimport type { PDFComponentProps } from \"@/registry/types/pdf-components\";\n\nexport type WatermarkPosition =\n  | \"center\"\n  | \"top-left\"\n  | \"top-right\"\n  | \"bottom-left\"\n  | \"bottom-right\";\n\n/**\n * Diagonal watermark overlaid across the full page using absolute positioning.\n * Props - `text` | `opacity` | `fontSize` | `color` | `angle` | `position` | `fixed` | `style`\n * @see {@link PdfWatermarkProps}\n */\nexport interface PdfWatermarkProps extends Omit<PDFComponentProps, \"children\"> {\n  text: string;\n  opacity?: number;\n  fontSize?: number;\n  color?: string;\n  angle?: number;\n  position?: WatermarkPosition;\n  /**\n   * @default true\n   */\n  fixed?: boolean;\n  children?: never;\n}\n\nconst withOpacity = (color: string, opacity: number): string => {\n  const match = color.match(/^#([\\da-f]{2})([\\da-f]{2})([\\da-f]{2})$/i);\n  if (!match) {\n    return color;\n  }\n\n  const [, red, green, blue] = match;\n  return `rgba(${Number.parseInt(red, 16)}, ${Number.parseInt(green, 16)}, ${Number.parseInt(blue, 16)}, ${opacity})`;\n};\n\nexport const PdfWatermark = ({\n  text,\n  opacity = 0.15,\n  fontSize = 60,\n  color = \"mutedForeground\",\n  angle = -45,\n  style,\n}: PdfWatermarkProps) => {\n  const theme = usePdfcnTheme();\n  const resolvedColor = resolveColor(color, theme.colors);\n\n  return (\n    <FormeWatermark\n      text={text}\n      angle={angle}\n      color={withOpacity(resolvedColor, opacity)}\n      fontSize={fontSize}\n      style={mergeFormeStyles(style)}\n    />\n  );\n};\n",
       "type": "registry:component",
       "target": "components/pdf/watermark/watermark.tsx"
-    },
-    {
-      "path": "registry/bases/forme/components/watermark/index.ts",
-      "content": "export {\n  PdfWatermark,\n  type PdfWatermarkProps,\n  type WatermarkPosition,\n} from \"./watermark\";\n",
-      "type": "registry:component",
-      "target": "components/pdf/watermark/index.ts"
     }
   ],
   "type": "registry:ui"

@@ -1,6 +1,6 @@
 import { Document, Page } from "@formepdf/react";
 
-import { PdfList } from "@/registry/bases/forme/components/list";
+import { PdfList } from "@/registry/bases/forme/components/list/list";
 
 const DemoBody = () => (
   <PdfList

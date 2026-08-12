@@ -1,6 +1,6 @@
-import { Heading } from "@/registry/bases/takumi/components/heading";
-import { PageBreak } from "@/registry/bases/takumi/components/page-break";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { Heading } from "@/registry/bases/takumi/components/heading/heading";
+import { PageBreak } from "@/registry/bases/takumi/components/page-break/page-break";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
   Document,

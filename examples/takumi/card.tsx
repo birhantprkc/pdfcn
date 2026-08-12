@@ -1,5 +1,5 @@
-import { PdfCard } from "@/registry/bases/takumi/components/card";
-import { Text } from "@/registry/bases/takumi/components/text";
+import { PdfCard } from "@/registry/bases/takumi/components/card/card";
+import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import { Document, Page } from "@/registry/bases/takumi/lib/pdf-primitives";
 

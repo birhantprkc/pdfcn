@@ -7,7 +7,7 @@ import {
   TableFooter,
   TableHeader,
   TableRow,
-} from "@/registry/bases/forme/components/table";
+} from "@/registry/bases/forme/components/table/table";
 import {
   usePdfcnTheme,
   useSafeMemo,
