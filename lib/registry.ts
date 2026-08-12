@@ -24,7 +24,6 @@ export const getRegistryUiSourceCandidates = ({
   return [
     path.join("registry", "bases", base, "components", slug, `${slug}.tsx`),
     path.join("registry", "bases", base, "blocks", slug, `${slug}.tsx`),
-    path.join("registry", "bases", base, "components", `${slug}.tsx`),
   ];
 };
 
