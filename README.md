@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://pdfcn.vercel.app/og" alt="pdfcn banner" />
+  <img src="./.github/assets/gh.png" alt="pdfcn banner" />
 </p>
 
 <h1 align="center">pdfcn</h1>

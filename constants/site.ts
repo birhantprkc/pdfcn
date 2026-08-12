@@ -1,5 +1,3 @@
-import { ROUTES } from "@/constants/routes";
-
 export const FALLBACK_SITE_ORIGIN = "https://pdfcn.dev" as const;
 
 const getBaseUrl = () => {
@@ -35,7 +33,7 @@ export const SITE = {
     "npx shadcn add",
   ] as const,
   NAME: "pdfcn",
-  OG_IMAGE: `${baseUrl}${ROUTES.OG}`,
+  OG_IMAGE: `${baseUrl}/og.png`,
   REGISTRY: "@pdfcn",
   URL: baseUrl,
 };
