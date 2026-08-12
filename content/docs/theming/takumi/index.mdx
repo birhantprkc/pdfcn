@@ -1,12 +1,12 @@
 ---
 title: Theming
-description: Configure PDF themes, colors, typography, and spacing.
+description: Configure PDF themes, colors, typography, and spacing for Takumi.
 ---
 
 import { ThemePreview } from "@/components/theme-preview";
 import { ThemePreviewGrid } from "@/components/theme-preview-grid";
 
-<ThemePreview />
+<ThemePreview base="takumi" />
 
 ## Installation
 
@@ -30,7 +30,7 @@ npx shadcn@latest add @pdfcn/theme-provider
 <Step>Copy and paste the following code into your project.</Step>
 
 <ComponentSource
-  src="registry/bases/forme/lib/theme-provider.tsx"
+  src="registry/bases/takumi/lib/theme-provider.tsx"
   title="components/theme-provider.tsx"
 />
 
@@ -45,7 +45,7 @@ npx shadcn@latest add @pdfcn/theme-provider
 ## Usage
 
 ```tsx
-import { PdfcnThemeProvider } from "@/registry/bases/forme/components";
+import { PdfcnThemeProvider } from "@/registry/bases/takumi/components";
 import { professionalTheme } from "@/registry/themes";
 
 export function Invoice() {
@@ -61,20 +61,20 @@ export function Invoice() {
 
 All color values must be hex strings (e.g., `#1a1a1a`). React PDF supports hex, `rgb()`, and `hsl()` — but NOT `oklch`.
 
-| Token | Purpose |
-|-------|---------|
-| `foreground` | Primary text color |
-| `background` | Page background |
-| `muted` | Secondary backgrounds |
-| `mutedForeground` | Captions, footnotes |
-| `primary` | Brand/accent color |
+| Token               | Purpose                     |
+| ------------------- | --------------------------- |
+| `foreground`        | Primary text color          |
+| `background`        | Page background             |
+| `muted`             | Secondary backgrounds       |
+| `mutedForeground`   | Captions, footnotes         |
+| `primary`           | Brand/accent color          |
 | `primaryForeground` | Text on primary backgrounds |
-| `border` | Table borders, dividers |
-| `accent` | Call-to-action elements |
-| `destructive` | Error states |
-| `success` | Success states |
-| `warning` | Warning states |
-| `info` | Informational states |
+| `border`            | Table borders, dividers     |
+| `accent`            | Call-to-action elements     |
+| `destructive`       | Error states                |
+| `success`           | Success states              |
+| `warning`           | Warning states              |
+| `info`              | Informational states        |
 
 ## Primitive Tokens
 

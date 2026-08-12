@@ -10,34 +10,78 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { replacePreviewImageSources } from "@/examples/preview-assets";
+import { getTakumiPreviewOptions } from "@/examples/preview-config";
 import { cn } from "@/lib/utils";
+import type { BaseName } from "@/registry/bases";
 import { THEMES } from "@/registry/themes";
 import type { RegistryThemeName } from "@/registry/themes";
 
+const TAKUMI_WASM_PATH = "/takumi_pdf_wasm_bg.wasm";
+const PREVIEW_LOGO_PATH = "/favicon.png";
+
+let takumiWasmReady: Promise<unknown> | undefined;
+
+const startTakumi = async (
+  initialize: (input: { module_or_path: string }) => Promise<unknown>
+) => {
+  try {
+    return await initialize({ module_or_path: TAKUMI_WASM_PATH });
+  } catch (error) {
+    takumiWasmReady = undefined;
+    throw error;
+  }
+};
+
+const initializeTakumi = (
+  initialize: (input: { module_or_path: string }) => Promise<unknown>
+) => {
+  takumiWasmReady ??= startTakumi(initialize);
+  return takumiWasmReady;
+};
+
+const loadPreviewLogo = async () => {
+  const response = await fetch(PREVIEW_LOGO_PATH);
+  if (!response.ok) {
+    throw new Error(`Unable to load preview logo (${response.status})`);
+  }
+
+  return {
+    sources: [
+      {
+        data: await response.arrayBuffer(),
+        src: PREVIEW_LOGO_PATH,
+      },
+    ],
+  };
+};
+
 const THEMES_OPTIONS = [
-  { value: "professional", label: "Professional" },
-  { value: "modern", label: "Modern" },
-  { value: "minimal", label: "Minimal" },
-  { value: "executive", label: "Executive" },
-  { value: "corporate", label: "Corporate" },
-  { value: "elegant", label: "Elegant" },
-  { value: "vivid", label: "Vivid" },
-  { value: "forest", label: "Forest" },
-  { value: "blueprint", label: "Blueprint" },
+  { label: "Professional", value: "professional" },
+  { label: "Modern", value: "modern" },
+  { label: "Minimal", value: "minimal" },
+  { label: "Executive", value: "executive" },
+  { label: "Corporate", value: "corporate" },
+  { label: "Elegant", value: "elegant" },
+  { label: "Vivid", value: "vivid" },
+  { label: "Forest", value: "forest" },
+  { label: "Blueprint", value: "blueprint" },
 ] as const;
 
 interface ThemePreviewProps {
+  base?: BaseName;
   name?: string;
   className?: string;
   height?: number;
 }
 
 export const ThemePreview = ({
+  base = "forme",
   name = "invoice-classic",
   className,
   height = 640,
 }: ThemePreviewProps) => {
-  const [selectedTheme, setSelectedTheme] = useState<RegistryThemeName>("professional");
+  const [selectedTheme, setSelectedTheme] =
+    useState<RegistryThemeName>("professional");
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -50,36 +94,80 @@ export const ThemePreview = ({
 
     (async () => {
       try {
-        const [
-          { InvoiceClassicDocument },
-          { renderSerializedDoc },
-          { serialize },
-        ] = await Promise.all([
-          import("@/registry/bases/forme/blocks/invoice-classic/invoice-classic"),
-          import("@formepdf/core/browser"),
-          import("@formepdf/react"),
-        ]);
-
         const theme = THEMES.find((t) => t.name === selectedTheme)?.theme;
-        const document = replacePreviewImageSources(
-          serialize(createElement(InvoiceClassicDocument, { theme }))
-        );
-        const buffer = await renderSerializedDoc(
-          document as unknown as Record<string, unknown>
-        );
-        const pdfBytes = new Uint8Array(buffer);
 
-        const source = new TextDecoder("latin1").decode(pdfBytes);
-        const pageCounts = [...source.matchAll(/\/Count\s+(\d+)/g)].map((match) =>
-          Number(match[1])
-        );
-        if (pageCounts.length > 0 && Math.max(...pageCounts) === 0) {
-          throw new Error("PDF renderer returned a document with no pages");
+        if (base === "takumi") {
+          const [
+            { demos },
+            { default: initialize, render },
+            { fromJsx },
+            images,
+          ] = await Promise.all([
+            import("@/examples/__index__"),
+            import("takumi-pdf"),
+            import("@takumi-rs/helpers/jsx"),
+            loadPreviewLogo(),
+          ]);
+          const Demo = demos.takumi[name];
+          if (!Demo) {
+            throw new Error(`Unknown Takumi demo: ${name}`);
+          }
+
+          await initializeTakumi(initialize);
+          const { node, stylesheets } = await fromJsx(
+            createElement(Demo, { theme })
+          );
+          const buffer = await render(node, {
+            ...getTakumiPreviewOptions(name),
+            images,
+            stylesheets,
+          });
+          const pdfBytes = new Uint8Array(buffer);
+
+          const source = new TextDecoder("latin1").decode(pdfBytes);
+          const pageCounts = [...source.matchAll(/\/Count\s+(\d+)/g)].map(
+            (match) => Number(match[1])
+          );
+          if (pageCounts.length > 0 && Math.max(...pageCounts) === 0) {
+            throw new Error("PDF renderer returned a document with no pages");
+          }
+
+          nextPdfUrl = URL.createObjectURL(
+            new Blob([pdfBytes as BlobPart], { type: "application/pdf" })
+          );
+        } else {
+          const [{ demos }, { renderSerializedDoc }, { serialize }] =
+            await Promise.all([
+              import("@/examples/__index__"),
+              import("@formepdf/core/browser"),
+              import("@formepdf/react"),
+            ]);
+          const Demo = demos.forme[name];
+          if (!Demo) {
+            throw new Error(`Unknown Forme demo: ${name}`);
+          }
+
+          const document = replacePreviewImageSources(
+            serialize(createElement(Demo, { theme }))
+          );
+          const buffer = await renderSerializedDoc(
+            document as unknown as Record<string, unknown>
+          );
+          const pdfBytes = new Uint8Array(buffer);
+
+          const source = new TextDecoder("latin1").decode(pdfBytes);
+          const pageCounts = [...source.matchAll(/\/Count\s+(\d+)/g)].map(
+            (match) => Number(match[1])
+          );
+          if (pageCounts.length > 0 && Math.max(...pageCounts) === 0) {
+            throw new Error("PDF renderer returned a document with no pages");
+          }
+
+          nextPdfUrl = URL.createObjectURL(
+            new Blob([pdfBytes as BlobPart], { type: "application/pdf" })
+          );
         }
 
-        nextPdfUrl = URL.createObjectURL(
-          new Blob([pdfBytes as BlobPart], { type: "application/pdf" })
-        );
         if (cancelled) {
           URL.revokeObjectURL(nextPdfUrl);
           return;
@@ -102,7 +190,7 @@ export const ThemePreview = ({
         URL.revokeObjectURL(nextPdfUrl);
       }
     };
-  }, [name, selectedTheme]);
+  }, [base, name, selectedTheme]);
 
   return (
     <div className={cn("not-prose", className)}>
@@ -113,7 +201,10 @@ export const ThemePreview = ({
           <span className="size-2.5 rounded-full bg-emerald-400" />
         </div>
         <span className="text-sm text-muted-foreground">document.pdf</span>
-        <Select value={selectedTheme} onValueChange={(v) => setSelectedTheme(v as RegistryThemeName)}>
+        <Select
+          value={selectedTheme}
+          onValueChange={(v) => setSelectedTheme(v as RegistryThemeName)}
+        >
           <SelectTrigger className="h-8 w-[140px] bg-background text-sm font-medium">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>

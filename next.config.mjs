@@ -50,6 +50,11 @@ const nextConfig = {
         permanent: true,
         source: `${ROUTES.DOCS}/:path*.mdx`,
       },
+      {
+        destination: `${ROUTES.DOCS_THEMING}/takumi`,
+        permanent: true,
+        source: ROUTES.DOCS_THEMING,
+      },
     ];
   },
   serverExternalPackages: [

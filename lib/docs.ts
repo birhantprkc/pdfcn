@@ -16,7 +16,10 @@ export const isComponentsFolder = (folder: PageTreeFolder) =>
 export const isBlocksFolder = (folder: PageTreeFolder) =>
   folder.$id === "blocks" || folder.name === "Blocks";
 
-export type DocsSidebarPanel = "components" | "blocks";
+export const isThemesFolder = (folder: PageTreeFolder) =>
+  folder.$id === "themes" || folder.name === "Themes";
+
+export type DocsSidebarPanel = "components" | "blocks" | "themes";
 
 const isPathWithin = (pathname: string, route: string) =>
   pathname === route || pathname.startsWith(`${route}/`);
@@ -29,6 +32,9 @@ export const getDocsSidebarPanel = (
   }
   if (isPathWithin(pathname, ROUTES.DOCS_BLOCKS)) {
     return "blocks";
+  }
+  if (isPathWithin(pathname, ROUTES.DOCS_THEMES)) {
+    return "themes";
   }
   return null;
 };

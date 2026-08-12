@@ -8,6 +8,7 @@ import {
   EXCLUDED_SECTIONS,
   isBlocksFolder,
   isComponentsFolder,
+  isThemesFolder,
 } from "@/lib/docs";
 import { DEFAULT_BASE } from "@/registry/bases";
 
@@ -92,7 +93,7 @@ export const getFolderPages = (
 
 export const getCurrentBase = (pathname: string): string => {
   const baseScopedMatch = pathname.match(
-    /\/docs\/(?:components|blocks)\/([^/]+)(?:\/|$)/
+    /\/docs\/(?:components|blocks|theming)\/([^/]+)(?:\/|$)/
   );
   if (baseScopedMatch) {
     return baseScopedMatch[1];
@@ -155,6 +156,19 @@ export const getTreeGroups = (
           pages,
         });
       }
+    } else if (isThemesFolder(item)) {
+      const pages = getAllPagesFromFolder(item).filter(
+        (page) =>
+          !page.url.endsWith("/themes") && !page.url.endsWith("/themes/")
+      );
+      if (pages.length > 0) {
+        groups.push({
+          label: "Themes",
+          pages,
+        });
+      }
+    } else if (item.$id === "theming" || item.name === "Theming") {
+      // Theming pages are accessed via the Sections nav
     } else {
       const pages = getFolderPages(item);
       if (pages.length > 0) {

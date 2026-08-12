@@ -5,11 +5,12 @@ import { cn } from "@/lib/utils";
 import { BASE_NAMES, BASES, getBase } from "@/registry/bases";
 import type { BaseName } from "@/registry/bases";
 
-type DocsBaseSwitcherSection = "components" | "blocks";
+type DocsBaseSwitcherSection = "components" | "blocks" | "theming";
 
 const DOCS_BASE_SWITCHER_SECTIONS = new Set<DocsBaseSwitcherSection>([
   "components",
   "blocks",
+  "theming",
 ]);
 
 const isDocsBaseSwitcherSection = (
@@ -18,7 +19,7 @@ const isDocsBaseSwitcherSection = (
   DOCS_BASE_SWITCHER_SECTIONS.has(section as DocsBaseSwitcherSection);
 
 export const getDocsBaseSwitcherProps = (
-  slug: string[] | undefined
+  slug?: string[]
 ): {
   section: DocsBaseSwitcherSection;
   base: string;
@@ -37,11 +38,7 @@ export const getDocsBaseSwitcherProps = (
     return null;
   }
 
-  if (!rest.length) {
-    return null;
-  }
-
-  return { base, section, slug: rest.join("/") };
+  return { base, section, slug: rest.length > 0 ? rest.join("/") : undefined };
 };
 
 export const DocsBaseSwitcher = ({

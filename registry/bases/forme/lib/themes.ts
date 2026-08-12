@@ -1,7 +1,4 @@
-export type {
-  PDFComponentProps,
-  Style,
-} from "@/registry/themes";
+export type { PDFComponentProps, Style } from "@/registry/themes";
 export type {
   PdfcnTheme,
   PrimitiveTokens,

@@ -16,10 +16,11 @@ import {
 import { TOP_LEVEL_SECTIONS } from "@/constants/nav";
 import { ROUTES } from "@/constants/routes";
 import {
+  PAGES_NEW,
   getDocsSidebarPanel,
   isBlocksFolder,
   isComponentsFolder,
-  PAGES_NEW,
+  isThemesFolder,
 } from "@/lib/docs";
 import {
   findBaseFolder,
@@ -147,6 +148,21 @@ const BlocksSidebarPanel = ({ pathname, tree }: SidebarPanelProps) => {
   return <SidebarPageGroup label="Blocks" pages={pages} pathname={pathname} />;
 };
 
+const ThemesSidebarPanel = ({ pathname, tree }: SidebarPanelProps) => {
+  const folder = findTopLevelFolder(tree, isThemesFolder);
+  if (!folder) {
+    return null;
+  }
+
+  const pages = getAllPagesFromFolder(folder)
+    .filter(
+      (page) => !page.url.endsWith("/themes") && !page.url.endsWith("/themes/")
+    )
+    .map((page) => ({ name: page.name, url: page.url }));
+
+  return <SidebarPageGroup label="Themes" pages={pages} pathname={pathname} />;
+};
+
 export const DocsSidebar = ({
   tree,
   ...props
@@ -163,6 +179,9 @@ export const DocsSidebar = ({
     }
     if (panel === "blocks") {
       return <BlocksSidebarPanel {...panelProps} />;
+    }
+    if (panel === "themes") {
+      return <ThemesSidebarPanel {...panelProps} />;
     }
     return null;
   };
