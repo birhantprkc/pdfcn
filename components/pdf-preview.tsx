@@ -3,9 +3,9 @@
 import { createElement, useEffect, useRef, useState } from "react";
 
 import { replacePreviewImageSources } from "@/examples/preview-assets";
-import { getTakumiPreviewOptions } from "@/examples/preview-config";
 import { cn } from "@/lib/utils";
 import type { BaseName } from "@/registry/bases";
+import type { PdfcnTheme } from "@/registry/themes";
 
 const TAKUMI_WASM_PATH = "/takumi_pdf_wasm_bg.wasm";
 const PREVIEW_LOGO_PATH = "/favicon.png";
@@ -15,6 +15,7 @@ let takumiWasmReady: Promise<unknown> | undefined;
 interface PdfPreviewProps {
   base: BaseName;
   name: string;
+  theme?: PdfcnTheme;
   className?: string;
   height?: React.CSSProperties["height"];
 }
@@ -66,6 +67,7 @@ const assertPdfHasPages = (pdfBytes: Uint8Array) => {
 export const PdfPreview = ({
   base,
   name,
+  theme,
   className,
   height = 640,
 }: PdfPreviewProps) => {
@@ -84,29 +86,76 @@ export const PdfPreview = ({
         let pdfBytes: Uint8Array;
 
         if (base === "takumi") {
-          const [
-            { demos },
-            { default: initialize, render },
-            { fromJsx },
-            images,
-          ] = await Promise.all([
-            import("@/examples/__index__"),
-            import("takumi-pdf"),
-            import("@takumi-rs/helpers/jsx"),
-            loadPreviewLogo(),
-          ]);
-          const Demo = demos.takumi[name];
-          if (!Demo) {
-            throw new Error(`Unknown Takumi demo: ${name}`);
-          }
+          if (theme) {
+            const [
+              { InvoiceClassicDocument },
+              { default: initialize, render },
+              { fromJsx },
+              images,
+            ] = await Promise.all([
+              import("@/registry/bases/takumi/blocks/invoice-classic/invoice-classic"),
+              import("takumi-pdf"),
+              import("@takumi-rs/helpers/jsx"),
+              loadPreviewLogo(),
+            ]);
 
-          await initializeTakumi(initialize);
-          const { node, stylesheets } = await fromJsx(createElement(Demo));
-          const buffer = await render(node, {
-            ...getTakumiPreviewOptions(name),
-            images,
-            stylesheets,
-          });
+            await initializeTakumi(initialize);
+            const { node, stylesheets } = await fromJsx(
+              createElement(InvoiceClassicDocument, { theme })
+            );
+            const { getTakumiPreviewOptions } =
+              await import("@/examples/preview-config");
+            const buffer = await render(node, {
+              ...getTakumiPreviewOptions(name),
+              images,
+              stylesheets,
+            });
+            pdfBytes = new Uint8Array(buffer);
+          } else {
+            const [
+              { demos },
+              { default: initialize, render },
+              { fromJsx },
+              { getTakumiPreviewOptions },
+              images,
+            ] = await Promise.all([
+              import("@/examples/__index__"),
+              import("takumi-pdf"),
+              import("@takumi-rs/helpers/jsx"),
+              import("@/examples/preview-config"),
+              loadPreviewLogo(),
+            ]);
+            const Demo = demos.takumi[name];
+            if (!Demo) {
+              throw new Error(`Unknown Takumi demo: ${name}`);
+            }
+
+            await initializeTakumi(initialize);
+            const { node, stylesheets } = await fromJsx(createElement(Demo));
+            const buffer = await render(node, {
+              ...getTakumiPreviewOptions(name),
+              images,
+              stylesheets,
+            });
+            pdfBytes = new Uint8Array(buffer);
+          }
+        } else if (theme) {
+          const [
+            { InvoiceClassicDocument },
+            { renderSerializedDoc },
+            { serialize },
+          ] = await Promise.all([
+            import("@/registry/bases/forme/blocks/invoice-classic/invoice-classic"),
+            import("@formepdf/core/browser"),
+            import("@formepdf/react"),
+          ]);
+
+          const document = replacePreviewImageSources(
+            serialize(createElement(InvoiceClassicDocument, { theme }))
+          );
+          const buffer = await renderSerializedDoc(
+            document as unknown as Record<string, unknown>
+          );
           pdfBytes = new Uint8Array(buffer);
         } else {
           const [{ demos }, { renderSerializedDoc }, { serialize }] =
@@ -120,10 +169,6 @@ export const PdfPreview = ({
             throw new Error(`Unknown Forme demo: ${name}`);
           }
 
-          // Serialize with the same @formepdf/react instance that created the
-          // demo primitives. renderDocument() dynamically imports a second
-          // serializer instance, whose strict Page identity check can drop all
-          // pages when bundled by Next.js.
           const document = replacePreviewImageSources(
             serialize(createElement(Demo))
           );
@@ -159,7 +204,7 @@ export const PdfPreview = ({
         URL.revokeObjectURL(nextPdfUrl);
       }
     };
-  }, [base, name]);
+  }, [base, name, theme]);
 
   return (
     <div
