@@ -58,7 +58,7 @@ export const ThemePreview = ({
           value={selectedTheme}
           onValueChange={(v) => setSelectedTheme(v as RegistryThemeName)}
         >
-          <SelectTrigger className="h-8 w-35 bg-background text-sm font-medium">
+          <SelectTrigger className="w-35 bg-background">
             <SelectValue placeholder="Theme" />
           </SelectTrigger>
           <SelectContent>

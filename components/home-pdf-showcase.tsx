@@ -24,9 +24,12 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/ui/native-select";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toggle } from "@/components/ui/toggle";
@@ -123,7 +126,7 @@ export const HomePdfShowcase = () => {
   const [selectedComponentId, setSelectedComponentId] =
     useState<ComponentPartId>("page-header");
   const [workspaceTab, setWorkspaceTab] = useState<WorkspaceTab>("preview");
-  const [pdfBase, setPdfBase] = useState<HomePdfBase>("forme");
+  const [pdfBase, setPdfBase] = useState<HomePdfBase>("takumi");
   const [codeRequest, setCodeRequest] = useState<{
     data: HomePdfCodeOutput | null;
     error: string | null;
@@ -276,21 +279,28 @@ export const HomePdfShowcase = () => {
               >
                 Choose base
               </label>
-              <NativeSelect
-                id="home-pdf-base"
-                size="sm"
+              <Select
                 value={pdfBase}
-                onChange={(e) =>
-                  handlePdfBaseChange(e.target.value as HomePdfBase)
+                onValueChange={(value) =>
+                  handlePdfBaseChange(value as HomePdfBase)
                 }
-                className="w-40 min-w-0 sm:w-48"
               >
-                {homePdfBases.map((base) => (
-                  <NativeSelectOption key={base.id} value={base.id}>
-                    {base.label}
-                  </NativeSelectOption>
-                ))}
-              </NativeSelect>
+                <SelectTrigger
+                  id="home-pdf-base"
+                  size="sm"
+                  aria-label="Choose base"
+                  className="w-40 min-w-0 sm:w-48"
+                >
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent align="end">
+                  {homePdfBases.map((base) => (
+                    <SelectItem key={base.id} value={base.id}>
+                      {base.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </CardHeader>
 
@@ -345,21 +355,28 @@ export const HomePdfShowcase = () => {
                 >
                   Choose template
                 </label>
-                <NativeSelect
-                  id="home-pdf-template"
-                  size="sm"
+                <Select
                   value={selectedPdfId}
-                  onChange={(e) =>
-                    handlePdfChange(e.target.value as PdfRecipeId)
+                  onValueChange={(value) =>
+                    handlePdfChange(value as PdfRecipeId)
                   }
-                  className="w-40 min-w-0 sm:w-48"
                 >
-                  {homePdfPreviews.map((pdf) => (
-                    <NativeSelectOption key={pdf.id} value={pdf.id}>
-                      {pdf.name}
-                    </NativeSelectOption>
-                  ))}
-                </NativeSelect>
+                  <SelectTrigger
+                    id="home-pdf-template"
+                    size="sm"
+                    aria-label="Choose template"
+                    className="w-40 min-w-0 sm:w-48"
+                  >
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent align="end">
+                    {homePdfPreviews.map((pdf) => (
+                      <SelectItem key={pdf.id} value={pdf.id}>
+                        {pdf.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <Separator className="lg:hidden" />
