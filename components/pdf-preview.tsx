@@ -106,24 +106,20 @@ export const PdfPreview = ({
         if (base === "takumi") {
           const [
             { default: initialize, render },
-            { fromJsx },
             { getTakumiPreviewOptions },
             images,
             element,
           ] = await Promise.all([
             import("takumi-pdf/no-init"),
-            import("@takumi-rs/helpers/jsx"),
             import("@/examples/preview-config"),
             loadPreviewLogo(),
             loadTakumiElement(name, theme),
           ]);
 
           await initializeTakumi(initialize);
-          const { node, stylesheets } = await fromJsx(element);
-          const buffer = await render(node, {
+          const buffer = await render(element, {
             ...getTakumiPreviewOptions(name),
             images,
-            stylesheets,
           });
           pdfBytes = new Uint8Array(buffer);
         } else if (theme) {
