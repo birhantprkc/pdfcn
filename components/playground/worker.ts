@@ -1,11 +1,9 @@
 import type * as React from "react";
-import { renderToStaticMarkup } from "react-dom/server";
 import initPdf, { render } from "takumi-pdf/no-init";
 import type { PageSize } from "takumi-pdf/no-init";
 import wasmUrl from "takumi-pdf/wasm-url";
 
 import { evaluateCodeExports, renderReact } from "./evaluate";
-import { outputGeometry } from "./geometry";
 import { inspectPdf } from "./inspect-pdf";
 import { messageSchema } from "./schema";
 import type { RenderMessageInput } from "./schema";
@@ -14,6 +12,15 @@ const postMessage = (message: RenderMessageInput, transfer?: Transferable[]) =>
   self.postMessage(message, { transfer });
 
 const PREVIEW_LOGO_PATH = "/favicon.png";
+
+const pageLabel = (size: PageSize | undefined, landscape: boolean): string => {
+  const name =
+    typeof size === "object"
+      ? `${Math.round(size.width)} × ${Math.round(size.height)}`
+      : (size ?? "a4").toUpperCase();
+
+  return landscape ? `${name} landscape` : name;
+};
 
 let imagesReady:
   | Promise<{
@@ -57,24 +64,11 @@ const renderRequest = async (id: number, code: string) => {
   const element = renderReact.createElement(
     component as React.JSXElementConstructor<unknown>
   );
-  const geometry = outputGeometry(options);
-
-  postMessage({
-    height: geometry.height,
-    html: renderToStaticMarkup(element),
-    id,
-    padding: geometry.padding,
-    type: "preview-result",
-    width: geometry.width,
-  });
-
   const start = performance.now();
 
   const pdfOptions = options.pdf ?? ({} as Record<string, unknown>);
   const pdfBytes = await render(element, {
     images: await getImages(),
-    margin: pdfOptions.margin ?? { bottom: 48, left: 48, right: 48, top: 48 },
-    size: (pdfOptions.size as PageSize | undefined) ?? "a4",
     ...pdfOptions,
   });
 
@@ -86,7 +80,10 @@ const renderRequest = async (id: number, code: string) => {
         duration,
         id,
         inspection: inspectPdf(pdfBytes),
-        label: geometry.label,
+        label: pageLabel(
+          pdfOptions.size as PageSize | undefined,
+          pdfOptions.landscape === true
+        ),
         outputBuffer: pdfBytes,
         outputFormat: "pdf",
         outputKind: "pdf",
@@ -119,8 +116,7 @@ self.onmessage = async (event: MessageEvent) => {
       break;
     }
     case "ready":
-    case "render-result":
-    case "preview-result": {
+    case "render-result": {
       throw new Error("Respond message should not be sent from main window.");
     }
     default: {

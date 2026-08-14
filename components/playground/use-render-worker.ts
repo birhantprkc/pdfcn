@@ -44,9 +44,6 @@ export const useRenderWorker = (ranCode: string | undefined) => {
         case "render-request": {
           throw new Error("request is not possible for response");
         }
-        case "preview-result": {
-          break;
-        }
         case "render-result": {
           const { result } = message;
           if (result.id !== currentRequestIdRef.current) {
