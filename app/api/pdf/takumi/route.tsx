@@ -19,18 +19,16 @@ export const GET = async (request: Request) => {
 
   try {
     const Demo = takumiDemos[name];
-    const { node, stylesheets } = await fromJsx(<Demo />);
     if (searchParams.get("format") === "document") {
-      return Response.json({ node, stylesheets });
+      return Response.json(await fromJsx(<Demo />));
     }
 
     const logo = await readFile(path.join(process.cwd(), "public/favicon.png"));
-    const pdf = await render(node, {
+    const pdf = await render(<Demo />, {
       ...getTakumiPreviewOptions(name),
       images: {
         sources: [{ data: logo, src: "/favicon.png" }],
       },
-      stylesheets,
     });
 
     return new Response(Buffer.from(pdf), {
