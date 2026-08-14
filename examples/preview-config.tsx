@@ -2,7 +2,10 @@ import type { RenderOptions } from "takumi-pdf";
 
 import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-footer";
 import { PdfPageNumber } from "@/registry/bases/takumi/components/page-number/page-number";
-import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
+import {
+  PdfcnThemeProvider,
+  usePdfcnTheme,
+} from "@/registry/bases/takumi/components/theme-provider";
 import { pointToCssPixel } from "@/registry/bases/takumi/lib/pdf-primitives";
 
 const DEFAULT_MARGIN = 40;
@@ -41,14 +44,23 @@ const REPORT_NAMES = new Set([
 
 // A footer repeats on every page as a render option, which is also what lets the
 // page counter count.
-const reportFooter = (
-  <PdfcnThemeProvider>
+const ReportFooter = () => {
+  const theme = usePdfcnTheme();
+
+  return (
     <PageFooter
       centerText="Generated with pdfcn"
       leftText="Confidential — Internal Use"
+      pagePadding={theme.spacing.page.marginLeft}
       rightText={<PdfPageNumber size="xs" />}
       variant="three-column"
     />
+  );
+};
+
+const reportFooter = (
+  <PdfcnThemeProvider>
+    <ReportFooter />
   </PdfcnThemeProvider>
 );
 
@@ -75,6 +87,8 @@ export const getTakumiPreviewOptions = (name: string): RenderOptions => {
   if (REPORT_NAMES.has(name)) {
     return {
       footer: reportFooter,
+      // The block paints its own page padding, so only the footer needs room.
+      margin: { bottom: "auto", left: 0, right: 0, top: 0 },
       size: "a4",
     };
   }

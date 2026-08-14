@@ -382,14 +382,16 @@ export const PageFooter = ({
   const resolvedTextColor = textColor
     ? resolveColor(textColor, theme.colors)
     : undefined;
-  const stickyStyle: Style = sticky
+  // A footer passed as a render option lays out at full page width, so the
+  // page padding has to come from the footer itself to line up with the content.
+  const placement: Style = sticky
     ? {
         bottom: pagePadding,
         left: pagePadding,
         position: "absolute",
         right: pagePadding,
       }
-    : {};
+    : { paddingLeft: pagePadding, paddingRight: pagePadding };
 
   const applyOverrides = (base: Style[]): Style[] => {
     if (background) {
@@ -398,9 +400,7 @@ export const PageFooter = ({
     if (style) {
       base.push(style);
     }
-    if (sticky) {
-      base.push(stickyStyle);
-    }
+    base.push(placement);
     return base;
   };
 
