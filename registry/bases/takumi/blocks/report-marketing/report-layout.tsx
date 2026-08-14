@@ -148,8 +148,6 @@ export const ReportLayout = ({
     page: {
       backgroundColor: theme.colors.background,
       boxSizing: "border-box",
-      minHeight: 841,
-      paddingBottom: theme.spacing.page.marginBottom,
       paddingLeft: theme.spacing.page.marginLeft,
       paddingRight: theme.spacing.page.marginRight,
       paddingTop: theme.spacing.page.marginTop,

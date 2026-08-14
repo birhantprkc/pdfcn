@@ -102,8 +102,8 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
       takumi-pdf:
-        specifier: ^0.9.0
-        version: 0.9.0(react@19.2.5)
+        specifier: ^0.9.1
+        version: 0.9.1(react@19.2.5)
       ts-morph:
         specifier: ^26.0.0
         version: 26.0.0
@@ -4287,8 +4287,8 @@ packages:
   tailwindcss@4.2.4:
     resolution: {integrity: sha512-HhKppgO81FQof5m6TEnuBWCZGgfRAWbaeOaGT00KOy/Pf/j6oUihdvBpA7ltCeAvZpFhW3j0PTclkxsd4IXYDA==}
 
-  takumi-pdf@0.9.0:
-    resolution: {integrity: sha512-A/U1XNiaomRmK3NQCDZzF/3e/lBBYjMzQBr/QDRowF0Jc3epjeo7qisIxrKbpvHxojn3TqZKvsv55Cpk/cKOqQ==}
+  takumi-pdf@0.9.1:
+    resolution: {integrity: sha512-HxSn+2XF6UkdJoaBELkFTAaJQI7No6S+YJEPEP+jWUXdRBeAq7VOA07u8NjP/H+pu5o1bTlzi/SNG4i7blJByg==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
@@ -8880,7 +8880,7 @@ snapshots:
 
   tailwindcss@4.2.4: {}
 
-  takumi-pdf@0.9.0(react@19.2.5):
+  takumi-pdf@0.9.1(react@19.2.5):
     dependencies:
       '@takumi-rs/helpers': 2.9.0(react@19.2.5)
     optionalDependencies:

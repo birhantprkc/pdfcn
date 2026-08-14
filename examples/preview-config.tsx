@@ -72,9 +72,15 @@ export const getTakumiPreviewOptions = (name: string): RenderOptions => {
     ? 0
     : pointToCssPixel(COMPONENT_MARGINS[name] ?? DEFAULT_MARGIN);
 
+  if (REPORT_NAMES.has(name)) {
+    return {
+      footer: reportFooter,
+      size: "a4",
+    };
+  }
+
   return {
-    footer: REPORT_NAMES.has(name) ? reportFooter : undefined,
-    margin: { bottom: margin, left: margin, right: margin, top: margin },
+    margin,
     size: COMPONENT_SIZES[name] ?? "a4",
   };
 };
