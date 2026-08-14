@@ -18,8 +18,8 @@ importers:
         specifier: ^4.2.4
         version: 4.2.4
       '@takumi-rs/helpers':
-        specifier: ^2.5.11
-        version: 2.5.11(react@19.2.5)
+        specifier: ^2.9.0
+        version: 2.9.0(react@19.2.5)
       '@vercel/analytics':
         specifier: ^2.0.1
         version: 2.0.1(next@16.3.0(@babel/core@7.29.0)(@types/node@25.6.0)(react-dom@19.2.5(react@19.2.5))(react@19.2.5))(react@19.2.5)
@@ -102,8 +102,8 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
       takumi-pdf:
-        specifier: ^0.4.1
-        version: 0.4.1(react@19.2.5)
+        specifier: ^0.9.0
+        version: 0.9.0(react@19.2.5)
       ts-morph:
         specifier: ^26.0.0
         version: 26.0.0
@@ -2161,8 +2161,8 @@ packages:
   '@tailwindcss/postcss@4.2.4':
     resolution: {integrity: sha512-wgAVj6nUWAolAu8YFvzT2cTBIElWHkjZwFYovF+xsqKsW2ADxM/X2opxj5NsF/qVccAOjRNe8X2IdPzMsWyHTg==}
 
-  '@takumi-rs/helpers@2.5.11':
-    resolution: {integrity: sha512-J6Fl3QMDfV/zKdiTUzJ16VJSUX778imyoVkU90uoqe0Fc9lK1/DVCmTpXq87jTjnkokAb9w2Y1hCT1XnyxqnAg==}
+  '@takumi-rs/helpers@2.9.0':
+    resolution: {integrity: sha512-hlt0W0nILorfAnLA3HtsaFHR2L7IFHpZBeVc3TE6W991f1E/TozvCMj6gLxcmR4pBTYAaFypvlaRDvBYRiMpaQ==}
     engines: {node: '>=18'}
     peerDependencies:
       preact: ^10.0.0
@@ -2228,6 +2228,7 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+    deprecated: Potential CWE-502 - Update to 1.3.1 or higher
 
   '@vercel/analytics@2.0.1':
     resolution: {integrity: sha512-MTQG6V9qQrt1tsDeF+2Uoo5aPjqbVPys1xvnIftXSJYG2SrwXRHnqEvVoYID7BTruDz4lCd2Z7rM1BdkUehk2g==}
@@ -4286,8 +4287,8 @@ packages:
   tailwindcss@4.2.4:
     resolution: {integrity: sha512-HhKppgO81FQof5m6TEnuBWCZGgfRAWbaeOaGT00KOy/Pf/j6oUihdvBpA7ltCeAvZpFhW3j0PTclkxsd4IXYDA==}
 
-  takumi-pdf@0.4.1:
-    resolution: {integrity: sha512-gYGZOUVRsI490cwC0WCNfFU5lGaZhWyr5i7udB6D7MrHwb3CzECbg40ECpieyKP3TBaVKC6lQwsg5UUJDsDSZw==}
+  takumi-pdf@0.9.0:
+    resolution: {integrity: sha512-A/U1XNiaomRmK3NQCDZzF/3e/lBBYjMzQBr/QDRowF0Jc3epjeo7qisIxrKbpvHxojn3TqZKvsv55Cpk/cKOqQ==}
     engines: {node: '>=18'}
     peerDependencies:
       react: ^18.0.0 || ^19.0.0
@@ -6368,7 +6369,7 @@ snapshots:
       postcss: 8.5.10
       tailwindcss: 4.2.4
 
-  '@takumi-rs/helpers@2.5.11(react@19.2.5)':
+  '@takumi-rs/helpers@2.9.0(react@19.2.5)':
     optionalDependencies:
       react: 19.2.5
 
@@ -8879,9 +8880,9 @@ snapshots:
 
   tailwindcss@4.2.4: {}
 
-  takumi-pdf@0.4.1(react@19.2.5):
+  takumi-pdf@0.9.0(react@19.2.5):
     dependencies:
-      '@takumi-rs/helpers': 2.5.11(react@19.2.5)
+      '@takumi-rs/helpers': 2.9.0(react@19.2.5)
     optionalDependencies:
       react: 19.2.5
     transitivePeerDependencies:

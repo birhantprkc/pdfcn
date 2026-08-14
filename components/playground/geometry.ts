@@ -1,6 +1,16 @@
+import type { PageMarginSide } from "takumi-pdf";
+
 const PX_PER_MM = 96 / 25.4;
 const PAGE_SIZES = {
+  a3: { height: 420 * PX_PER_MM, width: 297 * PX_PER_MM },
   a4: { height: 297 * PX_PER_MM, width: 210 * PX_PER_MM },
+  a5: { height: 210 * PX_PER_MM, width: 148 * PX_PER_MM },
+  b4: { height: 353 * PX_PER_MM, width: 250 * PX_PER_MM },
+  b5: { height: 250 * PX_PER_MM, width: 176 * PX_PER_MM },
+  "jis-b4": { height: 364 * PX_PER_MM, width: 257 * PX_PER_MM },
+  "jis-b5": { height: 257 * PX_PER_MM, width: 182 * PX_PER_MM },
+  ledger: { height: 17 * 96, width: 11 * 96 },
+  legal: { height: 14 * 96, width: 8.5 * 96 },
   letter: { height: 11 * 96, width: 8.5 * 96 },
 };
 const DEFAULT_PAGE_MARGIN = 48;
@@ -14,15 +24,20 @@ export interface OutputGeometry {
   label: string;
 }
 
+// An auto margin is the height of a band the renderer measures, which this HTML
+// preview cannot know, so it stands in the default.
+const sidePadding = (side: PageMarginSide): number =>
+  side === "auto" ? DEFAULT_PAGE_MARGIN : side;
+
 const marginPadding = (margin: PdfOptions["margin"]): string => {
-  if (margin === undefined) {
+  if (margin === undefined || margin === "auto") {
     return `${DEFAULT_PAGE_MARGIN}px`;
   }
   if (typeof margin === "number") {
     return `${margin}px`;
   }
   const { top = 0, right = 0, bottom = 0, left = 0 } = margin;
-  return `${top}px ${right}px ${bottom}px ${left}px`;
+  return `${sidePadding(top)}px ${sidePadding(right)}px ${sidePadding(bottom)}px ${sidePadding(left)}px`;
 };
 
 const pdfGeometry = (pdf: PdfOptions): OutputGeometry => {

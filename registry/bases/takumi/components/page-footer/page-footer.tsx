@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import {
   usePdfcnTheme,
   useSafeMemo,
@@ -26,9 +28,9 @@ export type PageFooterVariant =
  * @see {@link PageFooterProps}
  */
 export interface PageFooterProps extends Omit<PDFComponentProps, "children"> {
-  leftText?: string;
-  rightText?: string;
-  centerText?: string;
+  leftText?: ReactNode;
+  rightText?: ReactNode;
+  centerText?: ReactNode;
   /**
    * @default 'simple'
    */
@@ -237,8 +239,8 @@ const renderBranded = (
   containerStyles: Style[],
   leftStyle: Style[],
   rightStyle: Style[],
-  leftText: string | undefined,
-  rightText: string | undefined,
+  leftText: ReactNode,
+  rightText: ReactNode,
   noWrap: boolean
 ) => (
   <View wrap={!noWrap} style={containerStyles}>
@@ -251,8 +253,8 @@ const renderCentered = (
   styles: Styles,
   containerStyles: Style[],
   textStyle: Style[],
-  leftText: string | undefined,
-  rightText: string | undefined,
+  leftText: ReactNode,
+  rightText: ReactNode,
   noWrap: boolean
 ) => (
   <View wrap={!noWrap} style={containerStyles}>
@@ -267,8 +269,8 @@ const renderThreeColumn = (
   leftStyle: Style[],
   centerStyle: Style[],
   rightStyle: Style[],
-  leftText: string | undefined,
-  rightText: string | undefined,
+  leftText: ReactNode,
+  rightText: ReactNode,
   address: string | undefined,
   phone: string | undefined,
   email: string | undefined,
@@ -298,8 +300,8 @@ const renderDetailed = (
   addrStyle: Style[],
   contactStyle: Style[],
   pageNumStyle: Style[],
-  leftText: string | undefined,
-  rightText: string | undefined,
+  leftText: ReactNode,
+  rightText: ReactNode,
   address: string | undefined,
   phone: string | undefined,
   email: string | undefined,
@@ -327,8 +329,8 @@ const renderMinimal = (
   containerStyles: Style[],
   leftStyle: Style[],
   rightStyle: Style[],
-  leftText: string | undefined,
-  rightText: string | undefined,
+  leftText: ReactNode,
+  rightText: ReactNode,
   noWrap: boolean
 ) => (
   <View wrap={!noWrap} style={containerStyles}>
@@ -343,9 +345,9 @@ const renderSimple = (
   leftStyle: Style[],
   centerStyle: Style[],
   rightStyle: Style[],
-  leftText: string | undefined,
-  centerText: string | undefined,
-  rightText: string | undefined,
+  leftText: ReactNode,
+  centerText: ReactNode,
+  rightText: ReactNode,
   noWrap: boolean
 ) => (
   <View wrap={!noWrap} style={containerStyles}>

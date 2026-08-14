@@ -1,7 +1,8 @@
 import type * as React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import initPdf, { render } from "takumi-pdf";
-import type { PageSize } from "takumi-pdf";
+import initPdf, { render } from "takumi-pdf/no-init";
+import type { PageSize } from "takumi-pdf/no-init";
+import wasmUrl from "takumi-pdf/wasm-url";
 
 import { evaluateCodeExports, renderReact } from "./evaluate";
 import { outputGeometry } from "./geometry";
@@ -12,10 +13,6 @@ import type { RenderMessageInput } from "./schema";
 const postMessage = (message: RenderMessageInput, transfer?: Transferable[]) =>
   self.postMessage(message, { transfer });
 
-const TAKUMI_WASM_URL = new URL(
-  "/takumi_pdf_wasm_bg.wasm",
-  self.location.origin
-);
 const PREVIEW_LOGO_PATH = "/favicon.png";
 
 let imagesReady:
@@ -46,7 +43,7 @@ const getImages = () => {
 };
 
 const initWasm = async () => {
-  wasmReady ??= initPdf({ module_or_path: TAKUMI_WASM_URL });
+  wasmReady ??= initPdf({ module_or_path: wasmUrl });
   await wasmReady;
 };
 

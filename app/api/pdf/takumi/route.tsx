@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 import { fromJsx } from "@takumi-rs/helpers/jsx";
-import { render } from "takumi-pdf";
+import { render } from "takumi-pdf/next";
 
 import { demos } from "@/examples/__index__";
 import { getTakumiPreviewOptions } from "@/examples/preview-config";

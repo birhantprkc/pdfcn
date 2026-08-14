@@ -20,8 +20,8 @@ export type WatermarkPosition =
   | "bottom-right";
 
 /**
- * Diagonal watermark overlaid across the full page using absolute positioning.
- * Props - `text` | `opacity` | `fontSize` | `color` | `angle` | `position` | `fixed` | `style`
+ * Diagonal watermark overlaid across the full page, repeated on every page.
+ * Props - `text` | `opacity` | `fontSize` | `color` | `angle` | `position` | `style`
  * @see {@link PdfWatermarkProps}
  */
 export interface PdfWatermarkProps extends Omit<PDFComponentProps, "children"> {
@@ -31,10 +31,6 @@ export interface PdfWatermarkProps extends Omit<PDFComponentProps, "children"> {
   color?: string;
   angle?: number;
   position?: WatermarkPosition;
-  /**
-   * @default true
-   */
-  fixed?: boolean;
   children?: never;
 }
 
@@ -49,7 +45,7 @@ const createWatermarkStyles = (t: PdfcnTheme) => {
       justifyContent: "center",
       left: 0,
       pointerEvents: "none",
-      position: "absolute",
+      position: "fixed",
       right: 0,
       top: 0,
       zIndex: -1,
