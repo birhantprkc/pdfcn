@@ -8,8 +8,44 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { LINK } from "@/constants/links";
 import { ROUTES } from "@/constants/routes";
 import { getStargazers } from "@/lib/github";
+import type { Sponsor } from "@/lib/sponsors";
 import { tiers } from "@/lib/sponsors";
 import { createPageMetadata } from "@/seo/metadata";
+
+const logoClassName =
+  "h-8 w-auto opacity-60 transition-opacity group-hover:opacity-100";
+
+const SponsorLogo = ({ sponsor }: { sponsor: Sponsor }) => {
+  if (sponsor.logoLight || sponsor.logoDark) {
+    return (
+      <>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={sponsor.logoLight ?? sponsor.logoDark}
+          alt={sponsor.name}
+          className={`${logoClassName} dark:hidden`}
+        />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={sponsor.logoDark ?? sponsor.logoLight}
+          alt={sponsor.name}
+          className={`hidden ${logoClassName} dark:block`}
+        />
+      </>
+    );
+  }
+
+  if (sponsor.logo) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={sponsor.logo} alt={sponsor.name} className={logoClassName} />
+    );
+  }
+
+  return (
+    <span className="text-sm font-medium text-foreground">{sponsor.name}</span>
+  );
+};
 
 export const metadata: Metadata = createPageMetadata({
   description:
@@ -117,18 +153,7 @@ const SponsorPage = async () => {
                         borderColor: tier.colors.slotBorder,
                       }}
                     >
-                      {sponsor.logo ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={sponsor.logo}
-                          alt={sponsor.name}
-                          className="h-8 w-auto opacity-60 transition-opacity group-hover:opacity-100"
-                        />
-                      ) : (
-                        <span className="text-sm font-medium text-foreground">
-                          {sponsor.name}
-                        </span>
-                      )}
+                      <SponsorLogo sponsor={sponsor} />
                     </a>
                   ))}
 
