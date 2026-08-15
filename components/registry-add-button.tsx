@@ -40,7 +40,7 @@ const Description = ({ registryName }: { registryName: string }) => (
       className="text-foreground underline underline-offset-4"
       href={addQueryParams("https://ui.shadcn.com/docs/directory", {
         q: registryName,
-        ...UTM_PARAMS,
+        ...UTM_PARAMS.SOURCE,
       })}
       target="_blank"
       rel="noopener"

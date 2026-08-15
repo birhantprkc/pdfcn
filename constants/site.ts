@@ -44,7 +44,11 @@ export const META_THEME_COLORS = {
 };
 
 export const UTM_PARAMS = {
-  utm_campaign: "sponsors_page",
-  utm_medium: "sponsor",
-  utm_source: new URL(baseUrl).hostname,
+  SOURCE: {
+    utm_source: new URL(baseUrl).hostname,
+  },
+  SPONSOR: {
+    utm_campaign: "sponsors_page",
+    utm_medium: "sponsor",
+  },
 };

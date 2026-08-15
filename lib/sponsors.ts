@@ -10,7 +10,10 @@ export interface Sponsor {
 }
 
 const REACT_BITS_PRO: Sponsor = {
-  href: addQueryParams("https://pro.reactbits.dev", UTM_PARAMS),
+  href: addQueryParams("https://pro.reactbits.dev", {
+    ...UTM_PARAMS.SOURCE,
+    ...UTM_PARAMS.SPONSOR,
+  }),
   logo: "/sponsors/reactbitpro.svg",
   name: "React Bits Pro",
 };

@@ -25,7 +25,7 @@ export const GitHubStars = ({
       <TooltipTrigger asChild>
         <a
           className={cn(buttonVariants({ size: "sm", variant: "ghost" }))}
-          href={addQueryParams(LINK.GITHUB, UTM_PARAMS)}
+          href={addQueryParams(LINK.GITHUB, UTM_PARAMS.SOURCE)}
           onClick={play}
           rel="noopener"
           target="_blank"
