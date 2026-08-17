@@ -3,6 +3,8 @@ import { DataTable } from "@/registry/bases/takumi/components/data-table/data-ta
 import { PdfGraph } from "@/registry/bases/takumi/components/graph/graph";
 import { KeyValue } from "@/registry/bases/takumi/components/key-value/key-value";
 import { PdfList } from "@/registry/bases/takumi/components/list/list";
+import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-footer";
+import { PdfPageNumber } from "@/registry/bases/takumi/components/page-number/page-number";
 import { PageHeader } from "@/registry/bases/takumi/components/page-header/page-header";
 import { Section } from "@/registry/bases/takumi/components/section/section";
 import { Text } from "@/registry/bases/takumi/components/text/text";
@@ -148,6 +150,8 @@ export const ReportLayout = ({
     page: {
       backgroundColor: theme.colors.background,
       boxSizing: "border-box",
+      minHeight: 841,
+      paddingBottom: theme.spacing.page.marginBottom,
       paddingLeft: theme.spacing.page.marginLeft,
       paddingRight: theme.spacing.page.marginRight,
       paddingTop: theme.spacing.page.marginTop,
@@ -223,6 +227,15 @@ export const ReportLayout = ({
             ))}
           </View>
         </Section>
+
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with pdfcn"
+          rightText={<PdfPageNumber size="xs" />}
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
       </Page>
 
       <Page size="A4" style={[styles.page, styles.pageBreak]}>
@@ -306,6 +319,15 @@ export const ReportLayout = ({
             }}
           />
         </Section>
+
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with pdfcn"
+          rightText={<PdfPageNumber size="xs" />}
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
       </Page>
 
       <Page size="A4" style={styles.page}>
@@ -349,6 +371,15 @@ export const ReportLayout = ({
             </View>
           </View>
         </Section>
+
+        <PageFooter
+          variant="three-column"
+          leftText="Confidential — Internal Use"
+          centerText="Generated with pdfcn"
+          rightText={<PdfPageNumber size="xs" />}
+          sticky
+          pagePadding={theme.spacing.page.marginLeft}
+        />
       </Page>
     </Document>
   );
