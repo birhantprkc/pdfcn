@@ -2,10 +2,13 @@ import {
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/takumi/components/theme-provider";
+import { PageNumber, TotalPages } from "takumi-pdf";
+
 import {
   View,
   Text as PDFText,
   StyleSheet,
+  flatten,
 } from "@/registry/bases/takumi/lib/pdf-primitives";
 import type { Style } from "@/registry/bases/takumi/lib/pdf-primitives";
 import type { PDFComponentProps } from "@/registry/types/pdf-components";
@@ -116,22 +119,10 @@ export const PdfPageNumber = ({
     <View style={[styles.container, justifyMap[align]]}>
       {format.split(/({page}|{total})/).map((part, index) => {
         if (part === "{page}") {
-          return (
-            <PDFText
-              key={`page-${index}`}
-              className="pageNumber"
-              style={textStyles}
-            />
-          );
+          return <PageNumber key={`page-${index}`} style={flatten(textStyles)} />;
         }
         if (part === "{total}") {
-          return (
-            <PDFText
-              key={`total-${index}`}
-              className="totalPages"
-              style={textStyles}
-            />
-          );
+          return <TotalPages key={`total-${index}`} style={flatten(textStyles)} />;
         }
         return (
           <PDFText key={`text-${index}`} style={textStyles}>

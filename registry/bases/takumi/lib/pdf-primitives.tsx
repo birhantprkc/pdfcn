@@ -155,7 +155,7 @@ export const normalizeTakumiStyle = (style: Style): Style => {
   );
 };
 
-const flatten = (style?: StyleInput): Record<string, unknown> | undefined => {
+export const flatten = (style?: StyleInput): Record<string, unknown> | undefined => {
   if (!style) {
     return undefined;
   }
