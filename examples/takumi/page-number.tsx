@@ -1,5 +1,5 @@
 import { Heading } from "@/registry/bases/takumi/components/heading/heading";
-import { PdfPageNumber } from "@/registry/bases/takumi/components/page-number/page-number";
+import { PageNumber } from "@/registry/bases/takumi/components/page-number/page-number";
 import { Text } from "@/registry/bases/takumi/components/text/text";
 import { PdfcnThemeProvider } from "@/registry/bases/takumi/components/theme-provider";
 import {
@@ -21,7 +21,7 @@ const DemoBody = () => (
       </Text>
     </View>
     <View style={{ bottom: 0, left: 0, position: "absolute", right: 0 }}>
-      <PdfPageNumber format="Page 1 of 1" align="center" />
+      <PageNumber format="Page 1 of 1" align="center" />
     </View>
   </View>
 );

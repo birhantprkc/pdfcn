@@ -1,7 +1,7 @@
 import { Document, Page, View } from "@formepdf/react";
 
 import { Heading } from "@/registry/bases/forme/components/heading/heading";
-import { PdfPageNumber } from "@/registry/bases/forme/components/page-number/page-number";
+import { PageNumber } from "@/registry/bases/forme/components/page-number/page-number";
 import { Text } from "@/registry/bases/forme/components/text/text";
 
 const DemoBody = () => (
@@ -17,7 +17,7 @@ const DemoBody = () => (
       </Text>
     </View>
     <View style={{ bottom: 0, left: 0, position: "absolute", right: 0 }}>
-      <PdfPageNumber format="Page 1 of 1" align="center" />
+      <PageNumber format="Page 1 of 1" align="center" />
     </View>
   </View>
 );

@@ -3,7 +3,7 @@ import {
   useSafeMemo,
 } from "@/registry/bases/forme/components/theme-provider";
 import {
-  Text as PDFText,
+  Text,
   StyleSheet,
   View,
 } from "@/registry/bases/forme/lib/pdf-primitives";
@@ -17,12 +17,9 @@ export type PageNumberSize = "xs" | "sm" | "md";
 /**
  * Auto page number rendered with a configurable format string at a or inline position.
  * Props - `format` | `align` | `size` | `fixed` | `muted` | `style`
- * @see {@link PdfPageNumberProps}
+ * @see {@link PageNumberProps}
  */
-export interface PdfPageNumberProps extends Omit<
-  PDFComponentProps,
-  "children"
-> {
+export interface PageNumberProps extends Omit<PDFComponentProps, "children"> {
   /**
    * Format string — use `{page}` for current page and `{total}` for total page count.
    * @default 'Page {page} of {total}'
@@ -63,22 +60,13 @@ const createPageNumberStyles = (t: PdfcnTheme) => {
   });
 };
 
-const _formatPageNumber = (
-  format: string,
-  pageNumber: number,
-  totalPages: number
-): string =>
-  format
-    .replace("{page}", String(pageNumber))
-    .replace("{total}", String(totalPages));
-
-export const PdfPageNumber = ({
+export const PageNumber = ({
   format = "Page {page} of {total}",
   align = "center",
   size = "sm",
   muted = true,
   style,
-}: PdfPageNumberProps) => {
+}: PageNumberProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createPageNumberStyles(theme), [theme]);
   const alignMap = {
@@ -102,11 +90,11 @@ export const PdfPageNumber = ({
   }
   return (
     <View style={styles.container}>
-      <PDFText style={textStyles as never}>
+      <Text style={textStyles as never}>
         {format
           .replace("{page}", "{{pageNumber}}")
           .replace("{total}", "{{totalPages}}")}
-      </PDFText>
+      </Text>
     </View>
   );
 };
