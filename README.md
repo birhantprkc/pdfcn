@@ -74,7 +74,7 @@ This project is proudly supported by:
 
 > Found this project useful? [Sponsor us](https://pdfcn.vercel.app/sponsor) to help with support and maintenance.
 
-### Stats
+## Stats
 
 ![Stats](https://repobeats.axiom.co/api/embed/a4ea68c4f6820d5e1cb0d2681ec946a89b945790.svg "Repobeats analytics image")
 
