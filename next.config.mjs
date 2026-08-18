@@ -54,18 +54,7 @@ const nextConfig = {
       },
     ];
   },
-  serverExternalPackages: [
-    "takumi-pdf",
-    "@formepdf/core",
-    "@takumi-rs/helpers",
-  ],
-  turbopack: {
-    rules: {
-      "*.wasm": {
-        type: "wasm",
-      },
-    },
-  },
+  serverExternalPackages: ["@formepdf/core"],
 };
 
 const withMDX = createMDX({});

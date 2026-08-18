@@ -1,13 +1,13 @@
 "use client";
 
 import { createElement, useEffect, useRef, useState } from "react";
+import takumiWasmUrl from "takumi-pdf/wasm-url";
 
 import { replacePreviewImageSources } from "@/examples/preview-assets";
 import { cn } from "@/lib/utils";
 import type { BaseName } from "@/registry/bases";
 import type { PdfcnTheme } from "@/registry/themes";
 
-const TAKUMI_WASM_PATH = "/takumi_pdf_wasm_bg.wasm";
 const PREVIEW_LOGO_PATH = "/favicon.png";
 
 let takumiWasmReady: Promise<unknown> | undefined;
@@ -21,10 +21,10 @@ interface PdfPreviewProps {
 }
 
 const startTakumi = async (
-  initialize: (input: { module_or_path: string }) => Promise<unknown>
+  initialize: (input: { module_or_path: URL }) => Promise<unknown>
 ) => {
   try {
-    return await initialize({ module_or_path: TAKUMI_WASM_PATH });
+    return await initialize({ module_or_path: takumiWasmUrl });
   } catch (error) {
     takumiWasmReady = undefined;
     throw error;
@@ -32,10 +32,28 @@ const startTakumi = async (
 };
 
 const initializeTakumi = (
-  initialize: (input: { module_or_path: string }) => Promise<unknown>
+  initialize: (input: { module_or_path: URL }) => Promise<unknown>
 ) => {
   takumiWasmReady ??= startTakumi(initialize);
+
   return takumiWasmReady;
+};
+
+const loadTakumiElement = async (name: string, theme?: PdfcnTheme) => {
+  if (theme) {
+    const { InvoiceClassicDocument } =
+      await import("@/registry/bases/takumi/blocks/invoice-classic/invoice-classic");
+
+    return createElement(InvoiceClassicDocument, { theme });
+  }
+
+  const { demos } = await import("@/examples/__index__");
+  const Demo = demos.takumi[name];
+  if (!Demo) {
+    throw new Error(`Unknown Takumi demo: ${name}`);
+  }
+
+  return createElement(Demo);
 };
 
 const loadPreviewLogo = async () => {
@@ -86,59 +104,24 @@ export const PdfPreview = ({
         let pdfBytes: Uint8Array;
 
         if (base === "takumi") {
-          if (theme) {
-            const [
-              { InvoiceClassicDocument },
-              { default: initialize, render },
-              { fromJsx },
-              images,
-            ] = await Promise.all([
-              import("@/registry/bases/takumi/blocks/invoice-classic/invoice-classic"),
-              import("takumi-pdf"),
-              import("@takumi-rs/helpers/jsx"),
-              loadPreviewLogo(),
-            ]);
+          const [
+            { default: initialize, render },
+            { getTakumiPreviewOptions },
+            images,
+            element,
+          ] = await Promise.all([
+            import("takumi-pdf/no-init"),
+            import("@/examples/preview-config"),
+            loadPreviewLogo(),
+            loadTakumiElement(name, theme),
+          ]);
 
-            await initializeTakumi(initialize);
-            const { node, stylesheets } = await fromJsx(
-              createElement(InvoiceClassicDocument, { theme })
-            );
-            const { getTakumiPreviewOptions } =
-              await import("@/examples/preview-config");
-            const buffer = await render(node, {
-              ...getTakumiPreviewOptions(name),
-              images,
-              stylesheets,
-            });
-            pdfBytes = new Uint8Array(buffer);
-          } else {
-            const [
-              { demos },
-              { default: initialize, render },
-              { fromJsx },
-              { getTakumiPreviewOptions },
-              images,
-            ] = await Promise.all([
-              import("@/examples/__index__"),
-              import("takumi-pdf"),
-              import("@takumi-rs/helpers/jsx"),
-              import("@/examples/preview-config"),
-              loadPreviewLogo(),
-            ]);
-            const Demo = demos.takumi[name];
-            if (!Demo) {
-              throw new Error(`Unknown Takumi demo: ${name}`);
-            }
-
-            await initializeTakumi(initialize);
-            const { node, stylesheets } = await fromJsx(createElement(Demo));
-            const buffer = await render(node, {
-              ...getTakumiPreviewOptions(name),
-              images,
-              stylesheets,
-            });
-            pdfBytes = new Uint8Array(buffer);
-          }
+          await initializeTakumi(initialize);
+          const buffer = await render(element, {
+            ...getTakumiPreviewOptions(name),
+            images,
+          });
+          pdfBytes = new Uint8Array(buffer);
         } else if (theme) {
           const [
             { InvoiceClassicDocument },

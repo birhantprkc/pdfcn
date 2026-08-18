@@ -56,21 +56,10 @@ const readySchema = z.object({
   type: z.literal("ready"),
 });
 
-const previewResultSchema = z.object({
-  cssContents: z.optional(z.array(z.string())),
-  height: z.optional(z.int().check(z.positive(), z.minimum(1))),
-  html: z.string(),
-  id: z.int().check(z.positive(), z.minimum(1)),
-  padding: z.optional(z.string()),
-  type: z.literal("preview-result"),
-  width: z.optional(z.int().check(z.positive(), z.minimum(1))),
-});
-
 export const messageSchema = z.discriminatedUnion("type", [
   renderRequestSchema,
   renderResultSchema,
   readySchema,
-  previewResultSchema,
 ]);
 
 export type RenderMessageInput = z.input<typeof messageSchema>;

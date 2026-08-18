@@ -155,7 +155,7 @@ export const normalizeTakumiStyle = (style: Style): Style => {
   );
 };
 
-const flatten = (style?: StyleInput): Record<string, unknown> | undefined => {
+export const flatten = (style?: StyleInput): Record<string, unknown> | undefined => {
   if (!style) {
     return undefined;
   }
@@ -167,8 +167,8 @@ const flatten = (style?: StyleInput): Record<string, unknown> | undefined => {
 
 export const View = ({ children, style, className, ...rest }: ViewProps) => {
   const {
-    wrap: _w,
-    fixed: _f,
+    wrap,
+    fixed,
     break: br,
     minPresenceAhead: _m,
     ...dom
@@ -180,6 +180,12 @@ export const View = ({ children, style, className, ...rest }: ViewProps) => {
   };
   if (br) {
     Object.assign(merged, { breakBefore: "page" });
+  }
+  if (wrap === false) {
+    Object.assign(merged, { breakInside: "avoid" });
+  }
+  if (fixed) {
+    Object.assign(merged, { position: "fixed" });
   }
   return (
     <div

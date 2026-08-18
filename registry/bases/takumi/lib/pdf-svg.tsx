@@ -1,42 +1,9 @@
-import { Children, Fragment, cloneElement, isValidElement } from "react";
 import type { CSSProperties, ReactNode, SVGProps } from "react";
 
 import {
   normalizeTakumiStyle,
   pointToCssPixel,
 } from "@/registry/bases/takumi/lib/pdf-primitives";
-
-type SvgChildProps = Record<string, unknown> & {
-  children?: ReactNode;
-};
-
-const resolveSvgChildren = (children: ReactNode): ReactNode =>
-  Children.map(children, (child) => {
-    if (!isValidElement<SvgChildProps>(child)) {
-      return child;
-    }
-
-    if (typeof child.type === "function") {
-      const resolved = (child.type as (props: SvgChildProps) => ReactNode)(
-        child.props
-      );
-      return resolveSvgChildren(resolved);
-    }
-
-    if ((child.type as unknown) === Fragment) {
-      return resolveSvgChildren(child.props.children);
-    }
-
-    if (child.props.children === undefined) {
-      return child;
-    }
-
-    return cloneElement(
-      child,
-      undefined,
-      resolveSvgChildren(child.props.children)
-    );
-  });
 
 export const Svg = ({
   children,
@@ -70,7 +37,7 @@ export const Svg = ({
       width={numericWidth === undefined ? width : pointToCssPixel(numericWidth)}
       {...rest}
     >
-      {resolveSvgChildren(children)}
+      {children}
     </svg>
   );
 };

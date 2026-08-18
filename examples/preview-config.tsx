@@ -50,7 +50,7 @@ export const getTakumiPreviewOptions = (name: string): RenderOptions => {
     : pointToCssPixel(COMPONENT_MARGINS[name] ?? DEFAULT_MARGIN);
 
   return {
-    margin: { bottom: margin, left: margin, right: margin, top: margin },
+    margin,
     size: COMPONENT_SIZES[name] ?? "a4",
   };
 };
