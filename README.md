@@ -35,11 +35,11 @@
 
 ## Community
 
-The pdfcn community lives on [GitHub](https://github.com/shadcn-labs/pdfcn), where you can [report bugs, request features, and share ideas](https://github.com/shadcn-labs/pdfcn/issues).
+The pdfcn community lives on [GitHub](https://github.com/shadcn-labs/pdfcn), where you can ask questions, share ideas, and show what you've built.
 
 ## Contributing
 
-Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get the repo running locally and land a change, and use[issues](https://github.com/shadcn-labs/pdfcn/issues) and [discussions](https://github.com/shadcn-labs/pdfcn/discussions) to collaborate. By participating, you agree to the [Code of Conduct](./CODE_OF_CONDUCT.md).
+Contributions are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) to get the repo running locally and land a change, and use [issues](https://github.com/shadcn-labs/pdfcn/issues) and [discussions](https://github.com/shadcn-labs/pdfcn/discussions) to collaborate. By participating, you agree to the [Code of Conduct](./CODE_OF_CONDUCT.md).
 
 ## Security
 
