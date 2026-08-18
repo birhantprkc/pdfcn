@@ -1,9 +1,12 @@
 import {
+  PageNumber as PageNumberPrimitive,
+  TotalPages as TotalPagesPrimitive,
+} from "takumi-pdf/primitives";
+
+import {
   usePdfcnTheme,
   useSafeMemo,
 } from "@/registry/bases/takumi/components/theme-provider";
-import { PageNumber, TotalPages } from "takumi-pdf/primitives";
-
 import {
   View,
   Text as PDFText,
@@ -20,12 +23,9 @@ export type PageNumberSize = "xs" | "sm" | "md";
 /**
  * Auto page number rendered with a configurable format string at a or inline position.
  * Props - `format` | `align` | `size` | `fixed` | `muted` | `style`
- * @see {@link PdfPageNumberProps}
+ * @see {@link PageNumberProps}
  */
-export interface PdfPageNumberProps extends Omit<
-  PDFComponentProps,
-  "children"
-> {
+export interface PageNumberProps extends Omit<PDFComponentProps, "children"> {
   /**
    * Format string — use `{page}` for current page and `{total}` for total page count.
    * @default 'Page {page} of {total}'
@@ -73,22 +73,13 @@ const createPageNumberStyles = (t: PdfcnTheme) => {
   });
 };
 
-const _formatPageNumber = (
-  format: string,
-  pageNumber: number,
-  totalPages: number
-): string =>
-  format
-    .replace("{page}", String(pageNumber))
-    .replace("{total}", String(totalPages));
-
-export const PdfPageNumber = ({
+export const PageNumber = ({
   format = "Page {page} of {total}",
   align = "center",
   size = "sm",
   muted = true,
   style,
-}: PdfPageNumberProps) => {
+}: PageNumberProps) => {
   const theme = usePdfcnTheme();
   const styles = useSafeMemo(() => createPageNumberStyles(theme), [theme]);
   const alignMap = {
@@ -119,10 +110,20 @@ export const PdfPageNumber = ({
     <View style={[styles.container, justifyMap[align]]}>
       {format.split(/({page}|{total})/).map((part, index) => {
         if (part === "{page}") {
-          return <PageNumber key={`page-${index}`} style={flatten(textStyles)} />;
+          return (
+            <PageNumberPrimitive
+              key={`page-${index}`}
+              style={flatten(textStyles)}
+            />
+          );
         }
         if (part === "{total}") {
-          return <TotalPages key={`total-${index}`} style={flatten(textStyles)} />;
+          return (
+            <TotalPagesPrimitive
+              key={`total-${index}`}
+              style={flatten(textStyles)}
+            />
+          );
         }
         return (
           <PDFText key={`text-${index}`} style={textStyles}>

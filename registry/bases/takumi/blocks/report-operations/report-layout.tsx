@@ -4,8 +4,8 @@ import { PdfGraph } from "@/registry/bases/takumi/components/graph/graph";
 import { KeyValue } from "@/registry/bases/takumi/components/key-value/key-value";
 import { PdfList } from "@/registry/bases/takumi/components/list/list";
 import { PageFooter } from "@/registry/bases/takumi/components/page-footer/page-footer";
-import { PdfPageNumber } from "@/registry/bases/takumi/components/page-number/page-number";
 import { PageHeader } from "@/registry/bases/takumi/components/page-header/page-header";
+import { PageNumber } from "@/registry/bases/takumi/components/page-number/page-number";
 import { Section } from "@/registry/bases/takumi/components/section/section";
 import { Text } from "@/registry/bases/takumi/components/text/text";
 import {
@@ -232,7 +232,7 @@ export const ReportLayout = ({
           variant="three-column"
           leftText="Confidential — Internal Use"
           centerText="Generated with pdfcn"
-          rightText={<PdfPageNumber size="xs" />}
+          rightText={<PageNumber size="xs" />}
           sticky
           pagePadding={theme.spacing.page.marginLeft}
         />
@@ -324,7 +324,7 @@ export const ReportLayout = ({
           variant="three-column"
           leftText="Confidential — Internal Use"
           centerText="Generated with pdfcn"
-          rightText={<PdfPageNumber size="xs" />}
+          rightText={<PageNumber size="xs" />}
           sticky
           pagePadding={theme.spacing.page.marginLeft}
         />
@@ -376,7 +376,7 @@ export const ReportLayout = ({
           variant="three-column"
           leftText="Confidential — Internal Use"
           centerText="Generated with pdfcn"
-          rightText={<PdfPageNumber size="xs" />}
+          rightText={<PageNumber size="xs" />}
           sticky
           pagePadding={theme.spacing.page.marginLeft}
         />
