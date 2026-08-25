@@ -18,6 +18,7 @@ interface PdfPreviewProps {
   theme?: PdfcnTheme;
   className?: string;
   height?: React.CSSProperties["height"];
+  onUrlChange?: (url: string | null) => void;
 }
 
 const startTakumi = async (
@@ -88,6 +89,7 @@ export const PdfPreview = ({
   theme,
   className,
   height = 640,
+  onUrlChange,
 }: PdfPreviewProps) => {
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -98,6 +100,7 @@ export const PdfPreview = ({
     let nextPdfUrl: string | undefined;
     setPdfUrl(null);
     setError(null);
+    onUrlChange?.(null);
 
     (async () => {
       try {
@@ -170,6 +173,7 @@ export const PdfPreview = ({
           return;
         }
         setPdfUrl(nextPdfUrl);
+        onUrlChange?.(nextPdfUrl);
       } catch (renderError) {
         if (!cancelled) {
           setError(
@@ -185,9 +189,10 @@ export const PdfPreview = ({
       cancelled = true;
       if (nextPdfUrl) {
         URL.revokeObjectURL(nextPdfUrl);
+        onUrlChange?.(null);
       }
     };
-  }, [base, name, theme]);
+  }, [base, name, onUrlChange, theme]);
 
   return (
     <div

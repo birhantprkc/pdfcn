@@ -24,4 +24,5 @@ export const ROUTES = {
   RSS: "/rss.xml",
   SITEMAP: "/sitemap.xml",
   SPONSOR: "/sponsor",
+  THEME_BUILDER: "/theme-builder",
 } as const;
