@@ -19,10 +19,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { LABS_NAV_SECTIONS } from "@/constants/nav";
+import { LABS_LATEST, LABS_NAV_SECTIONS } from "@/constants/nav";
 import type { LabsNavLink as LabsNavLinkItem } from "@/constants/nav";
-import { SITE } from "@/constants/site";
+import { SITE, UTM_PARAMS } from "@/constants/site";
 import { useIconAnimation } from "@/hooks/use-icon-animation";
+import { addQueryParams } from "@/lib/url";
 import { cn } from "@/lib/utils";
 
 type SectionId = (typeof LABS_NAV_SECTIONS)[number]["id"];
@@ -31,6 +32,12 @@ const SECTION_WIDTH: Partial<Record<SectionId, string>> = {
   registries: "w-40",
   skills: "w-72",
 };
+
+const latestCardClassName = cn(
+  "flex flex-col gap-4 rounded-lg border border-border bg-background p-4",
+  "text-base font-normal no-underline transition-colors",
+  "hover:border-foreground/25 hover:bg-background focus:bg-background"
+);
 
 interface LinkAnimationProps {
   onMouseEnter: () => void;
@@ -83,6 +90,55 @@ const LabsNavLink = ({
     onMouseEnter,
     onMouseLeave,
   });
+};
+
+const LatestCard = ({
+  item,
+  nameClassName,
+  textClassName,
+  children,
+}: {
+  item: LabsNavLinkItem;
+  nameClassName?: string;
+  textClassName?: string;
+  children: (
+    props: LinkAnimationProps & { content: React.ReactNode }
+  ) => React.ReactNode;
+}) => {
+  const { iconRef, onMouseEnter, onMouseLeave } =
+    useIconAnimation<ArrowUpRightIconHandle>();
+
+  const content = (
+    <>
+      <span
+        className={cn(
+          "flex items-center justify-center rounded-md bg-muted text-base font-medium",
+          nameClassName ?? "min-h-24 w-full"
+        )}
+      >
+        {item.name}
+      </span>
+      {item.description ? (
+        <span
+          className={cn(
+            "inline-flex items-center gap-1 text-sm text-foreground",
+            textClassName
+          )}
+        >
+          {item.description}
+          <ArrowUpRightIcon
+            ref={iconRef}
+            size={16}
+            className="inline-flex shrink-0"
+          />
+        </span>
+      ) : (
+        <ExternalLinkLabel name={item.name} iconRef={iconRef} />
+      )}
+    </>
+  );
+
+  return children({ content, onMouseEnter, onMouseLeave });
 };
 
 const DesktopSection = ({
@@ -155,6 +211,28 @@ const LabsNavMobile = () => {
         sideOffset={14}
       >
         <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
+          <div className="flex flex-col gap-4">
+            <SectionTitle>Latest</SectionTitle>
+            <LatestCard
+              item={LABS_LATEST}
+              nameClassName="min-h-16 text-2xl"
+              textClassName="text-base"
+            >
+              {({ content, onMouseEnter, onMouseLeave }) => (
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={addQueryParams(LABS_LATEST.href, UTM_PARAMS.SOURCE)}
+                  className={cn(latestCardClassName, "w-full")}
+                  onClick={close}
+                  onMouseEnter={onMouseEnter}
+                  onMouseLeave={onMouseLeave}
+                >
+                  {content}
+                </a>
+              )}
+            </LatestCard>
+          </div>
           {LABS_NAV_SECTIONS.map((section) => (
             <div key={section.id} className="flex flex-col gap-4">
               <SectionTitle>{section.title}</SectionTitle>
@@ -165,7 +243,7 @@ const LabsNavMobile = () => {
                       <a
                         target="_blank"
                         rel="noopener noreferrer"
-                        href={item.href}
+                        href={addQueryParams(item.href, UTM_PARAMS.SOURCE)}
                         className="inline-flex items-center gap-1 text-2xl font-medium"
                         onClick={close}
                         onMouseEnter={onMouseEnter}
@@ -228,6 +306,26 @@ const LabsNavDesktop = () => {
             >
               <div className="container-wrapper px-6">
                 <div className="flex gap-8 py-4 pl-3">
+                  <div className="flex w-64 flex-col gap-3">
+                    <SectionTitle>Latest</SectionTitle>
+                    <LatestCard item={LABS_LATEST} nameClassName="min-h-22">
+                      {({ content, onMouseEnter, onMouseLeave }) => (
+                        <NavigationMenuLink
+                          href={addQueryParams(
+                            LABS_LATEST.href,
+                            UTM_PARAMS.SOURCE
+                          )}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={cn(latestCardClassName, "w-60 gap-2 p-3")}
+                          onMouseEnter={onMouseEnter}
+                          onMouseLeave={onMouseLeave}
+                        >
+                          {content}
+                        </NavigationMenuLink>
+                      )}
+                    </LatestCard>
+                  </div>
                   {LABS_NAV_SECTIONS.map((section) => (
                     <DesktopSection
                       key={section.id}
