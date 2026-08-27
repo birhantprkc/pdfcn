@@ -22,7 +22,13 @@ const sitemap = (): MetadataRoute.Sitemap => {
       changeFrequency: "weekly",
       lastModified: new Date(),
       priority: 0.8,
-      url: `${SITE.URL}${ROUTES.THEME_BUILDER}`,
+      url: `${SITE.URL}${ROUTES.THEME_BUILDER_FORME}`,
+    },
+    {
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+      priority: 0.8,
+      url: `${SITE.URL}${ROUTES.THEME_BUILDER_TAKUMI}`,
     },
   ];
 

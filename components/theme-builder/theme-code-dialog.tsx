@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy, Download } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -12,29 +12,78 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import type { PdfcnTheme } from "@/registry/themes";
+import { cn } from "@/lib/utils";
+import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
+
+import { getRemoteFontFamilies } from "./preview-fonts";
+import { generateDeltaCode, generateThemeCode } from "./theme-code";
+
+type CodeTab = "delta" | "full";
 
 interface ThemeCodeDialogProps {
+  basePreset: ThemePresetName;
   onOpenChange: (open: boolean) => void;
   open: boolean;
   theme: PdfcnTheme;
 }
 
 export const ThemeCodeDialog = ({
+  basePreset,
   onOpenChange,
   open,
   theme,
 }: ThemeCodeDialogProps) => {
   const [copied, setCopied] = useState(false);
+  const [highlightedCode, setHighlightedCode] = useState<string | null>(null);
+  const [tab, setTab] = useState<CodeTab>("full");
+
   const code = useMemo(
     () =>
-      `import type { PdfcnTheme } from "@/registry/themes";\n\nexport const customTheme: PdfcnTheme = ${JSON.stringify(theme, null, 2)};\n`,
-    [theme]
+      tab === "full"
+        ? generateThemeCode(theme)
+        : generateDeltaCode(theme, basePreset),
+    [basePreset, tab, theme]
   );
+
+  const remoteFonts = useMemo(
+    () =>
+      getRemoteFontFamilies([
+        theme.typography.body.fontFamily,
+        theme.typography.heading.fontFamily,
+      ]),
+    [theme.typography.body.fontFamily, theme.typography.heading.fontFamily]
+  );
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+
+    let cancelled = false;
+
+    (async () => {
+      const { highlightCode } = await import("@/lib/highlight-code");
+      const html = await highlightCode(code, "ts");
+      if (!cancelled) {
+        setHighlightedCode(html);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [code, open]);
+
+  const safeName =
+    theme.name
+      .trim()
+      .toLowerCase()
+      .replaceAll(/[^a-z0-9-]+/g, "-") || "custom-theme";
 
   const handleOpenChange = (nextOpen: boolean) => {
     if (!nextOpen) {
       setCopied(false);
+      setTab("full");
     }
     onOpenChange(nextOpen);
   };
@@ -54,11 +103,6 @@ export const ThemeCodeDialog = ({
       new Blob([code], { type: "text/typescript;charset=utf-8" })
     );
     const link = document.createElement("a");
-    const safeName =
-      theme.name
-        .trim()
-        .toLowerCase()
-        .replaceAll(/[^a-z0-9-]+/g, "-") || "custom-theme";
     link.download = `${safeName}.ts`;
     link.href = objectUrl;
     link.click();
@@ -69,20 +113,48 @@ export const ThemeCodeDialog = ({
     <Dialog onOpenChange={handleOpenChange} open={open}>
       <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-3xl">
         <DialogHeader className="border-b p-5 pr-12">
-          <DialogTitle>Theme code</DialogTitle>
+          <DialogTitle>Generated theme code</DialogTitle>
           <DialogDescription>
-            Copy this object into your project and pass it to any themed pdfcn
-            document.
+            Copy into{" "}
+            <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px]">
+              src/lib/{safeName}.ts
+            </code>{" "}
+            in your project and pass it to any themed pdfcn document.
           </DialogDescription>
         </DialogHeader>
-        <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-          <span className="font-mono text-xs text-muted-foreground">
-            {theme.name || "custom-theme"}.ts
-          </span>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b bg-muted/40 px-4 py-2">
+          <div className="flex overflow-hidden rounded-lg border bg-background">
+            <Button
+              className={cn(
+                "h-7 rounded-none border-0 px-3 text-xs",
+                tab === "full"
+                  ? "bg-foreground text-background hover:bg-foreground hover:text-background"
+                  : "text-muted-foreground"
+              )}
+              onClick={() => setTab("full")}
+              size="sm"
+              variant="ghost"
+            >
+              Full theme
+            </Button>
+            <Button
+              className={cn(
+                "h-7 rounded-none border-l px-3 text-xs",
+                tab === "delta"
+                  ? "bg-foreground text-background hover:bg-foreground hover:text-background"
+                  : "text-muted-foreground"
+              )}
+              onClick={() => setTab("delta")}
+              size="sm"
+              variant="ghost"
+            >
+              Delta from <span className="capitalize">{basePreset}</span>
+            </Button>
+          </div>
           <div className="flex items-center gap-2">
             <Button onClick={downloadCode} size="sm" variant="ghost">
               <Download />
-              Download
+              Download .ts
             </Button>
             <Button onClick={copyCode} size="sm" variant="outline">
               {copied ? <Check /> : <Copy />}
@@ -90,9 +162,37 @@ export const ThemeCodeDialog = ({
             </Button>
           </div>
         </div>
-        <pre className="max-h-[65svh] overflow-auto bg-zinc-950 p-5 font-mono text-xs leading-relaxed text-zinc-100">
-          <code>{code}</code>
-        </pre>
+        {tab === "full" && remoteFonts.length > 0 ? (
+          <div className="border-b border-amber-500/20 bg-amber-500/10 px-5 py-3">
+            <p className="text-[11px] text-amber-900 dark:text-amber-200">
+              <strong className="font-semibold">Production note:</strong> this
+              theme uses {remoteFonts.map((font) => `'${font}'`).join(" and ")}{" "}
+              from jsDelivr at runtime. For offline or restricted deployments,
+              self-host those font files or switch to built-in fonts before
+              release.
+            </p>
+          </div>
+        ) : null}
+        <div className="max-h-[60svh] overflow-auto [&_pre]:m-0">
+          {highlightedCode ? (
+            <div
+              dangerouslySetInnerHTML={{ __html: highlightedCode }}
+              dir="ltr"
+            />
+          ) : (
+            <pre className="bg-code p-5 font-mono text-xs leading-relaxed text-code-foreground">
+              <code>{code}</code>
+            </pre>
+          )}
+        </div>
+        <div className="border-t bg-muted/20 px-5 py-3">
+          <p className="text-[11px] text-muted-foreground">
+            <strong className="text-foreground/70">Tip:</strong> use the{" "}
+            <strong className="text-foreground/70">Delta</strong> tab if you
+            only changed a few values — it shows a minimal override to merge
+            with your base preset.
+          </p>
+        </div>
       </DialogContent>
     </Dialog>
   );

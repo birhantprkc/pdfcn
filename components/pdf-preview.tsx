@@ -8,6 +8,11 @@ import { cn } from "@/lib/utils";
 import type { BaseName } from "@/registry/bases";
 import type { PdfcnTheme } from "@/registry/themes";
 
+import {
+  getPreviewFonts,
+  getPreviewFontUrls,
+} from "./theme-builder/preview-fonts";
+
 const PREVIEW_LOGO_PATH = "/favicon.png";
 
 let takumiWasmReady: Promise<unknown> | undefined;
@@ -122,6 +127,12 @@ export const PdfPreview = ({
           await initializeTakumi(initialize);
           const buffer = await render(element, {
             ...getTakumiPreviewOptions(name),
+            fonts: theme
+              ? getPreviewFontUrls([
+                  theme.typography.body.fontFamily,
+                  theme.typography.heading.fontFamily,
+                ])
+              : undefined,
             images,
           });
           pdfBytes = new Uint8Array(buffer);
@@ -139,6 +150,13 @@ export const PdfPreview = ({
           const document = replacePreviewImageSources(
             serialize(createElement(InvoiceClassicDocument, { theme }))
           );
+          const previewFonts = getPreviewFonts([
+            theme.typography.body.fontFamily,
+            theme.typography.heading.fontFamily,
+          ]);
+          if (previewFonts.length > 0) {
+            document.fonts = [...(document.fonts ?? []), ...previewFonts];
+          }
           const buffer = await renderSerializedDoc(
             document as unknown as Record<string, unknown>
           );

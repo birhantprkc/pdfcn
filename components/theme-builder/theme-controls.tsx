@@ -1,15 +1,9 @@
 "use client";
 
-import { Check, LayoutTemplate, Palette, Type } from "lucide-react";
+import { LayoutTemplate, Palette, Shuffle, Type } from "lucide-react";
+import { Fragment } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -18,6 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
@@ -32,21 +27,30 @@ import type {
 } from "./use-theme-builder";
 
 const COLOR_FIELDS = [
-  { key: "background", label: "Background" },
-  { key: "foreground", label: "Foreground" },
-  { key: "primary", label: "Primary" },
-  { key: "primaryForeground", label: "Primary foreground" },
-  { key: "muted", label: "Muted" },
-  { key: "mutedForeground", label: "Muted foreground" },
-  { key: "accent", label: "Accent" },
-  { key: "border", label: "Border" },
-  { key: "destructive", label: "Destructive" },
-  { key: "success", label: "Success" },
-  { key: "warning", label: "Warning" },
-  { key: "info", label: "Info" },
+  { description: "Primary text", key: "foreground", label: "Foreground" },
+  { description: "Page background", key: "background", label: "Background" },
+  { description: "Brand emphasis", key: "primary", label: "Primary" },
+  {
+    description: "Text on primary",
+    key: "primaryForeground",
+    label: "Primary foreground",
+  },
+  { description: "Secondary fill", key: "muted", label: "Muted" },
+  {
+    description: "Captions, footnotes",
+    key: "mutedForeground",
+    label: "Muted foreground",
+  },
+  { description: "Links, highlights", key: "accent", label: "Accent" },
+  { description: "Dividers, table lines", key: "border", label: "Border" },
+  { description: "Errors", key: "destructive", label: "Destructive" },
+  { description: "Success states", key: "success", label: "Success" },
+  { description: "Warning states", key: "warning", label: "Warning" },
+  { description: "Info states", key: "info", label: "Info" },
 ] as const satisfies readonly {
   key: ColorTokenName;
   label: string;
+  description: string;
 }[];
 
 const FONT_OPTIONS = [
@@ -121,44 +125,69 @@ const NumberField = ({
 );
 
 interface ColorFieldProps {
+  description: string;
   label: string;
   onCommit: (value: string) => void;
   value: string;
 }
 
-const ColorField = ({ label, onCommit, value }: ColorFieldProps) => (
-  <div className="flex items-center gap-3 rounded-lg border bg-card p-2.5">
+const ColorField = ({
+  description,
+  label,
+  onCommit,
+  value,
+}: ColorFieldProps) => (
+  <div className="flex items-center gap-3">
+    <div className="min-w-0 flex-1">
+      <span className="block truncate text-xs font-medium">{label}</span>
+      <span className="block truncate text-[10px] text-muted-foreground">
+        {description}
+      </span>
+    </div>
     <Input
       aria-label={`Choose ${label.toLowerCase()} color`}
-      className="size-9 cursor-pointer rounded-md border-0 p-0.5 shadow-none"
+      className="size-8 shrink-0 cursor-pointer rounded-md border-0 bg-transparent p-0.5 shadow-none"
       onChange={(event) => onCommit(event.currentTarget.value)}
       type="color"
       value={value}
     />
-    <label className="min-w-0 flex-1">
-      <span className="block truncate text-xs font-medium">{label}</span>
-      <Input
-        key={`${label}-${value}`}
-        aria-label={`${label} hex value`}
-        className="mt-1 h-7 px-2 font-mono text-[11px] uppercase"
-        defaultValue={value}
-        maxLength={7}
-        onBlur={(event) => {
-          const nextValue = event.currentTarget.value.trim();
-          if (/^#[0-9a-f]{6}$/i.test(nextValue)) {
-            onCommit(nextValue.toLowerCase());
-          } else {
-            event.currentTarget.value = value;
-          }
-        }}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") {
-            event.currentTarget.blur();
-          }
-        }}
-        spellCheck={false}
-      />
-    </label>
+    <Input
+      key={`${label}-${value}`}
+      aria-label={`${label} hex value`}
+      className="h-8 w-[5.5rem] shrink-0 px-2 font-mono text-[11px] uppercase"
+      defaultValue={value}
+      maxLength={7}
+      onBlur={(event) => {
+        const nextValue = event.currentTarget.value.trim();
+        if (/^#[0-9a-f]{6}$/i.test(nextValue)) {
+          onCommit(nextValue.toLowerCase());
+        } else {
+          event.currentTarget.value = value;
+        }
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Enter") {
+          event.currentTarget.blur();
+        }
+      }}
+      spellCheck={false}
+    />
+  </div>
+);
+
+interface SectionProps {
+  children: React.ReactNode;
+  description: string;
+  title: string;
+}
+
+const Section = ({ children, description, title }: SectionProps) => (
+  <div>
+    <div className="mb-3 space-y-0.5">
+      <h3 className="text-sm font-semibold">{title}</h3>
+      <p className="text-xs text-muted-foreground">{description}</p>
+    </div>
+    {children}
   </div>
 );
 
@@ -177,95 +206,90 @@ export const ThemeControls = ({
   idPrefix,
   theme,
 }: ThemeControlsProps) => (
-  <div className={cn("space-y-5 p-4", className)}>
-    <Card className="gap-4 py-4 shadow-none">
-      <CardHeader className="gap-1 px-4">
-        <CardTitle className="text-sm">Theme</CardTitle>
-        <CardDescription className="text-xs">
-          Start from a built-in pdfcn preset.
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-4 px-4">
-        <label
-          className="grid gap-1.5 text-xs font-medium"
-          htmlFor={`${idPrefix}-theme-name`}
-        >
-          Export name
-          <Input
-            key={theme.name}
-            id={`${idPrefix}-theme-name`}
-            className="h-8"
-            defaultValue={theme.name}
-            maxLength={48}
-            onBlur={(event) => {
-              const nextName = event.currentTarget.value.trim();
-              if (nextName) {
-                actions.setName(nextName);
-              } else {
-                event.currentTarget.value = theme.name;
-              }
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                event.currentTarget.blur();
-              }
-            }}
-          />
-        </label>
+  <div className={cn("space-y-4 py-4", className)}>
+    <div className="space-y-3 border-b px-6 pb-4">
+      <label
+        className="grid gap-1.5 text-xs font-medium"
+        htmlFor={`${idPrefix}-theme-name`}
+      >
+        Export name
+        <Input
+          key={theme.name}
+          id={`${idPrefix}-theme-name`}
+          className="h-8"
+          defaultValue={theme.name}
+          maxLength={48}
+          onBlur={(event) => {
+            const nextName = event.currentTarget.value.trim();
+            if (nextName) {
+              actions.setName(nextName);
+            } else {
+              event.currentTarget.value = theme.name;
+            }
+          }}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              event.currentTarget.blur();
+            }
+          }}
+        />
+      </label>
 
-        <div className="grid grid-cols-3 gap-2">
-          {THEMES.map(({ name, theme: presetTheme, title }) => {
-            const selected = name === basePreset;
-            return (
-              <Button
-                key={name}
-                aria-pressed={selected}
-                className={cn(
-                  "relative h-auto min-w-0 flex-col items-stretch gap-2 px-2.5 py-2.5 text-left",
-                  selected && "border-primary bg-primary/5"
-                )}
-                onClick={() => actions.loadPreset(name)}
-                size="sm"
-                variant="outline"
-              >
-                <span className="flex w-full items-center gap-1">
+      <div className="flex items-center gap-1.5">
+        <Select
+          onValueChange={(value) =>
+            actions.loadPreset(value as ThemePresetName)
+          }
+          value={basePreset}
+        >
+          <SelectTrigger
+            className="w-full flex-1"
+            id={`${idPrefix}-preset`}
+            size="sm"
+          >
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {THEMES.map(({ name, theme: presetTheme, title }) => (
+              <SelectItem key={name} value={name}>
+                <span className="flex items-center gap-2">
                   <span
-                    className="size-3.5 shrink-0 rounded-full border"
+                    className="size-2.5 shrink-0 rounded-full border"
                     style={{ backgroundColor: presetTheme.colors.primary }}
                   />
-                  <span className="truncate text-[11px]">{title}</span>
-                  {selected ? <Check className="ml-auto size-3" /> : null}
+                  {title}
                 </span>
-                <span className="flex gap-0.5" aria-hidden="true">
-                  {[
-                    presetTheme.colors.background,
-                    presetTheme.colors.foreground,
-                    presetTheme.colors.muted,
-                    presetTheme.colors.accent,
-                  ].map((color) => (
-                    <span
-                      key={color}
-                      className="h-1.5 flex-1 rounded-full border"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </span>
-              </Button>
-            );
-          })}
-        </div>
-      </CardContent>
-    </Card>
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Button
+          aria-label="Pick a random preset"
+          onClick={() => {
+            const others = THEMES.filter(({ name }) => name !== basePreset);
+            const next = others[Math.floor(Math.random() * others.length)];
+            if (next) {
+              actions.loadPreset(next.name);
+            }
+          }}
+          size="icon-sm"
+          title="Pick a random preset"
+          variant="outline"
+        >
+          <Shuffle />
+        </Button>
+      </div>
+    </div>
 
-    <Tabs defaultValue="colors">
+    <Tabs className="gap-4 px-6" defaultValue="colors">
       <TabsList className="grid w-full grid-cols-3">
         <TabsTrigger value="colors">
           <Palette />
           Colors
         </TabsTrigger>
-        <TabsTrigger value="type">
+        <TabsTrigger value="typography">
           <Type />
-          Type
+          Typography
         </TabsTrigger>
         <TabsTrigger value="layout">
           <LayoutTemplate />
@@ -273,28 +297,26 @@ export const ThemeControls = ({
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent className="mt-3" value="colors">
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-          {COLOR_FIELDS.map(({ key, label }) => (
+      <TabsContent value="colors">
+        {COLOR_FIELDS.map(({ key, label, description }, index) => (
+          <Fragment key={key}>
+            {index > 0 ? <Separator className="my-3" /> : null}
             <ColorField
-              key={key}
+              description={description}
               label={label}
               onCommit={(value) => actions.setColor(key, value)}
               value={theme.colors[key]}
             />
-          ))}
-        </div>
+          </Fragment>
+        ))}
       </TabsContent>
 
-      <TabsContent className="mt-3 space-y-3" value="type">
-        <Card className="gap-4 py-4 shadow-none">
-          <CardHeader className="gap-1 px-4">
-            <CardTitle className="text-sm">Body</CardTitle>
-            <CardDescription className="text-xs">
-              Base type used across paragraphs and tables.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-3 px-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+      <TabsContent value="typography">
+        <Section
+          description="Base type used across paragraphs and tables."
+          title="Body"
+        >
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <label
               className="grid gap-1.5 text-xs font-medium sm:col-span-2 lg:col-span-1 xl:col-span-2"
               htmlFor={`${idPrefix}-body-font`}
@@ -305,8 +327,9 @@ export const ThemeControls = ({
                 value={theme.typography.body.fontFamily}
               >
                 <SelectTrigger
-                  className="h-8 w-full"
+                  className="w-full"
                   id={`${idPrefix}-body-font`}
+                  size="sm"
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -335,17 +358,16 @@ export const ThemeControls = ({
               step={0.05}
               value={theme.typography.body.lineHeight}
             />
-          </CardContent>
-        </Card>
+          </div>
+        </Section>
 
-        <Card className="gap-4 py-4 shadow-none">
-          <CardHeader className="gap-1 px-4">
-            <CardTitle className="text-sm">Headings</CardTitle>
-            <CardDescription className="text-xs">
-              Display type, weight, and scale.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-3 px-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+        <Separator className="my-4" />
+
+        <Section
+          description="Display type, weight, and scale."
+          title="Headings"
+        >
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
             <label
               className="grid gap-1.5 text-xs font-medium sm:col-span-2 lg:col-span-1 xl:col-span-2"
               htmlFor={`${idPrefix}-heading-font`}
@@ -356,8 +378,9 @@ export const ThemeControls = ({
                 value={theme.typography.heading.fontFamily}
               >
                 <SelectTrigger
-                  className="h-8 w-full"
+                  className="w-full"
                   id={`${idPrefix}-heading-font`}
+                  size="sm"
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -382,8 +405,9 @@ export const ThemeControls = ({
                 value={String(theme.typography.heading.fontWeight)}
               >
                 <SelectTrigger
-                  className="h-8 w-full"
+                  className="w-full"
                   id={`${idPrefix}-heading-weight`}
+                  size="sm"
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -417,19 +441,13 @@ export const ThemeControls = ({
                 value={theme.typography.heading.fontSize[level]}
               />
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </Section>
       </TabsContent>
 
-      <TabsContent className="mt-3 space-y-3" value="layout">
-        <Card className="gap-4 py-4 shadow-none">
-          <CardHeader className="gap-1 px-4">
-            <CardTitle className="text-sm">Page</CardTitle>
-            <CardDescription className="text-xs">
-              Paper format and reading direction.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-3 px-4">
+      <TabsContent value="layout">
+        <Section description="Paper format and reading direction." title="Page">
+          <div className="grid grid-cols-2 gap-3">
             <label
               className="grid gap-1.5 text-xs font-medium"
               htmlFor={`${idPrefix}-page-size`}
@@ -442,8 +460,9 @@ export const ThemeControls = ({
                 value={theme.page.size}
               >
                 <SelectTrigger
-                  className="h-8 w-full"
+                  className="w-full"
                   id={`${idPrefix}-page-size`}
+                  size="sm"
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -468,8 +487,9 @@ export const ThemeControls = ({
                 value={theme.page.orientation}
               >
                 <SelectTrigger
-                  className="h-8 w-full capitalize"
+                  className="w-full capitalize"
                   id={`${idPrefix}-page-orientation`}
+                  size="sm"
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -479,17 +499,16 @@ export const ThemeControls = ({
                 </SelectContent>
               </Select>
             </label>
-          </CardContent>
-        </Card>
+          </div>
+        </Section>
 
-        <Card className="gap-4 py-4 shadow-none">
-          <CardHeader className="gap-1 px-4">
-            <CardTitle className="text-sm">Margins</CardTitle>
-            <CardDescription className="text-xs">
-              Space between content and every page edge.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid grid-cols-2 gap-3 px-4">
+        <Separator className="my-4" />
+
+        <Section
+          description="Space between content and every page edge."
+          title="Margins"
+        >
+          <div className="grid grid-cols-2 gap-3">
             {(
               [
                 ["marginTop", "Top"],
@@ -508,17 +527,16 @@ export const ThemeControls = ({
                 value={theme.spacing.page[edge]}
               />
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </Section>
 
-        <Card className="gap-4 py-4 shadow-none">
-          <CardHeader className="gap-1 px-4">
-            <CardTitle className="text-sm">Rhythm</CardTitle>
-            <CardDescription className="text-xs">
-              Vertical spacing between document elements.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-3 px-4 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
+        <Separator className="my-4" />
+
+        <Section
+          description="Vertical spacing between document elements."
+          title="Rhythm"
+        >
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
             {(
               [
                 ["sectionGap", "Sections"],
@@ -536,8 +554,8 @@ export const ThemeControls = ({
                 value={theme.spacing[key]}
               />
             ))}
-          </CardContent>
-        </Card>
+          </div>
+        </Section>
       </TabsContent>
     </Tabs>
   </div>
