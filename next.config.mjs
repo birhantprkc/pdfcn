@@ -52,6 +52,11 @@ const nextConfig = {
         permanent: true,
         source: ROUTES.DOCS_THEMING,
       },
+      {
+        destination: ROUTES.THEME_BUILDER_TAKUMI,
+        permanent: false,
+        source: ROUTES.THEME_BUILDER,
+      },
     ];
   },
   serverExternalPackages: ["@formepdf/core"],

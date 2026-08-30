@@ -17,6 +17,7 @@ const navItems = [
   { href: ROUTES.DOCS, label: "Docs" },
   { href: ROUTES.DOCS_COMPONENTS, label: "Components" },
   { href: ROUTES.DOCS_BLOCKS, label: "Blocks" },
+  { href: ROUTES.THEME_BUILDER, label: "Theme Builder" },
 ];
 
 export const SiteHeader = () => (

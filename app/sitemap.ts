@@ -18,6 +18,18 @@ const sitemap = (): MetadataRoute.Sitemap => {
       priority: 0.5,
       url: `${SITE.URL}${ROUTES.SPONSOR}`,
     },
+    {
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+      priority: 0.8,
+      url: `${SITE.URL}${ROUTES.THEME_BUILDER_FORME}`,
+    },
+    {
+      changeFrequency: "weekly",
+      lastModified: new Date(),
+      priority: 0.8,
+      url: `${SITE.URL}${ROUTES.THEME_BUILDER_TAKUMI}`,
+    },
   ];
 
   const docPages: MetadataRoute.Sitemap = source.getPages().map((page) => ({
