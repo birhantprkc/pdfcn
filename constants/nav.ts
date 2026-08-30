@@ -6,6 +6,12 @@ export interface LabsNavLink {
   description?: string;
 }
 
+export const LABS_LATEST = {
+  description: "Beautiful rich text editors, made simple",
+  href: "https://editorcn.vercel.app",
+  name: "editorcn",
+} as const satisfies LabsNavLink;
+
 export const LABS_REGISTRIES = [
   { href: "https://termcn.dev", name: "termcn" },
   { href: "https://emailcn.run", name: "emailcn" },
