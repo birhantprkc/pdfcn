@@ -18,6 +18,7 @@ import { cn } from "@/lib/utils";
 import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
 import { THEMES } from "@/registry/themes";
 
+import { ThemePicker } from "./theme-picker";
 import type {
   ColorTokenName,
   HeadingLevel,
@@ -236,33 +237,10 @@ export const ThemeControls = ({
       </label>
 
       <div className="flex items-center gap-1.5">
-        <Select
-          onValueChange={(value) =>
-            actions.loadPreset(value as ThemePresetName)
-          }
-          value={basePreset}
-        >
-          <SelectTrigger
-            className="w-full flex-1"
-            id={`${idPrefix}-preset`}
-            size="sm"
-          >
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {THEMES.map(({ name, theme: presetTheme, title }) => (
-              <SelectItem key={name} value={name}>
-                <span className="flex items-center gap-2">
-                  <span
-                    className="size-2.5 shrink-0 rounded-full border"
-                    style={{ backgroundColor: presetTheme.colors.primary }}
-                  />
-                  {title}
-                </span>
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <ThemePicker
+          onThemeSelect={(name) => actions.loadPreset(name)}
+          selectedTheme={basePreset}
+        />
         <Button
           aria-label="Pick a random preset"
           onClick={() => {

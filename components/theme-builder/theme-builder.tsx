@@ -295,20 +295,15 @@ export const ThemeBuilder = ({ base }: { base: BaseName }) => {
             : "lg:grid-cols-[minmax(0,1fr)_0px]"
         )}
       >
-        <section
-          className="relative min-h-0 overflow-hidden bg-muted/35 p-6"
-          aria-label="Live PDF preview"
-        >
-          <div className="mx-auto h-full max-w-5xl overflow-hidden rounded-xl border bg-background shadow-sm">
-            <PdfPreview
-              base={base}
-              className="h-full rounded-none border-0"
-              height="100%"
-              name="invoice-classic"
-              onUrlChange={handlePdfUrlChange}
-              theme={previewTheme}
-            />
-          </div>
+        <section aria-label="Live PDF preview">
+          <PdfPreview
+            base={base}
+            className="h-full rounded-none border-0"
+            height="100%"
+            name="invoice-classic"
+            onUrlChange={handlePdfUrlChange}
+            theme={previewTheme}
+          />
 
           <Button
             className="absolute right-6 bottom-6 shadow-lg lg:hidden"
@@ -374,7 +369,7 @@ export const ThemeBuilder = ({ base }: { base: BaseName }) => {
           aria-label="Theme controls"
         >
           <div className="flex h-full w-[390px] min-h-0 flex-col">
-            <div className="flex items-start justify-between border-b px-6 py-3">
+            <div className="flex items-start justify-between border-b px-6 py-2.5">
               <div className="min-w-0">
                 <h2 className="text-sm font-semibold">Customize</h2>
                 <p className="text-xs text-muted-foreground">

@@ -1,5 +1,5 @@
 import { SiteHeader } from "@/components/site-header";
-import { WebMcpTools } from "@/components/web-mcp-tools";
+import { WebMcpTools } from "@/components/web-mcp/web-mcp-tools";
 import { AGENT_DOCS_DIRECTIVE_TEXT } from "@/lib/agent-discovery/directive";
 
 const ThemeBuilderLayout = ({ children }: { children: React.ReactNode }) => (
