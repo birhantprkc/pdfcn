@@ -14,18 +14,23 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
-import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
-import { THEMES } from "@/registry/themes";
-
-import { ThemePicker } from "./theme-picker";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import type {
   ColorTokenName,
   HeadingLevel,
   PageMargin,
   SpacingTokenName,
   ThemeBuilderActions,
-} from "./use-theme-builder";
+} from "@/hooks/use-theme-builder";
+import { cn } from "@/lib/utils";
+import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
+import { THEMES } from "@/registry/themes";
+
+import { ThemePicker } from "./theme-picker";
 
 const COLOR_FIELDS = [
   { description: "Primary text", key: "foreground", label: "Foreground" },
@@ -241,26 +246,30 @@ export const ThemeControls = ({
           onThemeSelect={(name) => actions.loadPreset(name)}
           selectedTheme={basePreset}
         />
-        <Button
-          aria-label="Pick a random preset"
-          onClick={() => {
-            const others = THEMES.filter(({ name }) => name !== basePreset);
-            const next = others[Math.floor(Math.random() * others.length)];
-            if (next) {
-              actions.loadPreset(next.name);
-            }
-          }}
-          size="icon-sm"
-          title="Pick a random preset"
-          variant="outline"
-        >
-          <Shuffle />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              aria-label="Pick a random preset"
+              onClick={() => {
+                const others = THEMES.filter(({ name }) => name !== basePreset);
+                const next = others[Math.floor(Math.random() * others.length)];
+                if (next) {
+                  actions.loadPreset(next.name);
+                }
+              }}
+              size="icon-sm"
+              variant="outline"
+            >
+              <Shuffle />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Random preset</TooltipContent>
+        </Tooltip>
       </div>
     </div>
 
     <Tabs className="gap-4 px-6" defaultValue="colors">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className="grid w-full grid-cols-3 gap-1">
         <TabsTrigger value="colors">
           <Palette />
           Colors

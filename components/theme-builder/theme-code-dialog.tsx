@@ -12,11 +12,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  generateDeltaCode,
+  generateThemeCode,
+} from "@/lib/theme-builder/generate-code";
+import { getRemoteFontFamilies } from "@/lib/theme-builder/preview-fonts";
 import { cn } from "@/lib/utils";
 import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
-
-import { getRemoteFontFamilies } from "./preview-fonts";
-import { generateDeltaCode, generateThemeCode } from "./theme-code";
 
 type CodeTab = "delta" | "full";
 
@@ -111,7 +113,7 @@ export const ThemeCodeDialog = ({
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={open}>
-      <DialogContent className="gap-0 overflow-hidden p-0 sm:max-w-3xl">
+      <DialogContent className="flex max-h-[85svh] flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl">
         <DialogHeader className="border-b p-5 pr-12">
           <DialogTitle>Generated theme code</DialogTitle>
           <DialogDescription>
@@ -173,14 +175,14 @@ export const ThemeCodeDialog = ({
             </p>
           </div>
         ) : null}
-        <div className="max-h-[60svh] overflow-auto [&_pre]:m-0">
+        <div className="min-h-0 flex-1 overflow-auto bg-code [&_pre]:m-0">
           {highlightedCode ? (
             <div
               dangerouslySetInnerHTML={{ __html: highlightedCode }}
               dir="ltr"
             />
           ) : (
-            <pre className="bg-code p-5 font-mono text-xs leading-relaxed text-code-foreground">
+            <pre className="p-5 font-mono text-xs leading-relaxed text-code-foreground">
               <code>{code}</code>
             </pre>
           )}

@@ -12,7 +12,13 @@ import {
   Undo2,
 } from "lucide-react";
 import Link from "next/link";
-import { useCallback, useDeferredValue, useEffect, useState } from "react";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { toast } from "sonner";
 
 import { FormeIcon, TakumiIcon } from "@/components/icons";
@@ -24,15 +30,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useMounted } from "@/hooks/use-mounted";
+import { useThemeBuilder } from "@/hooks/use-theme-builder";
 import { cn } from "@/lib/utils";
 import type { BaseName } from "@/registry/bases";
 
 import { ThemeCodeDialog } from "./theme-code-dialog";
 import { ThemeControls } from "./theme-controls";
-import { writeThemeState } from "./theme-storage";
-import { useThemeBuilder } from "./use-theme-builder";
-
-const PERSIST_DELAY_MS = 300;
 
 const BASE_SWITCHER = [
   { icon: TakumiIcon, name: "takumi" as const },
@@ -40,13 +44,15 @@ const BASE_SWITCHER = [
 ];
 
 export const ThemeBuilder = ({ base }: { base: BaseName }) => {
-  const { actions, basePreset, canRedo, canUndo, hydrated, theme } =
+  const { actions, basePreset, canRedo, canUndo, syncToUrl, theme } =
     useThemeBuilder();
+  const isMounted = useMounted();
   const previewTheme = useDeferredValue(theme);
   const [codeOpen, setCodeOpen] = useState(false);
   const [customizerOpen, setCustomizerOpen] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const syncTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const safeThemeName =
     theme.name
@@ -54,17 +60,22 @@ export const ThemeBuilder = ({ base }: { base: BaseName }) => {
       .toLowerCase()
       .replaceAll(/[^a-z0-9-]+/g, "-") || "theme";
 
+  // Debounced sync to URL + localStorage
   useEffect(() => {
-    if (!hydrated) {
+    if (!isMounted) {
       return;
     }
 
-    const timeout = window.setTimeout(() => {
-      writeThemeState({ basePreset, theme });
-    }, PERSIST_DELAY_MS);
+    syncTimeoutRef.current = setTimeout(() => {
+      syncToUrl({ basePreset, theme });
+    }, 300);
 
-    return () => window.clearTimeout(timeout);
-  }, [basePreset, hydrated, theme]);
+    return () => {
+      if (syncTimeoutRef.current) {
+        clearTimeout(syncTimeoutRef.current);
+      }
+    };
+  }, [basePreset, isMounted, syncToUrl, theme]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -104,7 +115,7 @@ export const ThemeBuilder = ({ base }: { base: BaseName }) => {
   }, []);
 
   const shareTheme = async () => {
-    writeThemeState({ basePreset, theme });
+    syncToUrl({ basePreset, theme });
     try {
       await navigator.clipboard.writeText(window.location.href);
       toast.success("Share link copied");
@@ -295,7 +306,10 @@ export const ThemeBuilder = ({ base }: { base: BaseName }) => {
             : "lg:grid-cols-[minmax(0,1fr)_0px]"
         )}
       >
-        <section aria-label="Live PDF preview">
+        <section
+          className="relative min-h-0 overflow-hidden"
+          aria-label="Live PDF preview"
+        >
           <PdfPreview
             base={base}
             className="h-full rounded-none border-0"

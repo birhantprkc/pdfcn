@@ -4,14 +4,13 @@ import { createElement, useEffect, useRef, useState } from "react";
 import takumiWasmUrl from "takumi-pdf/wasm-url";
 
 import { replacePreviewImageSources } from "@/examples/preview-assets";
-import { cn } from "@/lib/utils";
-import type { BaseName } from "@/registry/bases";
-import type { PdfcnTheme } from "@/registry/themes";
-
 import {
   getPreviewFonts,
   getPreviewFontUrls,
-} from "./theme-builder/preview-fonts";
+} from "@/lib/theme-builder/preview-fonts";
+import { cn } from "@/lib/utils";
+import type { BaseName } from "@/registry/bases";
+import type { PdfcnTheme } from "@/registry/themes";
 
 const PREVIEW_LOGO_PATH = "/favicon.png";
 

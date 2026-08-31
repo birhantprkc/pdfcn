@@ -3,8 +3,6 @@ import { z } from "zod";
 import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
 import { themePresets } from "@/registry/themes";
 
-const STORAGE_KEY = "pdfcn-theme-builder";
-const HASH_KEY = "theme";
 const PRESET_NAMES = Object.keys(themePresets) as [
   ThemePresetName,
   ...ThemePresetName[],
@@ -12,6 +10,7 @@ const PRESET_NAMES = Object.keys(themePresets) as [
 
 const finiteNumber = z.number().finite();
 const hexColor = z.string().regex(/^#[\da-f]{6}$/i);
+
 const ThemeSchema: z.ZodType<PdfcnTheme> = z.object({
   colors: z.object({
     accent: hexColor,
@@ -114,58 +113,80 @@ const ThemeSchema: z.ZodType<PdfcnTheme> = z.object({
   }),
 });
 
-const StoredThemeStateSchema = z.object({
+export const StoredThemeStateSchema = z.object({
   basePreset: z.enum(PRESET_NAMES),
   theme: ThemeSchema,
 });
 
 export type StoredThemeState = z.infer<typeof StoredThemeStateSchema>;
 
-const parseThemeState = (value: string | null): StoredThemeState | null => {
-  if (!value) {
+const readFromLocalStorage = (storageKey: string): StoredThemeState | null => {
+  if (typeof window === "undefined") {
     return null;
   }
-
   try {
-    const result = StoredThemeStateSchema.safeParse(JSON.parse(value));
+    const raw = localStorage.getItem(storageKey);
+    if (!raw) {
+      return null;
+    }
+    const result = StoredThemeStateSchema.safeParse(JSON.parse(raw));
     return result.success ? result.data : null;
   } catch {
     return null;
   }
 };
 
-export const readThemeState = (): StoredThemeState | null => {
+const writeToLocalStorage = (storageKey: string, state: StoredThemeState) => {
   if (typeof window === "undefined") {
-    return null;
+    return;
   }
-
-  const hashValue = new URLSearchParams(window.location.hash.slice(1)).get(
-    HASH_KEY
-  );
-  if (hashValue) {
-    return parseThemeState(hashValue);
-  }
-
   try {
-    return parseThemeState(localStorage.getItem(STORAGE_KEY));
+    localStorage.setItem(storageKey, JSON.stringify(state));
+  } catch {
+    // Storage unavailable — URL is still the source of truth.
+  }
+};
+
+const serializeTheme = (state: StoredThemeState): string =>
+  btoa(encodeURIComponent(JSON.stringify(state)));
+
+const deserializeTheme = (encoded: string): StoredThemeState | null => {
+  try {
+    const json = decodeURIComponent(atob(encoded));
+    const result = StoredThemeStateSchema.safeParse(JSON.parse(json));
+    return result.success ? result.data : null;
   } catch {
     return null;
   }
 };
 
-export const writeThemeState = (state: StoredThemeState) => {
+export const readThemeState = (storageKey: string): StoredThemeState | null => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  const hash = window.location.hash.slice(1);
+  const params = new URLSearchParams(hash);
+  const encoded = params.get("theme");
+  if (encoded) {
+    const fromUrl = deserializeTheme(encoded);
+    if (fromUrl) {
+      writeToLocalStorage(storageKey, fromUrl);
+      return fromUrl;
+    }
+  }
+  return readFromLocalStorage(storageKey);
+};
+
+export const writeThemeState = (
+  storageKey: string,
+  state: StoredThemeState
+) => {
   if (typeof window === "undefined") {
     return;
   }
-
-  const serialized = JSON.stringify(state);
+  writeToLocalStorage(storageKey, state);
+  const encoded = serializeTheme(state);
   const url = new URL(window.location.href);
-  url.hash = new URLSearchParams({ [HASH_KEY]: serialized }).toString();
-  window.history.replaceState(null, "", url);
-
-  try {
-    localStorage.setItem(STORAGE_KEY, serialized);
-  } catch {
-    // The shareable URL remains the source of truth when storage is unavailable.
-  }
+  url.hash = `theme=${encoded}`;
+  window.history.replaceState(null, "", url.toString());
 };

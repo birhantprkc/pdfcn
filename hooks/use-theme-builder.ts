@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useReducer } from "react";
+import { useCallback, useEffect, useMemo, useReducer } from "react";
 
+import {
+  THEME_BUILDER_HISTORY_LIMIT,
+  THEME_BUILDER_STORAGE_KEY,
+} from "@/constants/theme-builder";
+import {
+  readThemeState,
+  writeThemeState,
+} from "@/lib/theme-builder/persist-theme";
+import type { StoredThemeState } from "@/lib/theme-builder/persist-theme";
 import type { PdfcnTheme, ThemePresetName } from "@/registry/themes";
 import { themePresets } from "@/registry/themes";
-
-import { readThemeState } from "./theme-storage";
-import type { StoredThemeState } from "./theme-storage";
-
-const HISTORY_LIMIT = 30;
 
 export type ColorTokenName = keyof PdfcnTheme["colors"];
 export type HeadingLevel =
@@ -22,15 +26,14 @@ type ThemeSnapshot = StoredThemeState;
 interface ThemeBuilderState {
   basePreset: ThemePresetName;
   future: ThemeSnapshot[];
-  hydrated: boolean;
   past: ThemeSnapshot[];
   theme: PdfcnTheme;
 }
 
 type ThemeBuilderAction =
-  | { type: "HYDRATE"; stored: StoredThemeState | null }
   | { type: "UPDATE"; update: ThemeUpdate }
   | { type: "LOAD_PRESET"; preset: ThemePresetName }
+  | { type: "RESTORE"; stored: StoredThemeState }
   | { type: "UNDO" }
   | { type: "REDO" };
 
@@ -63,31 +66,34 @@ const cloneTheme = (theme: PdfcnTheme): PdfcnTheme => ({
 const pushHistory = (
   history: ThemeSnapshot[],
   snapshot: ThemeSnapshot
-): ThemeSnapshot[] => [...history.slice(-(HISTORY_LIMIT - 1)), snapshot];
+): ThemeSnapshot[] => [
+  ...history.slice(-(THEME_BUILDER_HISTORY_LIMIT - 1)),
+  snapshot,
+];
 
 const snapshotState = (state: ThemeBuilderState): ThemeSnapshot => ({
   basePreset: state.basePreset,
   theme: state.theme,
 });
 
+const getInitialState = (): ThemeBuilderState => ({
+  basePreset: "professional",
+  future: [],
+  past: [],
+  theme: cloneTheme(themePresets.professional),
+});
+
 const reducer = (
   state: ThemeBuilderState,
   action: ThemeBuilderAction
 ): ThemeBuilderState => {
-  if (action.type === "HYDRATE") {
-    if (state.hydrated) {
-      return state;
-    }
-
-    return action.stored
-      ? {
-          basePreset: action.stored.basePreset,
-          future: [],
-          hydrated: true,
-          past: [],
-          theme: cloneTheme(action.stored.theme),
-        }
-      : { ...state, hydrated: true };
+  if (action.type === "RESTORE") {
+    return {
+      basePreset: action.stored.basePreset,
+      future: [],
+      past: [],
+      theme: cloneTheme(action.stored.theme),
+    };
   }
 
   if (action.type === "UPDATE") {
@@ -125,7 +131,7 @@ const reducer = (
       basePreset: previous.basePreset,
       future: [
         snapshotState(state),
-        ...state.future.slice(0, HISTORY_LIMIT - 1),
+        ...state.future.slice(0, THEME_BUILDER_HISTORY_LIMIT - 1),
       ],
       past: state.past.slice(0, -1),
       theme: previous.theme,
@@ -170,21 +176,24 @@ export interface ThemeBuilderActions {
 }
 
 export const useThemeBuilder = () => {
-  const [state, dispatch] = useReducer(reducer, {
-    basePreset: "professional",
-    future: [],
-    hydrated: false,
-    past: [],
-    theme: cloneTheme(themePresets.professional),
-  });
+  const [state, dispatch] = useReducer(reducer, null, getInitialState);
 
   useEffect(() => {
-    dispatch({ stored: readThemeState(), type: "HYDRATE" });
+    const stored = readThemeState(THEME_BUILDER_STORAGE_KEY);
+    if (stored) {
+      dispatch({ stored, type: "RESTORE" });
+    }
+  }, []);
+
+  const syncToUrl = useCallback((snapshot: StoredThemeState) => {
+    writeThemeState(THEME_BUILDER_STORAGE_KEY, snapshot);
   }, []);
 
   const actions = useMemo<ThemeBuilderActions>(
     () => ({
-      loadPreset: (preset) => dispatch({ preset, type: "LOAD_PRESET" }),
+      loadPreset: (preset) => {
+        dispatch({ preset, type: "LOAD_PRESET" });
+      },
       redo: () => dispatch({ type: "REDO" }),
       setBodyFontFamily: (value) =>
         dispatch({
@@ -361,7 +370,7 @@ export const useThemeBuilder = () => {
     basePreset: state.basePreset,
     canRedo: state.future.length > 0,
     canUndo: state.past.length > 0,
-    hydrated: state.hydrated,
+    syncToUrl,
     theme: state.theme,
   };
 };
