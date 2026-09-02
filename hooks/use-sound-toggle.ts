@@ -29,8 +29,8 @@ export const useSoundToggle = () => {
     "s",
     () => toggleSound(),
     {
-      enableOnContentEditable: true,
-      enableOnFormTags: true,
+      enableOnContentEditable: false,
+      enableOnFormTags: false,
       preventDefault: true,
     },
     [toggleSound]
