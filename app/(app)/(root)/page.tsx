@@ -15,6 +15,9 @@ const IndexPage = () => (
       <section className="container-wrapper relative">
         <div className="container flex flex-col items-center gap-4 py-16 text-center md:py-20 lg:py-24">
           <PageHero
+            showAnnouncement
+            title="Beautiful PDFs, made simple"
+            titleClassName="max-w-7xl"
             description={
               <>
                 Ready to use, customizable pdf components for React.
@@ -23,8 +26,6 @@ const IndexPage = () => (
               </>
             }
             descriptionClassName="max-w-2xl text-lg sm:text-xl"
-            title="Beautiful PDFs, made simple"
-            titleClassName="max-w-7xl"
           />
 
           <CommandBox className="mt-4 w-full max-w-xl" />
