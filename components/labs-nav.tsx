@@ -158,7 +158,7 @@ const DesktopSection = ({
           <LabsNavLink item={item}>
             {({ label, onMouseEnter, onMouseLeave }) => (
               <NavigationMenuLink
-                href={item.href}
+                href={addQueryParams(item.href, UTM_PARAMS.SOURCE)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
