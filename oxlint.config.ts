@@ -8,14 +8,12 @@ export default defineConfig({
   extends: [core, react, next, vitest],
   ignorePatterns: [
     ...(core.ignorePatterns ?? []),
-    "public/r/**",
-    ".pnpm-store/**",
-    ".registry-build/**",
     ".agents/**",
     ".cursor/**",
     ".changeset/**",
     ".claude/**",
-    ".web-kits/**",
-    "audio/**",
+    "apps/web/public/r/**",
+    "apps/web/.web-kits/**",
+    "apps/web/audio/**",
   ],
 });
